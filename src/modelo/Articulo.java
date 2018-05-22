@@ -2,31 +2,32 @@ package modelo;
 
 import java.io.Serializable;
 
-public class Articulo implements Serializable{
-	private int numero;
+public class Articulo implements Serializable {
+	private int id;
 	private String nombre;
+	private float precio;
 
-	public Articulo(int numero, String nombre) {
+	public Articulo(int id, String nombre, int precio) {
 		super();
-		this.numero = numero;
+		this.id = id;
 		this.nombre = nombre;
+		this.precio = precio;
 	}
 
-	public int getNumero() {
-		return numero;
+	public float getPrecio() {
+		return precio;
 	}
 
-	public void setNumero(int numero) {
-		this.numero = numero;
+	public void setPrecio(float precio) {
+		this.precio = precio;
+	}
+
+	public int getId() {
+		return id;
 	}
 
 	public String getNombre() {
 		return nombre;
-	}
-
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-
 	}
 
 	@Override
@@ -34,7 +35,7 @@ public class Articulo implements Serializable{
 		boolean retorno = super.equals(obj);
 		if (!retorno) {
 			Articulo articulo = (Articulo) obj;
-			retorno = this.numero==articulo.getNumero();
+			retorno = this.id == articulo.getId();
 		}
 		return retorno;
 	}
