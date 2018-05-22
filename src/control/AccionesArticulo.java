@@ -8,8 +8,8 @@ public class AccionesArticulo {
 
 	public boolean crearArticulo(String nombre, int precio, int id) {
 		Articulo newArticulo = new Articulo(id, nombre, precio);
-		Articulo leer = (Articulo) new AlmacenArticulo<>().leer(nombre);
-		if (newArticulo.getNombre() == leer.getNombre()) {
+		Articulo item = (Articulo) new AlmacenArticulo<>().leer(nombre);
+		if (newArticulo.getNombre() == item.getNombre()) {
 			return false;
 		} else {
 			new AlmacenArticulo<>().grabar(newArticulo, id, nombre);
@@ -18,16 +18,16 @@ public class AccionesArticulo {
 	}
 
 	public void consultar(String nombre, JLabel nombreArt, JLabel id, JLabel precio) {
-		Articulo leer = (Articulo) new AlmacenArticulo<>().leer(nombre);
-		nombreArt.setText(leer.getNombre());
+		Articulo item = (Articulo) new AlmacenArticulo<>().leer(nombre);
+		nombreArt.setText(item.getNombre());
 		id.setText(String.valueOf(id));
 		precio.setText(String.valueOf(precio));
 	}
 
 	public void editar(String nombre, int nuevoPrecio) {
-		Articulo leer = (Articulo) new AlmacenArticulo<>().leer(nombre);
+		Articulo item = (Articulo) new AlmacenArticulo<>().leer(nombre);
 		leer.setPrecio(nuevoPrecio);
-		new AlmacenArticulo<>().grabar(leer, leer.getId(), leer.getNombre());
+		new AlmacenArticulo<>().grabar(item, item.getId(), item.getNombre());
 	}
 
 	/**
