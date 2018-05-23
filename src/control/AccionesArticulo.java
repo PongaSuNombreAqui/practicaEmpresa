@@ -26,7 +26,7 @@ public class AccionesArticulo {
 
 	public void editar(String nombre, int nuevoPrecio) {
 		Articulo item = (Articulo) new AlmacenArticulo<>().leer(nombre);
-		leer.setPrecio(nuevoPrecio);
+		item.setPrecio(nuevoPrecio);
 		new AlmacenArticulo<>().grabar(item, item.getId(), item.getNombre());
 	}
 
