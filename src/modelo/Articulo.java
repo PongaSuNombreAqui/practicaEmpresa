@@ -7,7 +7,7 @@ public class Articulo implements Serializable {
 	private String nombre;
 	private float precio;
 
-	public Articulo(int id, String nombre, int precio) {
+	public Articulo(int id, String nombre, float precio) {
 		super();
 		this.id = id;
 		this.nombre = nombre;
@@ -33,6 +33,7 @@ public class Articulo implements Serializable {
 	@Override
 	public boolean equals(Object obj) {
 		boolean retorno = super.equals(obj);
+		retorno = true;
 		if (!retorno) {
 			Articulo articulo = (Articulo) obj;
 			retorno = this.id == articulo.getId();
