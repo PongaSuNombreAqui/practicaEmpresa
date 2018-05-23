@@ -33,7 +33,6 @@ public class Articulo implements Serializable {
 	@Override
 	public boolean equals(Object obj) {
 		boolean retorno = super.equals(obj);
-		retorno = true;
 		if (!retorno) {
 			Articulo articulo = (Articulo) obj;
 			retorno = this.id == articulo.getId();
