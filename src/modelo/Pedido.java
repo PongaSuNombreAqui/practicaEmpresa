@@ -9,11 +9,11 @@ import java.io.Serializable;
 
 import utiles.Utiles;
 
-public class Pedido implements Serializable{
+public class Pedido implements Serializable {
 	private int numero;
 	private String item;
 
-	public Pedido( String nombre) {
+	public Pedido(String nombre) {
 		super();
 		this.item = nombre;
 		ponerNumero();
@@ -22,10 +22,10 @@ public class Pedido implements Serializable{
 	private void ponerNumero() {
 		Integer num = 0;
 		String path = "./data/numeroUltimoPedido.data";
-		if(Utiles.comprobarExiste(path)){
-			num = (Integer) new DAO<>().leer(path);			
+		if (Utiles.comprobarExiste(path)) {
+			num = (Integer) new DAO<>().leer(path);
 		}
-		this.numero=num;
+		this.numero = num;
 		num++;
 		new DAO<>().grabar(path, num);
 	}
@@ -56,6 +56,5 @@ public class Pedido implements Serializable{
 		}
 		return retorno;
 	}
-
 
 }
