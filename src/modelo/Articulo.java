@@ -7,7 +7,7 @@ public class Articulo implements Serializable {
 	private String nombre;
 	private float precio;
 
-	public Articulo(int id, String nombre, int precio) {
+	public Articulo(int id, String nombre, float precio) {
 		super();
 		this.id = id;
 		this.nombre = nombre;
