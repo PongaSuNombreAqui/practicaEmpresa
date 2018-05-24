@@ -1,6 +1,5 @@
 package modelo;
 
-
 import java.io.Closeable;
 import java.io.File;
 import java.io.FileInputStream;
@@ -13,7 +12,7 @@ import java.io.OutputStream;
 
 //Data Access Object
 
-public class DAO<T>  {
+public class DAO<T> {
 	class MyObjectOutputStream extends ObjectOutputStream {
 
 		public MyObjectOutputStream(OutputStream out) throws IOException {
@@ -51,13 +50,16 @@ public class DAO<T>  {
 	public boolean grabar(String path, Object t) {
 		return grabar(path, t, false);
 	}
-	
+
 	/**
 	 * 
-	 * @param path :es la ruta del archivo donde se guardara
-	 * @param t 	: es el objeto a guardar
-	 * @param adicion	:false para añadir cabecera, true para no
-	 * @return	:false si falla al escribir
+	 * @param path
+	 *            :es la ruta del archivo donde se guardara
+	 * @param t
+	 *            : es el objeto a guardar
+	 * @param adicion
+	 *            :false para añadir cabecera, true para no
+	 * @return :false si falla al escribir
 	 */
 	public boolean grabar(String path, Object t, boolean adicion) {
 		File file = new File(path);

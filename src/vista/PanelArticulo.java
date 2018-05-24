@@ -1,10 +1,7 @@
 package vista;
 
-import java.awt.BorderLayout;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
@@ -12,249 +9,280 @@ import javax.swing.JButton;
 import java.awt.Font;
 import javax.swing.border.MatteBorder;
 import java.awt.Color;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
 public class PanelArticulo extends JFrame {
-
-	private JPanel contentPane;
-	private JTextField textField_3;
-	private JTextField precioNewArt;
-	private JTextField idNewArt;
-	private JTextField nombreNewArt;
-	private JTextField textField;
+	private JTextField textCrearID;
+	private JTextField textCrearNombre;
+	private JTextField textCrearPrecio;
+	private JTextField textConsultarNombre;
+	private JTextField textNuevoPrecio;
 
 	public PanelArticulo() {
 
-		JPanel panelPrincipal = new JPanel();
-		panelPrincipal.setLayout(new BorderLayout(0, 0));
-
-		JPanel panelC = new JPanel();
-		panelC.setBorder(new MatteBorder(3, 3, 3, 3, (Color) new Color(0, 0, 0)));
-		panelPrincipal.add(panelC, BorderLayout.CENTER);
-		panelC.setLayout(new BorderLayout(0, 0));
-
-		JPanel panelConsultar = new JPanel();
-		panelConsultar.setBorder(new MatteBorder(1, 1, 3, 1, (Color) new Color(0, 0, 0)));
-		panelC.add(panelConsultar, BorderLayout.NORTH);
-		panelConsultar.setLayout(new BorderLayout(0, 0));
+		JPanel panelArticulo = new JPanel();
 
 		JPanel panel = new JPanel();
-		panelConsultar.add(panel, BorderLayout.CENTER);
-
-		JLabel lblN = new JLabel("Nombre del Articulo :");
-		lblN.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-		lblN.setHorizontalAlignment(SwingConstants.CENTER);
-		panel.add(lblN);
-
-		textField_3 = new JTextField();
-		textField_3.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-		textField_3.setHorizontalAlignment(SwingConstants.CENTER);
-		panel.add(textField_3);
-		textField_3.setColumns(10);
-
-		JButton btnNewButton = new JButton("Buscar");
-		btnNewButton.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-		panel.add(btnNewButton);
-
-		JLabel lblNewLabel_7 = new JLabel("Mensaje del Sistema");
-		lblNewLabel_7.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-		lblNewLabel_7.setHorizontalAlignment(SwingConstants.CENTER);
-		panelConsultar.add(lblNewLabel_7, BorderLayout.SOUTH);
-
-		JLabel lblNewLabel = new JLabel("Consultar Art\u00EDculo");
-		lblNewLabel.setFont(new Font("Segoe UI", Font.PLAIN, 20));
-		panelConsultar.add(lblNewLabel, BorderLayout.NORTH);
-		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		panel.setBorder(new MatteBorder(2, 2, 2, 2, (Color) new Color(0, 0, 0)));
 
 		JPanel panel_1 = new JPanel();
-		panelC.add(panel_1, BorderLayout.CENTER);
-		panel_1.setLayout(new BorderLayout(0, 0));
+		GroupLayout gl_panelArticulo = new GroupLayout(panelArticulo);
+		gl_panelArticulo.setHorizontalGroup(gl_panelArticulo.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panelArticulo.createSequentialGroup().addContainerGap()
+						.addComponent(panel, GroupLayout.PREFERRED_SIZE, 206, GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(ComponentPlacement.UNRELATED)
+						.addComponent(panel_1, GroupLayout.DEFAULT_SIZE, 548, Short.MAX_VALUE).addGap(18)));
+		gl_panelArticulo.setVerticalGroup(gl_panelArticulo.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panelArticulo.createSequentialGroup().addGap(17)
+						.addGroup(gl_panelArticulo.createParallelGroup(Alignment.LEADING)
+								.addComponent(panel_1, GroupLayout.DEFAULT_SIZE, 333, Short.MAX_VALUE)
+								.addComponent(panel, GroupLayout.DEFAULT_SIZE, 327, Short.MAX_VALUE))
+						.addContainerGap()));
+
+		JPanel panelConsultar = new JPanel();
+		panelConsultar.setBorder(new MatteBorder(2, 2, 2, 2, (Color) new Color(0, 0, 0)));
+
+		JPanel panelEditar = new JPanel();
+		panelEditar.setBackground(Color.WHITE);
+		panelEditar.setBorder(new MatteBorder(2, 2, 2, 2, (Color) new Color(0, 0, 0)));
 
 		JPanel panel_2 = new JPanel();
-		panel_1.add(panel_2, BorderLayout.CENTER);
+		panel_2.setBorder(new MatteBorder(2, 2, 2, 2, (Color) new Color(0, 0, 0)));
 
-		JLabel lblEditarArticulo = new JLabel("Editar Art\u00EDculo");
-		lblEditarArticulo.setFont(new Font("Segoe UI", Font.PLAIN, 20));
-		lblEditarArticulo.setHorizontalAlignment(SwingConstants.CENTER);
+		JLabel lblListaDePrecios = new JLabel("Lista de Precios");
+		lblListaDePrecios.setHorizontalAlignment(SwingConstants.CENTER);
+		lblListaDePrecios.setFont(new Font("Segoe UI", Font.PLAIN, 20));
+		lblListaDePrecios.setBorder(new MatteBorder(0, 0, 1, 0, (Color) Color.DARK_GRAY));
 
-		JLabel lblNewLabel_6 = new JLabel("Lista de Precios");
-		lblNewLabel_6.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_6.setFont(new Font("Segoe UI", Font.PLAIN, 20));
+		JLabel lblNewLabel_3 = new JLabel("FECHA - PRECIO");
+		lblNewLabel_3.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+		lblNewLabel_3.setHorizontalAlignment(SwingConstants.CENTER);
+		GroupLayout gl_panel_2 = new GroupLayout(panel_2);
+		gl_panel_2.setHorizontalGroup(gl_panel_2.createParallelGroup(Alignment.TRAILING).addGroup(gl_panel_2
+				.createSequentialGroup().addContainerGap()
+				.addGroup(gl_panel_2.createParallelGroup(Alignment.LEADING).addGroup(gl_panel_2.createSequentialGroup()
+						.addComponent(lblNewLabel_3, GroupLayout.DEFAULT_SIZE, 261, Short.MAX_VALUE).addContainerGap())
+						.addGroup(Alignment.TRAILING,
+								gl_panel_2
+										.createSequentialGroup().addComponent(lblListaDePrecios,
+												GroupLayout.PREFERRED_SIZE, 166, GroupLayout.PREFERRED_SIZE)
+										.addGap(56)))));
+		gl_panel_2.setVerticalGroup(gl_panel_2.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel_2.createSequentialGroup().addContainerGap()
+						.addComponent(lblListaDePrecios, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE)
+						.addGap(18).addComponent(lblNewLabel_3, GroupLayout.DEFAULT_SIZE, 255, Short.MAX_VALUE)
+						.addContainerGap()));
+		panel_2.setLayout(gl_panel_2);
+		GroupLayout gl_panel_1 = new GroupLayout(panel_1);
+		gl_panel_1.setHorizontalGroup(gl_panel_1.createParallelGroup(Alignment.LEADING).addGroup(gl_panel_1
+				.createSequentialGroup().addContainerGap()
+				.addGroup(gl_panel_1.createParallelGroup(Alignment.TRAILING, false)
+						.addComponent(panelConsultar, GroupLayout.PREFERRED_SIZE, 247, Short.MAX_VALUE)
+						.addComponent(panelEditar, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+				.addPreferredGap(ComponentPlacement.RELATED)
+				.addComponent(panel_2, GroupLayout.PREFERRED_SIZE, 285, GroupLayout.PREFERRED_SIZE)));
+		gl_panel_1.setVerticalGroup(gl_panel_1.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel_1.createSequentialGroup()
+						.addComponent(panelConsultar, GroupLayout.PREFERRED_SIZE, 163, GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(ComponentPlacement.UNRELATED)
+						.addComponent(panelEditar, GroupLayout.DEFAULT_SIZE, 159, Short.MAX_VALUE))
+				.addComponent(panel_2, GroupLayout.DEFAULT_SIZE, 327, Short.MAX_VALUE));
+
+		JLabel lblEditarArtculo = new JLabel("Editar Art\u00EDculo");
+		lblEditarArtculo.setHorizontalAlignment(SwingConstants.CENTER);
+		lblEditarArtculo.setFont(new Font("Segoe UI", Font.PLAIN, 20));
+		lblEditarArtculo.setBorder(new MatteBorder(0, 0, 1, 0, (Color) Color.DARK_GRAY));
 
 		JLabel lblNuevoPrecio = new JLabel("Nuevo Precio :");
+		lblNuevoPrecio.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNuevoPrecio.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 
-		textField = new JTextField();
-		textField.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-		textField.setHorizontalAlignment(SwingConstants.CENTER);
-		textField.setColumns(10);
+		textNuevoPrecio = new JTextField();
+		textNuevoPrecio.setHorizontalAlignment(SwingConstants.CENTER);
+		textNuevoPrecio.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+		textNuevoPrecio.setColumns(10);
+		textNuevoPrecio.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
 
-		JLabel listaPrecios = new JLabel("Lista de precios con sus fechas");
-		listaPrecios.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+		JButton btnEditar = new JButton("Editar");
+		btnEditar.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+		btnEditar.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
 
-		JButton confirmar = new JButton("Confirmar");
-		confirmar.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+		JLabel label_1 = new JLabel("Mensaje del sistema");
+		label_1.setHorizontalAlignment(SwingConstants.CENTER);
+		label_1.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+		GroupLayout gl_panelEditar = new GroupLayout(panelEditar);
+		gl_panelEditar.setHorizontalGroup(gl_panelEditar.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panelEditar.createSequentialGroup().addContainerGap(25, Short.MAX_VALUE)
+						.addGroup(gl_panelEditar.createParallelGroup(Alignment.LEADING)
+								.addGroup(Alignment.TRAILING, gl_panelEditar
+										.createParallelGroup(Alignment.LEADING)
+										.addGroup(gl_panelEditar.createSequentialGroup().addComponent(lblNuevoPrecio)
+												.addPreferredGap(ComponentPlacement.RELATED)
+												.addComponent(textNuevoPrecio, GroupLayout.PREFERRED_SIZE, 119,
+														GroupLayout.PREFERRED_SIZE)
+												.addContainerGap())
+										.addGroup(Alignment.TRAILING,
+												gl_panelEditar.createSequentialGroup()
+														.addComponent(lblEditarArtculo, GroupLayout.PREFERRED_SIZE, 166,
+																GroupLayout.PREFERRED_SIZE)
+														.addGap(37)))
+								.addGroup(Alignment.TRAILING,
+										gl_panelEditar.createSequentialGroup()
+												.addComponent(btnEditar, GroupLayout.PREFERRED_SIZE, 119,
+														GroupLayout.PREFERRED_SIZE)
+												.addContainerGap())
+								.addGroup(Alignment.TRAILING,
+										gl_panelEditar
+												.createSequentialGroup().addComponent(label_1,
+														GroupLayout.PREFERRED_SIZE, 119, GroupLayout.PREFERRED_SIZE)
+												.addContainerGap()))));
+		gl_panelEditar.setVerticalGroup(gl_panelEditar.createParallelGroup(Alignment.LEADING).addGroup(gl_panelEditar
+				.createSequentialGroup().addContainerGap()
+				.addComponent(lblEditarArtculo, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE).addGap(18)
+				.addGroup(gl_panelEditar.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblNuevoPrecio, GroupLayout.PREFERRED_SIZE, 18, GroupLayout.PREFERRED_SIZE)
+						.addComponent(textNuevoPrecio, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+								GroupLayout.PREFERRED_SIZE))
+				.addPreferredGap(ComponentPlacement.UNRELATED)
+				.addComponent(btnEditar, GroupLayout.PREFERRED_SIZE, 21, GroupLayout.PREFERRED_SIZE)
+				.addPreferredGap(ComponentPlacement.UNRELATED)
+				.addComponent(label_1, GroupLayout.PREFERRED_SIZE, 18, GroupLayout.PREFERRED_SIZE)
+				.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
+		panelEditar.setLayout(gl_panelEditar);
 
-		JLabel mensajeConfirmar = new JLabel("Mensaje del Sistema");
-		mensajeConfirmar.setHorizontalAlignment(SwingConstants.LEFT);
-		mensajeConfirmar.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-		GroupLayout gl_panel_2 = new GroupLayout(panel_2);
-		gl_panel_2.setHorizontalGroup(
-			gl_panel_2.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel_2.createSequentialGroup()
-					.addGap(75)
-					.addGroup(gl_panel_2.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_panel_2.createSequentialGroup()
-							.addGroup(gl_panel_2.createParallelGroup(Alignment.LEADING)
-								.addGroup(gl_panel_2.createSequentialGroup()
-									.addGroup(gl_panel_2.createParallelGroup(Alignment.LEADING)
-										.addComponent(lblNuevoPrecio, GroupLayout.DEFAULT_SIZE, 186, Short.MAX_VALUE)
-										.addComponent(mensajeConfirmar, GroupLayout.DEFAULT_SIZE, 186, Short.MAX_VALUE))
-									.addGap(18))
-								.addGroup(gl_panel_2.createSequentialGroup()
-									.addComponent(lblEditarArticulo)
-									.addPreferredGap(ComponentPlacement.RELATED)))
-							.addGroup(gl_panel_2.createParallelGroup(Alignment.LEADING)
-								.addComponent(listaPrecios, GroupLayout.DEFAULT_SIZE, 218, Short.MAX_VALUE)
-								.addComponent(lblNewLabel_6, GroupLayout.PREFERRED_SIZE, 149, GroupLayout.PREFERRED_SIZE)))
-						.addGroup(gl_panel_2.createParallelGroup(Alignment.TRAILING, false)
-							.addComponent(confirmar, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-							.addComponent(textField, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 124, Short.MAX_VALUE)))
-					.addContainerGap())
-		);
-		gl_panel_2.setVerticalGroup(
-			gl_panel_2.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel_2.createSequentialGroup()
-					.addContainerGap(25, Short.MAX_VALUE)
-					.addGroup(gl_panel_2.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblEditarArticulo)
-						.addComponent(lblNewLabel_6, GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE))
-					.addGroup(gl_panel_2.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_panel_2.createSequentialGroup()
-							.addGap(6)
-							.addComponent(lblNuevoPrecio, GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE)
-							.addGap(3)
-							.addComponent(textField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-							.addGap(18)
-							.addComponent(confirmar)
-							.addGap(11))
-						.addGroup(gl_panel_2.createSequentialGroup()
-							.addGap(27)
-							.addComponent(listaPrecios)
-							.addPreferredGap(ComponentPlacement.RELATED, 72, Short.MAX_VALUE)))
-					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addComponent(mensajeConfirmar, GroupLayout.DEFAULT_SIZE, 23, Short.MAX_VALUE)
-					.addGap(55))
-		);
-		panel_2.setLayout(gl_panel_2);
-
-		JPanel panelCreacion = new JPanel();
-		panelCreacion.setBorder(new MatteBorder(3, 3, 3, 0, (Color) new Color(0, 0, 0)));
-		panelPrincipal.add(panelCreacion, BorderLayout.WEST);
-		GridBagLayout gbl_panelCreacion = new GridBagLayout();
-		gbl_panelCreacion.columnWidths = new int[] { 0, 0, 0, 0, 0, 0, 0 };
-		gbl_panelCreacion.rowHeights = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-		gbl_panelCreacion.columnWeights = new double[] { 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE };
-		gbl_panelCreacion.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0,
-				Double.MIN_VALUE };
-		panelCreacion.setLayout(gbl_panelCreacion);
-
-		JLabel lblNewLabel_3 = new JLabel("Crear Art\u00EDculo");
-		lblNewLabel_3.setFont(new Font("Segoe UI", Font.PLAIN, 20));
-		GridBagConstraints gbc_lblNewLabel_3 = new GridBagConstraints();
-		gbc_lblNewLabel_3.insets = new Insets(0, 0, 5, 5);
-		gbc_lblNewLabel_3.gridx = 2;
-		gbc_lblNewLabel_3.gridy = 1;
-		panelCreacion.add(lblNewLabel_3, gbc_lblNewLabel_3);
-
-		JLabel lblNewLabel_4 = new JLabel("Nombre :");
-		lblNewLabel_4.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_4.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-		GridBagConstraints gbc_lblNewLabel_4 = new GridBagConstraints();
-		gbc_lblNewLabel_4.insets = new Insets(0, 0, 5, 5);
-		gbc_lblNewLabel_4.gridx = 1;
-		gbc_lblNewLabel_4.gridy = 3;
-		panelCreacion.add(lblNewLabel_4, gbc_lblNewLabel_4);
-
-		nombreNewArt = new JTextField();
-		nombreNewArt.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-		GridBagConstraints gbc_nombreNewArt = new GridBagConstraints();
-		gbc_nombreNewArt.insets = new Insets(0, 0, 5, 5);
-		gbc_nombreNewArt.fill = GridBagConstraints.HORIZONTAL;
-		gbc_nombreNewArt.gridx = 2;
-		gbc_nombreNewArt.gridy = 3;
-		panelCreacion.add(nombreNewArt, gbc_nombreNewArt);
-		nombreNewArt.setColumns(10);
-
-		JLabel lblNewLabel_5 = new JLabel("ID :");
-		lblNewLabel_5.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-		lblNewLabel_5.setHorizontalAlignment(SwingConstants.CENTER);
-		GridBagConstraints gbc_lblNewLabel_5 = new GridBagConstraints();
-		gbc_lblNewLabel_5.anchor = GridBagConstraints.EAST;
-		gbc_lblNewLabel_5.insets = new Insets(0, 0, 5, 5);
-		gbc_lblNewLabel_5.gridx = 1;
-		gbc_lblNewLabel_5.gridy = 5;
-		panelCreacion.add(lblNewLabel_5, gbc_lblNewLabel_5);
-
-		idNewArt = new JTextField();
-		idNewArt.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-		GridBagConstraints gbc_idNewArt = new GridBagConstraints();
-		gbc_idNewArt.insets = new Insets(0, 0, 5, 5);
-		gbc_idNewArt.fill = GridBagConstraints.HORIZONTAL;
-		gbc_idNewArt.gridx = 2;
-		gbc_idNewArt.gridy = 5;
-		panelCreacion.add(idNewArt, gbc_idNewArt);
-		idNewArt.setColumns(10);
-
-		JLabel lblNewLabel_2 = new JLabel("Precio :");
+		JLabel lblNewLabel_2 = new JLabel("Consultar Art\u00EDculo");
+		lblNewLabel_2.setBorder(new MatteBorder(0, 0, 1, 0, (Color) Color.DARK_GRAY));
+		lblNewLabel_2.setFont(new Font("Segoe UI", Font.PLAIN, 20));
 		lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_2.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-		GridBagConstraints gbc_lblNewLabel_2 = new GridBagConstraints();
-		gbc_lblNewLabel_2.anchor = GridBagConstraints.EAST;
-		gbc_lblNewLabel_2.insets = new Insets(0, 0, 5, 5);
-		gbc_lblNewLabel_2.gridx = 1;
-		gbc_lblNewLabel_2.gridy = 7;
-		panelCreacion.add(lblNewLabel_2, gbc_lblNewLabel_2);
 
-		precioNewArt = new JTextField();
-		precioNewArt.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-		GridBagConstraints gbc_precioNewArt = new GridBagConstraints();
-		gbc_precioNewArt.insets = new Insets(0, 0, 5, 5);
-		gbc_precioNewArt.fill = GridBagConstraints.HORIZONTAL;
-		gbc_precioNewArt.gridx = 2;
-		gbc_precioNewArt.gridy = 7;
-		panelCreacion.add(precioNewArt, gbc_precioNewArt);
-		precioNewArt.setColumns(10);
+		JLabel label = new JLabel("Nombre :");
+		label.setHorizontalAlignment(SwingConstants.CENTER);
+		label.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 
-		JButton btnNewButton_1 = new JButton("Crear");
-		btnNewButton_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-			}
-		});
-		btnNewButton_1.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-		GridBagConstraints gbc_btnNewButton_1 = new GridBagConstraints();
-		gbc_btnNewButton_1.insets = new Insets(0, 0, 5, 5);
-		gbc_btnNewButton_1.gridx = 2;
-		gbc_btnNewButton_1.gridy = 9;
-		panelCreacion.add(btnNewButton_1, gbc_btnNewButton_1);
+		textConsultarNombre = new JTextField();
+		textConsultarNombre.setHorizontalAlignment(SwingConstants.CENTER);
+		textConsultarNombre.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+		textConsultarNombre.setColumns(10);
+		textConsultarNombre.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
 
-		JLabel lblNewLabel_1 = new JLabel("Mensaje del Sistema");
-		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
+		JButton botonBuscar = new JButton("Buscar");
+		botonBuscar.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+		botonBuscar.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
+
+		JLabel lblMensajeDelSistema = new JLabel("Mensaje del sistema");
+		lblMensajeDelSistema.setHorizontalAlignment(SwingConstants.CENTER);
+		lblMensajeDelSistema.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+		GroupLayout gl_panelConsultar = new GroupLayout(panelConsultar);
+		gl_panelConsultar.setHorizontalGroup(gl_panelConsultar.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panelConsultar.createSequentialGroup().addGap(46)
+						.addComponent(label, GroupLayout.PREFERRED_SIZE, 56, GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(ComponentPlacement.UNRELATED)
+						.addGroup(gl_panelConsultar.createParallelGroup(Alignment.LEADING, false)
+								.addComponent(botonBuscar, GroupLayout.DEFAULT_SIZE, 112, Short.MAX_VALUE)
+								.addComponent(textConsultarNombre, GroupLayout.DEFAULT_SIZE, 112, Short.MAX_VALUE)
+								.addComponent(lblMensajeDelSistema, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE,
+										Short.MAX_VALUE))
+						.addGap(21))
+				.addGroup(
+						gl_panelConsultar
+								.createSequentialGroup().addGap(38).addComponent(lblNewLabel_2,
+										GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+								.addGap(39)));
+		gl_panelConsultar.setVerticalGroup(gl_panelConsultar.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panelConsultar.createSequentialGroup().addContainerGap().addComponent(lblNewLabel_2)
+						.addPreferredGap(ComponentPlacement.UNRELATED)
+						.addGroup(gl_panelConsultar.createParallelGroup(Alignment.BASELINE)
+								.addComponent(textConsultarNombre, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+										GroupLayout.PREFERRED_SIZE)
+								.addComponent(label, GroupLayout.PREFERRED_SIZE, 18, GroupLayout.PREFERRED_SIZE))
+						.addPreferredGap(ComponentPlacement.UNRELATED)
+						.addComponent(botonBuscar, GroupLayout.PREFERRED_SIZE, 21, GroupLayout.PREFERRED_SIZE)
+						.addGap(18)
+						.addComponent(lblMensajeDelSistema, GroupLayout.PREFERRED_SIZE, 18, GroupLayout.PREFERRED_SIZE)
+						.addContainerGap(17, Short.MAX_VALUE)));
+		panelConsultar.setLayout(gl_panelConsultar);
+		panel_1.setLayout(gl_panel_1);
+
+		JLabel tituloCrear = new JLabel("Crear Art\u00EDculo");
+		tituloCrear.setBorder(new MatteBorder(0, 0, 1, 0, (Color) Color.DARK_GRAY));
+		tituloCrear.setHorizontalAlignment(SwingConstants.CENTER);
+		tituloCrear.setFont(new Font("Segoe UI", Font.PLAIN, 20));
+
+		JLabel lblNewLabel = new JLabel("Nombre :");
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+
+		JLabel lblId = new JLabel("ID :");
+		lblId.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+		lblId.setHorizontalAlignment(SwingConstants.CENTER);
+
+		JLabel lblNewLabel_1 = new JLabel("Precio :");
 		lblNewLabel_1.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-		GridBagConstraints gbc_lblNewLabel_1 = new GridBagConstraints();
-		gbc_lblNewLabel_1.anchor = GridBagConstraints.NORTH;
-		gbc_lblNewLabel_1.gridheight = 2;
-		gbc_lblNewLabel_1.insets = new Insets(0, 0, 0, 5);
-		gbc_lblNewLabel_1.gridx = 2;
-		gbc_lblNewLabel_1.gridy = 10;
-		panelCreacion.add(lblNewLabel_1, gbc_lblNewLabel_1);
+		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
+
+		JButton botonCrear = new JButton("Crear");
+		botonCrear.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
+		botonCrear.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+
+		textCrearID = new JTextField();
+		textCrearID.setHorizontalAlignment(SwingConstants.CENTER);
+		textCrearID.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
+		textCrearID.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+		textCrearID.setColumns(10);
+
+		textCrearNombre = new JTextField();
+		textCrearNombre.setHorizontalAlignment(SwingConstants.CENTER);
+		textCrearNombre.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
+		textCrearNombre.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+		textCrearNombre.setColumns(10);
+
+		textCrearPrecio = new JTextField();
+		textCrearPrecio.setHorizontalAlignment(SwingConstants.CENTER);
+		textCrearPrecio.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
+		textCrearPrecio.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+		textCrearPrecio.setColumns(10);
+		GroupLayout gl_panel = new GroupLayout(panel);
+		gl_panel.setHorizontalGroup(
+				gl_panel.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_panel.createSequentialGroup()
+								.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+										.addGroup(gl_panel.createSequentialGroup().addGap(41)
+												.addComponent(tituloCrear, GroupLayout.DEFAULT_SIZE,
+														GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+												.addGap(22))
+										.addGroup(gl_panel.createSequentialGroup().addContainerGap()
+												.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+														.addComponent(lblNewLabel).addComponent(lblId))
+												.addPreferredGap(ComponentPlacement.RELATED)
+												.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+														.addComponent(textCrearNombre, GroupLayout.PREFERRED_SIZE,
+																GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+														.addComponent(textCrearID, GroupLayout.PREFERRED_SIZE,
+																GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+										.addGroup(gl_panel.createSequentialGroup().addContainerGap()
+												.addComponent(lblNewLabel_1).addGap(18)
+												.addGroup(gl_panel.createParallelGroup(Alignment.LEADING, false)
+														.addComponent(botonCrear, GroupLayout.DEFAULT_SIZE,
+																GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+														.addComponent(textCrearPrecio))))
+								.addGap(19)));
+		gl_panel.setVerticalGroup(gl_panel.createParallelGroup(Alignment.LEADING).addGroup(gl_panel
+				.createSequentialGroup().addContainerGap().addComponent(tituloCrear).addGap(18)
+				.addGroup(gl_panel
+						.createParallelGroup(Alignment.BASELINE).addComponent(lblNewLabel).addComponent(textCrearNombre,
+								GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+				.addGap(28)
+				.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING).addComponent(lblId).addComponent(textCrearID,
+						GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+				.addGap(39)
+				.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE).addComponent(lblNewLabel_1).addComponent(
+						textCrearPrecio, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+						GroupLayout.PREFERRED_SIZE))
+				.addGap(34).addComponent(botonCrear).addContainerGap(84, Short.MAX_VALUE)));
+		panel.setLayout(gl_panel);
+		panelArticulo.setLayout(gl_panelArticulo);
 
 	}
 }

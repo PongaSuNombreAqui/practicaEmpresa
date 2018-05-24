@@ -2,7 +2,7 @@ package modelo;
 
 import java.io.Serializable;
 
-public class Proveedor implements Serializable{ 
+public class Proveedor implements Serializable {
 	private int numero;
 	private String nombre;
 

@@ -1,6 +1,5 @@
 package modelo;
 
-
 import java.io.Serializable;
 
 public class Cliente implements Serializable {
@@ -12,7 +11,7 @@ public class Cliente implements Serializable {
 		super();
 		this.numero = numero;
 		this.nombre = nombre;
-		this.ID=ID;
+		this.ID = ID;
 	}
 
 	public String getID() {
