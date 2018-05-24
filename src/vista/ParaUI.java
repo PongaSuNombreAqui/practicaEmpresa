@@ -17,7 +17,7 @@ public class ParaUI extends UI{
 		this.accionesCliente= new AccionesCliente();
 		this.accionesPedido= new AccionesPedido();
 		panelMain.add(new PanelMain());
-//		panelArticulo.add(new PanelArticulo());
+		panelArticulo.add(new PanelArticulo());
 		panelPedido.add(new PanelPedido());
 		panelCliente.add(new PanelCliente());
 		

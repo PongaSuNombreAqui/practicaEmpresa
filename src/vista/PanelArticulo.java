@@ -21,7 +21,7 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
-public class panelArticulo extends JFrame {
+public class PanelArticulo extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField textField_3;
@@ -30,7 +30,7 @@ public class panelArticulo extends JFrame {
 	private JTextField nombreNewArt;
 	private JTextField textField;
 
-	public panelArticulo() {
+	public PanelArticulo() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 779, 414);
 		contentPane = new JPanel();
