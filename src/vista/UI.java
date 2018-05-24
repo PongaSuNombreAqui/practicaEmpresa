@@ -16,10 +16,10 @@ import java.awt.GridLayout;
 public class UI extends JFrame {
 
 	private JPanel contentPane;
-	protected JPanel panelMain;
-	protected JPanel panelCliente;
-	protected JPanel panelArticulo;
-	protected JPanel panelPedido;
+	protected JPanel panelGeneralMain;
+	protected JPanel panelGeneralCliente;
+	protected JPanel panelGeneralArticulo;
+	protected JPanel panelGeneralPedido;
 
 	/**
 	 * Create the frame.
@@ -72,21 +72,21 @@ public class UI extends JFrame {
 
 		contentPane.setLayout(new CardLayout(0, 0));
 
-		panelMain = new JPanel();
-		contentPane.add(panelMain, "panelMain");
-		panelMain.setLayout(new GridLayout(1, 0, 0, 0));
+		panelGeneralMain = new JPanel();
+		contentPane.add(panelGeneralMain, "panelMain");
+		panelGeneralMain.setLayout(new GridLayout(1, 0, 0, 0));
 
-		panelCliente = new JPanel();
-		contentPane.add(panelCliente, "panelCliente");
-		panelCliente.setLayout(new GridLayout(0, 1, 0, 0));
+		panelGeneralCliente = new JPanel();
+		contentPane.add(panelGeneralCliente, "panelCliente");
+		panelGeneralCliente.setLayout(new GridLayout(0, 1, 0, 0));
 
-		panelArticulo = new JPanel();
-		contentPane.add(panelArticulo, "panelArticulo");
-		panelArticulo.setLayout(new GridLayout(0, 1, 0, 0));
+		panelGeneralArticulo = new JPanel();
+		contentPane.add(panelGeneralArticulo, "panelArticulo");
+		panelGeneralArticulo.setLayout(new GridLayout(1, 0, 0, 0));
 
-		panelPedido = new JPanel();
-		contentPane.add(panelPedido, "panelPedido");
-		panelPedido.setLayout(new GridLayout(0, 1, 0, 0));
+		panelGeneralPedido = new JPanel();
+		contentPane.add(panelGeneralPedido, "panelPedido");
+		panelGeneralPedido.setLayout(new GridLayout(0, 1, 0, 0));
 	}
 
 	private void getPanel(String name) {
