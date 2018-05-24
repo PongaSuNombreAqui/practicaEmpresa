@@ -13,7 +13,7 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
-public class PanelArticulo extends JFrame {
+public class PanelArticulo extends JPanel {
 	private JTextField textCrearID;
 	private JTextField textCrearNombre;
 	private JTextField textCrearPrecio;
@@ -22,13 +22,12 @@ public class PanelArticulo extends JFrame {
 
 	public PanelArticulo() {
 
-		JPanel panelArticulo = new JPanel();
 
 		JPanel panel = new JPanel();
 		panel.setBorder(new MatteBorder(2, 2, 2, 2, (Color) new Color(0, 0, 0)));
 
 		JPanel panel_1 = new JPanel();
-		GroupLayout gl_panelArticulo = new GroupLayout(panelArticulo);
+		GroupLayout gl_panelArticulo = new GroupLayout(this);
 		gl_panelArticulo.setHorizontalGroup(gl_panelArticulo.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panelArticulo.createSequentialGroup().addContainerGap()
 						.addComponent(panel, GroupLayout.PREFERRED_SIZE, 206, GroupLayout.PREFERRED_SIZE)
@@ -282,7 +281,7 @@ public class PanelArticulo extends JFrame {
 						GroupLayout.PREFERRED_SIZE))
 				.addGap(34).addComponent(botonCrear).addContainerGap(84, Short.MAX_VALUE)));
 		panel.setLayout(gl_panel);
-		panelArticulo.setLayout(gl_panelArticulo);
+		this.setLayout(gl_panelArticulo);
 
 	}
 }
