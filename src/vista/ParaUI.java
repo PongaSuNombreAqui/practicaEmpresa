@@ -3,11 +3,23 @@ package vista;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FilenameFilter;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.Map.Entry;
+import java.util.Set;
+import java.util.TreeMap;
 
 import javax.swing.AbstractButton;
+import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+
+import org.omg.Messaging.SyncScopeHelper;
 
 import control.AccionesArticulo;
 import control.AccionesCliente;
@@ -15,6 +27,7 @@ import control.AccionesPedido;
 import control.AlmacenArticulo;
 import control.AlmacenCliente;
 import modelo.Articulo;
+import modelo.Cliente;
 
 public class ParaUI extends UI {
 
@@ -65,17 +78,60 @@ public class ParaUI extends UI {
 	private void ponerListenersPedido() {
 		panelPedido.getBtnAdd().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				accionesPedido.añadirArticuloATabla(panelTabla.getTabla(),"ajo"); //TODO pilla el nombre del combobox donde esta los articulos
+				accionesPedido.aniadirArticuloATabla(panelTabla.getTabla(),(String) panelPedido.getComboArticulos().getSelectedItem()); //TODO pilla el nombre del combobox donde esta los articulos
+				panelPedido.getBtnCheck().setEnabled(true);
+				panelPedido.getBtnDelete().setEnabled(true);
 				panelPedido.revalidate();
 			}
 		});
 		panelPedido.getBtnCheck().addActionListener(new ActionListener() {
-			
-			@Override
 			public void actionPerformed(ActionEvent e) {
-				//TODO no se que hace el check
+				//TOD no se que hace el check
 			}
 		});
+		panelPedido.getBtnNuevoPedido().addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				panelPedido.getComboArticulos().setEnabled(true);
+				panelPedido.getBtnEncargar().setEnabled(true);
+				panelPedido.getTxtNombreCliente().setEditable(true);
+				panelPedido.getBtnNuevoPedido().setEnabled(false);
+				panelPedido.getBtnVer().setEnabled(false);
+				panelPedido.getTxtNumeroPedido().setText(String.valueOf(accionesPedido.getNumeroPosiblePedido()));
+			}
+		});
+		panelPedido.getBtnEncargar().addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (!panelPedido.getTxtNombreCliente().getText().isEmpty()) {
+					panelPedido.getBtnNuevoPedido().setEnabled(true);
+					panelPedido.getComboArticulos().setEnabled(false);
+					panelPedido.getBtnEncargar().setEnabled(false);
+					panelPedido.getBtnDelete().setEnabled(false);
+					panelPedido.getTxtNombreCliente().setEditable(false);
+					panelPedido.getBtnCheck().setEnabled(false);
+					panelPedido.getBtnAdd().setEnabled(false);
+					panelPedido.getBtnVer().setEnabled(true);
+					ArrayList lineaPedido = new ArrayList<>();
+					if(accionesPedido.crear(lineaPedido,Integer.valueOf(panelPedido.getTxtNombreCliente().getText()))){
+						panelPedido.getTxtMensaje().setText("Pedido completado satisfactoriamente");
+					}else{
+						panelPedido.getTxtMensaje().setText("Fallo al encargar el pedido");
+					}
+				}else{
+					panelPedido.getTxtMensaje().setText("Campo cliente vacio o erroneo");
+				}
+			}
+		});
+		panelPedido.getBtnDelete().addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.out.println(panelTabla.getTabla().getRowCount());
+				int row = panelTabla.getTabla().getSelectedRow();
+				System.out.println(row);
+				panelTabla.getTabla().remove(row);//TODO ????
+				
+			}
+		});
+		panelPedido.getComboArticulos().addActionListener((e)->	panelPedido.getBtnAdd().setEnabled(true)
+		);			
 	}
 
 	private void prepararTablaPedido() {
@@ -83,7 +139,20 @@ public class ParaUI extends UI {
 		this.panelTabla = new PanelTabla();  //crea el paneltabla
 		this.panelPedido.addPanelTabla(panelTabla); //mete el paneltabla en el panelpedido  
 		panelGeneralPedido.add(panelPedido);
-		new AlmacenArticulo<>().grabar(new Articulo(1, "ajo", 122), 1, "ajo");// TODO para testear tabla
+		
+		panelPedido.getComboArticulos().addItem("ajo");//TODO recorrer articulos para insertarlos en el commbobox
+		panelPedido.getComboArticulos().addItem("pan");
+		Cliente cliente = (Cliente) new AlmacenCliente<>().obtener(0);
+		File[] listFiles = new File("./data/pedidos/"+cliente.getID()).listFiles();
+		for (int i = 0; i < listFiles.length; i++) {
+			panelPedido.getComboPedidos().addItem(listFiles[i].getName());
+		}
 		
 	}
+	
+	
+	
+	
+	
+	
 }
