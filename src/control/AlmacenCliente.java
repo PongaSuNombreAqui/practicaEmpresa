@@ -48,4 +48,8 @@ public class AlmacenCliente<T, K> {
 		}
 		return retorno;
 	}
+	
+	public TreeMap obtenerMap(){
+		return (TreeMap<K, Integer>) new DAO<T>().leer(pathIndice.toString());
+	}
 }
