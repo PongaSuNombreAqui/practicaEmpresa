@@ -12,24 +12,14 @@ public class Pedido implements Serializable {
 	private ArrayList<LineaPedido> lineaPedido;
 	private LocalDate fecha;
 
-	public Pedido(Cliente cliente, ArrayList<LineaPedido> lineaPedido, LocalDate fecha) {
+	public Pedido(Cliente cliente, ArrayList<LineaPedido> lineaPedido, LocalDate fecha,int numero) {
 		super();
 		this.cliente = cliente;
 		this.lineaPedido = lineaPedido;
 		this.fecha = fecha;
-		ponerNumero();
+		this.numero=numero;
 	}
 
-	private void ponerNumero() {
-		Integer num = 0;
-		String path = "./data/numeroUltimoPedido.data";
-		if (Utiles.comprobarExiste(path)) {
-			num = (Integer) new DAO<>().leer(path);
-		}
-		this.numero = num;
-		num++;
-		new DAO<>().grabar(path, num);
-	}
 
 	public ArrayList<LineaPedido> getLineaPedido() {
 		return lineaPedido;
