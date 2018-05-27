@@ -24,13 +24,13 @@ import javax.swing.JLabel;
 
 public class PanelTabla extends JPanel {
 
-
 	private JTable tabla;
 	private JScrollPane scrollPane;
 
 	public JTable getTabla() {
 		return tabla;
 	}
+
 	public PanelTabla() {
 
 		GridBagLayout gridBagLayout = new GridBagLayout();
@@ -39,20 +39,18 @@ public class PanelTabla extends JPanel {
 		gridBagLayout.columnWeights = new double[] { 1.0, Double.MIN_VALUE };
 		gridBagLayout.rowWeights = new double[] { 1.0, Double.MIN_VALUE };
 		setLayout(gridBagLayout);
-		tabla = new JTable(new DefaultTableModel(
-			new Object[][] {
-				{new Integer(1), "ajo", new Float(55.0f), new Integer(0), new Float(0.0f)},
-				{null, "pan", "32", new Integer(0), new Float(0.0f)},
-			},
-			new String[] {
-				"ID", "Nombre", "Precio", "Cantidad", "Precio Total"
-			}
-		) {
-			Class[] columnTypes = new Class[] {
-				Object.class, Object.class, Object.class, Integer.class, Float.class
-			};
+		tabla = new JTable(new DefaultTableModel(new Object[][] {},
+				new String[] { "ID", "Nombre", "Precio", "Cantidad", "Precio Total" }) {
+			Class[] columnTypes = new Class[] { Object.class, Object.class, Object.class, Integer.class, Float.class };
+
 			public Class getColumnClass(int columnIndex) {
 				return columnTypes[columnIndex];
+			}
+
+			boolean[] columnEditables = new boolean[] { false, false, false, true, false };
+
+			public boolean isCellEditable(int row, int column) {
+				return columnEditables[column];
 			}
 		});
 		GridBagConstraints gbc_scrollPane = new GridBagConstraints();
@@ -65,6 +63,5 @@ public class PanelTabla extends JPanel {
 		Articulo item = new Articulo(1, "as", 32f);
 
 	}
-
 
 }
