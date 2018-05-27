@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.TreeMap;
 
 import modelo.DAO;
+import utiles.Utiles;
 
 public class AlmacenCliente<T, K> {
 
@@ -33,7 +34,6 @@ public class AlmacenCliente<T, K> {
 					indice.put(k, 0);
 				}
 				retorno = new DAO<>().grabar(pathIndice.toString(), indice);
-				;
 			}
 		}
 		return retorno;
@@ -50,6 +50,9 @@ public class AlmacenCliente<T, K> {
 	}
 	
 	public TreeMap obtenerMap(){
+		if(Utiles.comprobarExiste(pathIndice)){
 		return (TreeMap<K, Integer>) new DAO<T>().leer(pathIndice.toString());
+		}
+		return null;
 	}
 }
