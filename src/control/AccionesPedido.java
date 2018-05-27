@@ -13,6 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 public class AccionesPedido {
 
@@ -48,8 +49,6 @@ public class AccionesPedido {
 		// ?
 
 	}
-	
-
 	public void aniadirArticuloATabla(JTable tabla, String nombre) {
 		DefaultTableModel dm = (DefaultTableModel) tabla.getModel();
 		Articulo item = new AlmacenArticulo<Articulo>().leer(nombre);
@@ -61,4 +60,25 @@ public class AccionesPedido {
 				item.getPrecio() * cantidadAlAniadirse };
 		return retorno;
 	}
+	
+	/**
+	 * Introduce en un ArrayList del tipo que creeis los datos
+	 * de un modelo de una tabla
+	 * @param modelo
+	 * @return
+	 */
+	public ArrayList<LineaPedido> extraerPedidoRejilla(TableModel modelo){
+		ArrayList<LineaPedido> retorno = new ArrayList<>();
+		//TODO 
+		return retorno;
+	}
+	/**
+	 * Vuelca los datos de un arraylist en un modelo de una tabla
+	 * @param modelo
+	 * @param listaObjeto
+	 */
+	public void introducirPedidoRejilla(TableModel modelo,ArrayList<LineaPedido> listaObjeto){
+		//TODO
+	}
+
 }
