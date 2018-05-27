@@ -50,4 +50,9 @@ public class AlmacenArticulo<T> {
 		}
 		return retorno;
 	}
+
+	public TreeMap obtenerIndice() {
+		return (TreeMap) new DAO<>().leer(pathIndice);
+		
+	}
 }
