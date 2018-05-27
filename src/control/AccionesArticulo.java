@@ -1,5 +1,9 @@
 package control;
 
+import java.util.Set;
+import java.util.TreeMap;
+
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 
 import modelo.Articulo;
@@ -40,5 +44,14 @@ public class AccionesArticulo {
 		String precio = "";// Precio que estamos buscando
 		return precio;
 
+	}
+
+	public void insertarArticulosEnCombo(JComboBox combo) {
+		TreeMap indiceMap = new AlmacenArticulo<>().obtenerIndice();
+		Set keySet = indiceMap.keySet();
+		for (Object object : keySet) {
+			combo.addItem(object);
+		}
+		
 	}
 }
