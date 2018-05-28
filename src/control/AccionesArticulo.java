@@ -21,11 +21,12 @@ public class AccionesArticulo {
 		}
 	}
 
-	public void consultar(String nombre, JLabel nombreArt, JLabel id, JLabel precio) {
+	public void consultar(String nombre, JLabel nombreArt, JLabel id, JLabel precio, JLabel descripcion) {
 		Articulo item = (Articulo) new AlmacenArticulo<>().leer(nombre);
 		nombreArt.setText(item.getNombre());
-		id.setText(String.valueOf(id));
-		precio.setText(String.valueOf(precio));
+		id.setText(String.valueOf(item.getId()));
+		precio.setText(String.valueOf(item.getPrecio()));
+		// descripcion.setText();
 	}
 
 	public void editar(String nombre, int nuevoPrecio) {
@@ -52,6 +53,6 @@ public class AccionesArticulo {
 		for (Object object : keySet) {
 			combo.addItem(object);
 		}
-		
+
 	}
 }
