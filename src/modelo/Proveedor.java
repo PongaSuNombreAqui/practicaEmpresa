@@ -2,41 +2,27 @@ package modelo;
 
 import java.io.Serializable;
 
-public class Proveedor implements Serializable {
-	private int numero;
+public class Proveedor implements Serializable,Comparable<Proveedor>{
 	private String nombre;
 
-	public Proveedor(int numero, String nombre) {
+	public Proveedor(String nombre) {
 		super();
-		this.numero = numero;
 		this.nombre = nombre;
-
 	}
 
-	public int getNumero() {
-		return numero;
-	}
-
-	public void setNumero(int numero) {
-		this.numero = numero;
-	}
-
+	
 	public String getNombre() {
 		return nombre;
 	}
 
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-
+	@Override
+	public String toString() {
+		return String.valueOf(nombre);
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		boolean retorno = super.equals(obj);
-		if (!retorno) {
-			Proveedor proveedor = (Proveedor) obj;
-			retorno = this.numero == proveedor.numero;
-		}
-		return retorno;
+	public int compareTo(Proveedor o) {
+		return nombre.compareTo(o.nombre);
 	}
+	
 }

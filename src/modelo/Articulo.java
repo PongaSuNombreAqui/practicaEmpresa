@@ -1,42 +1,82 @@
 package modelo;
 
 import java.io.Serializable;
+import java.sql.Date;
+import java.time.LocalDate;
+import java.util.GregorianCalendar;
+import java.util.Iterator;
+import java.util.LinkedList;
 
 public class Articulo implements Serializable {
-	private int id;
-	private String nombre;
-	private float precio;
 
-	public Articulo(int id, String nombre, float precio) {
-		super();
-		this.id = id;
-		this.nombre = nombre;
-		this.precio = precio;
+	private int idArticulo;
+	private String nombre;
+	private String descripcion;
+	private Proveedor proveedor;
+	private LinkedList<Precio> precios;
+
+	public Articulo(int idArticulo, String nombre, String descripcion, float precio, Proveedor proveedor) {
+		this(idArticulo, nombre, descripcion, precio);
+		this.proveedor = proveedor;
 	}
 
-	public float getPrecio() {
+	public Articulo(int idArticulo, String nombre, String descripcion, float precio) {
+		super();
+		this.idArticulo = idArticulo;
+		this.nombre = nombre;
+		this.descripcion = descripcion;
+		precios = new LinkedList<>();
+		precios.add(new Precio(precio, false));
+	}
+
+	public float getOldPrice(GregorianCalendar instant) {
+		Iterator<Precio> iterator = precios.iterator();
+		boolean encontrado = false;
+		float precio = 0;
+		while (iterator.hasNext() && !encontrado) {
+			Precio next = iterator.next();
+			if (next.isInToPeriod(instant)) {
+				encontrado = true;
+				precio = next.getPrecio();
+			}
+			;
+		}
 		return precio;
 	}
 
-	public void setPrecio(float precio) {
-		this.precio = precio;
+	@Override
+	public boolean equals(Object obj) {
+		Articulo elemento=(Articulo)obj;
+		boolean retorno=super.equals(elemento);
+		if(!retorno){
+			retorno=idArticulo==elemento.getIdArticulo();
+		}
+		return retorno;
+	}
+	public void insertarNuevoPrecio(float nuevoPrecio, boolean oferta) {
+		assert nuevoPrecio > 0;
+		precios.getLast().setFechaFinal();
+		precios.addLast(new Precio(nuevoPrecio, oferta));
 	}
 
-	public int getId() {
-		return id;
+	public float getCurrentPrice() {
+		return precios.getLast().getPrecio();
+	}
+
+	public int getIdArticulo() {
+		return idArticulo;
 	}
 
 	public String getNombre() {
 		return nombre;
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		boolean retorno = super.equals(obj);
-		if (!retorno) {
-			Articulo articulo = (Articulo) obj;
-			retorno = this.id == articulo.getId();
-		}
-		return retorno;
+	public String getDescripcion() {
+		return descripcion;
 	}
+
+	public Proveedor getProveedor() {
+		return proveedor;
+	}
+
 }
