@@ -52,8 +52,29 @@ public class ParaUI extends UI {
 	}
 
 	private void ponerListenerArticulo() {
-		// TODO Auto-generated method stub
 
+		panelArticulo.getBtnBuscar().addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				accionesArticulo.consultar(panelArticulo.getNombreConsultado().getText(),
+						panelArticulo.getDetallesNombre(), panelArticulo.getDetallesID(),
+						panelArticulo.getDetallesPrecio(), panelArticulo.getDetallesDescripcion());
+			}
+		});
+
+		panelArticulo.getBtnCrear().addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				accionesArticulo.crearArticulo(panelArticulo.getCrearNombre().getText(),
+						Integer.parseInt(panelArticulo.getCrearPrecio().getText()),
+						Integer.parseInt(panelArticulo.getCrearID().getText()),
+						panelArticulo.getCrearDescripcion().getText());
+			}
+		});
+		
+		panelArticulo.getBtnCrear().addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
 	}
 
 	private void ponerListenerCliente() {
@@ -64,7 +85,8 @@ public class ParaUI extends UI {
 	private void ponerListenersPedido() {
 		panelPedido.getBtnAdd().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				accionesPedido.aniadirArticuloATabla(panelTabla.getTabla(),(String) panelPedido.getComboArticulos().getSelectedItem()); 
+				accionesPedido.aniadirArticuloATabla(panelTabla.getTabla(),
+						(String) panelPedido.getComboArticulos().getSelectedItem());
 				// TODO pilla el nombre del combobox donde esta los articulos
 				panelPedido.getBtnCheck().setEnabled(true);
 				panelPedido.getBtnDelete().setEnabled(true);
@@ -98,7 +120,8 @@ public class ParaUI extends UI {
 				panelPedido.getBtnCheck().setEnabled(false);
 				panelPedido.getBtnAdd().setEnabled(false);
 				panelPedido.getComboClientes().setEnabled(true);
-				ArrayList lineaPedido = new ArrayList<>();//TODO sacar las lineas de pedido desde la tabla, cada fila una linwa
+				ArrayList lineaPedido = new ArrayList<>();// TODO sacar las lineas de pedido desde la tabla, cada fila
+															// una linwa
 				int numero = getClienteIDFromCombo(panelPedido.getComboClientesCrear());
 				if (accionesPedido.crear(lineaPedido, numero)) {
 					panelPedido.getTxtMensaje().setText("Pedido completado satisfactoriamente");
