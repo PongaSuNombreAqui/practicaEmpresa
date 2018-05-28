@@ -29,7 +29,7 @@ public class AccionesCliente {
 			Set keySet = indiceMap.keySet();
 			for (Object object : keySet) {
 				Cliente cliente=(Cliente) new AlmacenCliente<>().obtener(object);
-				combo.addItem(cliente.getNumero()+"-"+cliente.getNombre()+" "+cliente.getID());
+				combo.addItem(cliente.getRazonSocial()+" "+cliente.getDniCif());
 			}
 		}
 

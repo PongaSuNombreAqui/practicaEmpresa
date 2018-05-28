@@ -5,14 +5,11 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.JComboBox;
-import javax.swing.event.CellEditorListener;
-import javax.swing.event.ChangeEvent;
-
+import javax.swing.table.DefaultTableModel;
 import control.AccionesArticulo;
 import control.AccionesCliente;
 import control.AccionesPedido;
-import control.AlmacenCliente;
-import modelo.Cliente;
+import modelo.Linea;
 
 public class ParaUI extends UI {
 
@@ -29,13 +26,6 @@ public class ParaUI extends UI {
 		super();
 		this.panelMain = new PanelMain();
 		panelGeneralMain.add(panelMain);
-
-		AlmacenCliente<Cliente, Object> inst = new AlmacenCliente<>();
-		;
-		ArrayList<Cliente> clientes = new ArrayList<>();
-		for (Cliente cliente : clientes) {
-			inst.grabar(cliente, cliente.getNumero());
-		}
 
 		this.accionesArticulo = new AccionesArticulo();
 		this.accionesCliente = new AccionesCliente();
@@ -64,7 +54,8 @@ public class ParaUI extends UI {
 	private void ponerListenersPedido() {
 		panelPedido.getBtnAdd().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				accionesPedido.aniadirArticuloATabla(panelTabla.getTabla(),(String) panelPedido.getComboArticulos().getSelectedItem()); 
+				accionesPedido.aniadirArticuloATabla(panelTabla.getTabla(),
+						(String) panelPedido.getComboArticulos().getSelectedItem());
 				// TODO pilla el nombre del combobox donde esta los articulos
 				panelPedido.getBtnCheck().setEnabled(true);
 				panelPedido.getBtnDelete().setEnabled(true);
@@ -73,7 +64,7 @@ public class ParaUI extends UI {
 		});
 		panelPedido.getBtnCheck().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// TOD no se que hace el check
+				// TODO no se que hace el check
 			}
 		});
 		panelPedido.getBtnNuevoPedido().addActionListener(new ActionListener() {
@@ -98,24 +89,22 @@ public class ParaUI extends UI {
 				panelPedido.getBtnCheck().setEnabled(false);
 				panelPedido.getBtnAdd().setEnabled(false);
 				panelPedido.getComboClientes().setEnabled(true);
-				ArrayList lineaPedido = new ArrayList<>();//TODO sacar las lineas de pedido desde la tabla, cada fila una linwa
-				int numero = getClienteIDFromCombo(panelPedido.getComboClientesCrear());
-				if (accionesPedido.crear(lineaPedido, numero)) {
+				ArrayList<Linea> lineas = new ArrayList<>();// TODO sacar las lineas de pedido desde la tabla, cada fila una linwa
+				String dniNif = getClienteIDFromCombo(panelPedido.getComboClientesCrear());
+				// TODO add linea al pedido
+				if (accionesPedido.crear(dniNif)) {
 					panelPedido.getTxtMensaje().setText("Pedido completado satisfactoriamente");
 				} else {
 					panelPedido.getTxtMensaje().setText("Fallo al encargar el pedido");
 				}
-
 			}
 
 		});
 		panelPedido.getBtnDelete().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.out.println(panelTabla.getTabla().getRowCount());
-				int row = panelTabla.getTabla().getSelectedRow();
-				System.out.println(row);
-				panelTabla.getTabla().remove(row);// TODO ????
-
+				DefaultTableModel model = (DefaultTableModel) panelTabla.getTabla().getModel();
+				int seleccionada = panelTabla.getTabla().getSelectedRow();
+				model.removeRow(seleccionada);
 			}
 		});
 		panelPedido.getComboArticulos().addActionListener((e) -> panelPedido.getBtnAdd().setEnabled(true));
@@ -159,10 +148,10 @@ public class ParaUI extends UI {
 
 	}
 
-	private int getClienteIDFromCombo(JComboBox combo) {
+	private String getClienteIDFromCombo(JComboBox<String> combo) {
 		String cadenaCliente = combo.getSelectedItem().toString();
-		int numero = Integer.valueOf(cadenaCliente.substring(0, cadenaCliente.indexOf("-")));
-		return numero;
+		String dniNif = cadenaCliente.substring(cadenaCliente.indexOf(" ") + 1);
+		return dniNif;
 	}
 
 }

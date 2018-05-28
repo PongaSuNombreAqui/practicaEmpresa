@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 import modelo.Cliente;
 import modelo.DAO;
-import modelo.LineaPedido;
+import modelo.Linea;
 import modelo.Pedido;
 import utiles.Utiles;
 import modelo.Articulo;
@@ -17,13 +17,12 @@ import javax.swing.table.TableModel;
 
 public class AccionesPedido {
 
-	public boolean crear(ArrayList<LineaPedido> lineaPedido, int numeroCliente) {
-		LocalDate fecha = null;//TODO hay que poner que entre la fecha aqui
-		Cliente cliente = (Cliente) new AlmacenCliente<>().obtener(numeroCliente);
+	public boolean crear( String dniNif) {
+		Cliente cliente = (Cliente) new AlmacenCliente<>().obtener(dniNif);
 		int numero=getNumeroPosiblePedido();
-		Pedido pedido = new Pedido(cliente, lineaPedido, fecha,numero);
+		Pedido pedido = new Pedido(numero, cliente);
 		AlmacenPedido almacen = new AlmacenPedido();
-		if(almacen.grabar(cliente.getID(), pedido)){
+		if(almacen.grabar(cliente.getDniCif(), pedido)){
 			aumentarNumeroPedido(numero);
 			return true;
 		}
@@ -56,8 +55,8 @@ public class AccionesPedido {
 	}
 	private Object[] introducirRejilla(Articulo item) {
 		int cantidadAlAniadirse = 1;
-		Object[] retorno = { item.getId(), item.getNombre(), item.getPrecio(), cantidadAlAniadirse,
-				item.getPrecio() * cantidadAlAniadirse };
+		Object[] retorno = { item.getIdArticulo(), item.getNombre(), item.getCurrentPrice(), cantidadAlAniadirse,
+				item.getCurrentPrice() * cantidadAlAniadirse };
 		return retorno;
 	}
 	
@@ -67,8 +66,8 @@ public class AccionesPedido {
 	 * @param modelo
 	 * @return
 	 */
-	public ArrayList<LineaPedido> extraerPedidoRejilla(TableModel modelo){
-		ArrayList<LineaPedido> retorno = new ArrayList<>();
+	public ArrayList<Linea> extraerPedidoRejilla(TableModel modelo){
+		ArrayList<Linea> retorno = new ArrayList<>();
 		//TODO 
 		return retorno;
 	}
@@ -77,7 +76,7 @@ public class AccionesPedido {
 	 * @param modelo
 	 * @param listaObjeto
 	 */
-	public void introducirPedidoRejilla(TableModel modelo,ArrayList<LineaPedido> listaObjeto){
+	public void introducirPedidoRejilla(TableModel modelo,ArrayList<Linea> listaObjeto){
 		//TODO
 	}
 

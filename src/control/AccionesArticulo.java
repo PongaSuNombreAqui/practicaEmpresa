@@ -10,8 +10,8 @@ import modelo.Articulo;
 
 public class AccionesArticulo {
 
-	public boolean crearArticulo(String nombre, int precio, int id) {
-		Articulo newArticulo = new Articulo(id, nombre, precio);
+	public boolean crearArticulo(String nombre, int precio, int id,String descripcion) {
+		Articulo newArticulo = new Articulo(id, nombre,descripcion, precio);
 		Articulo item = (Articulo) new AlmacenArticulo<>().leer(nombre);
 		if (newArticulo.getNombre() == item.getNombre()) {
 			return false;
@@ -30,8 +30,8 @@ public class AccionesArticulo {
 
 	public void editar(String nombre, int nuevoPrecio) {
 		Articulo item = (Articulo) new AlmacenArticulo<>().leer(nombre);
-		item.setPrecio(nuevoPrecio);
-		new AlmacenArticulo<>().grabar(item, item.getId(), item.getNombre());
+		item.insertarNuevoPrecio(nuevoPrecio, true);//TODO oferta??
+		new AlmacenArticulo<>().grabar(item, item.getIdArticulo(), item.getNombre());
 	}
 
 	/**
