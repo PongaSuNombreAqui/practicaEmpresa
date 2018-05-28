@@ -24,8 +24,8 @@ public class PruebaNumeroPedido {
 		lineaPedido.add(new LineaPedido(articulo, 3));
 		
 //		ArrayList lineaPedido = new ArrayList<>();
-		acc.crear(lineaPedido, cliente2, fecha);
-		acc.crear(lineaPedido, cliente, fecha);
+//		acc.crear(lineaPedido, cliente2, fecha);
+//		acc.crear(lineaPedido, cliente, fecha);
 		
 //		acc.consultar("123456789A", 0);
 		
