@@ -206,7 +206,7 @@ public class PanelArticulo extends JPanel {
 		btnBuscar.setBackground(Color.LIGHT_GRAY);
 		btnBuscar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				añadir();
+				aniadir();
 				contentPane.updateUI();
 				revalidate();
 			}
@@ -314,7 +314,7 @@ public class PanelArticulo extends JPanel {
 		contentPane.setLayout(new BorderLayout(0, 0));
 	}
 
-	private void añadir() {
+	private void aniadir() {
 		if (contador == 1) {
 			setLayout(new GridLayout(0, 3, 0, 0));
 			JPanel ventana = new VentanaEditar();

@@ -54,15 +54,16 @@ public class ParaUI extends UI {
 		panelArticulo.getBtnCrear().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				accionesArticulo.crearArticulo(panelArticulo.getCrearNombre().getText(),
-						Integer.parseInt(panelArticulo.getCrearPrecio().getText()),
-						Integer.parseInt(panelArticulo.getCrearID().getText()),
+						Float.valueOf(panelArticulo.getCrearPrecio().getText()),
+						Integer.valueOf(panelArticulo.getCrearID().getText()),
 						panelArticulo.getCrearDescripcion().getText());
+				accionesArticulo.insertarArticulosEnCombo(panelPedido.getComboArticulos());
 			}
 		});
-		
+
 		panelArticulo.getBtnCrear().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+
 			}
 		});
 	}
@@ -110,7 +111,11 @@ public class ParaUI extends UI {
 				panelPedido.getBtnCheck().setEnabled(false);
 				panelPedido.getBtnAdd().setEnabled(false);
 				panelPedido.getComboClientes().setEnabled(true);
-				ArrayList<Linea> lineas = new ArrayList<>();// TODO sacar las lineas de pedido desde la tabla, cada fila una linwa
+				ArrayList<Linea> lineas = new ArrayList<>();// TODO sacar las
+															// lineas de pedido
+															// desde la tabla,
+															// cada fila una
+															// linwa
 				String dniNif = getClienteIDFromCombo(panelPedido.getComboClientesCrear());
 				// TODO add linea al pedido
 				if (accionesPedido.crear(dniNif)) {

@@ -52,7 +52,9 @@ public class AlmacenArticulo<T> {
 	}
 
 	public TreeMap obtenerIndice() {
-		return (TreeMap) new DAO<>().leer(pathIndice);
-		
+		if (Utiles.comprobarExiste(pathIndice)) {
+			return (TreeMap) new DAO<>().leer(pathIndice);
+		}
+		return null;
 	}
 }

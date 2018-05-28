@@ -10,9 +10,9 @@ import modelo.Articulo;
 
 public class AccionesArticulo {
 
-	public boolean crearArticulo(String nombre, int precio, int id,String descripcion) {
-		Articulo newArticulo = new Articulo(id, nombre,descripcion, precio);
-		Articulo item = (Articulo) new AlmacenArticulo<>().leer(nombre);
+	public boolean crearArticulo(String nombre, Float precio, int id, String descripcion) {
+		Articulo newArticulo = new Articulo(id, nombre, descripcion, precio);
+		Articulo item = (Articulo) new AlmacenArticulo<>().leer(nombre);//esto no tira
 		if (newArticulo.getNombre() == item.getNombre()) {
 			return false;
 		} else {
@@ -24,14 +24,14 @@ public class AccionesArticulo {
 	public void consultar(String nombre, JLabel nombreArt, JLabel id, JLabel precio, JLabel descripcion) {
 		Articulo item = (Articulo) new AlmacenArticulo<>().leer(nombre);
 		nombreArt.setText(item.getNombre());
-		id.setText(String.valueOf(item.getId()));
-		precio.setText(String.valueOf(item.getPrecio()));
-		// descripcion.setText();
+		id.setText(String.valueOf(item.getIdArticulo()));
+		precio.setText(String.valueOf(item.getCurrentPrice()));
+		descripcion.setText(item.getDescripcion());
 	}
 
 	public void editar(String nombre, int nuevoPrecio) {
 		Articulo item = (Articulo) new AlmacenArticulo<>().leer(nombre);
-		item.insertarNuevoPrecio(nuevoPrecio, true);//TODO oferta??
+		item.insertarNuevoPrecio(nuevoPrecio, true);// TODO oferta??
 		new AlmacenArticulo<>().grabar(item, item.getIdArticulo(), item.getNombre());
 	}
 
@@ -48,11 +48,15 @@ public class AccionesArticulo {
 	}
 
 	public void insertarArticulosEnCombo(JComboBox combo) {
+		combo.removeAllItems();
 		TreeMap indiceMap = new AlmacenArticulo<>().obtenerIndice();
-		Set keySet = indiceMap.keySet();
-		for (Object object : keySet) {
-			combo.addItem(object);
+		if (!(indiceMap==null)) {
+			Set keySet = indiceMap.keySet();
+			for (Object object : keySet) {
+				combo.addItem(object);
+			}
 		}
+
 
 	}
 }
