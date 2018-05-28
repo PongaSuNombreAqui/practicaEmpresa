@@ -13,12 +13,11 @@ public class AccionesArticulo {
 	public boolean crearArticulo(String nombre, Float precio, int id, String descripcion) {
 		Articulo newArticulo = new Articulo(id, nombre, descripcion, precio);
 		Articulo item = (Articulo) new AlmacenArticulo<>().leer(nombre);//esto no tira
-		if (newArticulo.getNombre() == item.getNombre()) {
-			return false;
-		} else {
+		if (item==null) {
 			new AlmacenArticulo<>().grabar(newArticulo, id, nombre);
 			return true;
 		}
+		return false;
 	}
 
 	public void consultar(String nombre, JLabel nombreArt, JLabel id, JLabel precio, JLabel descripcion) {

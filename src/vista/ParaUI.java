@@ -53,11 +53,15 @@ public class ParaUI extends UI {
 
 		panelArticulo.getBtnCrear().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				accionesArticulo.crearArticulo(panelArticulo.getCrearNombre().getText(),
+				if(accionesArticulo.crearArticulo(panelArticulo.getCrearNombre().getText(),
 						Float.valueOf(panelArticulo.getCrearPrecio().getText()),
 						Integer.valueOf(panelArticulo.getCrearID().getText()),
-						panelArticulo.getCrearDescripcion().getText());
+						panelArticulo.getCrearDescripcion().getText())){
 				accionesArticulo.insertarArticulosEnCombo(panelPedido.getComboArticulos());
+				}else{
+					//mensaje Error: el articulo ya existe
+					System.out.println(" el articulo ya existe");
+				}
 			}
 		});
 

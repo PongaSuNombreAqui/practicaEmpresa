@@ -44,9 +44,12 @@ public class AlmacenArticulo<T> {
 		if (Utiles.comprobarExiste(pathIndice)) {
 			indice = (TreeMap<String, Integer>) new DAO().leer(pathIndice);
 			Integer nombreArch = indice.get(nombre);
-			pathDatos.append(nombreArch + ".art");
-			retorno = (T) new DAO<>().leer(pathDatos.toString());
-			this.pathDatos.delete(lenghtDir, pathDatos.length());
+			if (nombreArch!=null) {
+				pathDatos.append(nombreArch + ".art");
+				retorno = (T) new DAO<>().leer(pathDatos.toString());
+				this.pathDatos.delete(lenghtDir, pathDatos.length());	
+			}
+			
 		}
 		return retorno;
 	}
