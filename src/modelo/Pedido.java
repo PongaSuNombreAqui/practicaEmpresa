@@ -1,32 +1,39 @@
 package modelo;
 
-import java.io.*;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-import utiles.Utiles;
-
 public class Pedido implements Serializable {
+
 	private int numero;
 	private Cliente cliente;
-	private ArrayList<LineaPedido> lineaPedido;
 	private LocalDate fecha;
+	ArrayList<Linea> lineas;
 
-	public Pedido(Cliente cliente, ArrayList<LineaPedido> lineaPedido, LocalDate fecha,int numero) {
+	public Pedido(int numero, Cliente cliente) {
 		super();
-		this.cliente = cliente;
-		this.lineaPedido = lineaPedido;
-		this.fecha = fecha;
-		this.numero=numero;
-	}
-
-
-	public ArrayList<LineaPedido> getLineaPedido() {
-		return lineaPedido;
-	}
-
-	public void setNumero(int numero) {
 		this.numero = numero;
+		this.cliente = cliente;
+		this.fecha = LocalDate.now();
+		lineas = new ArrayList<>();
+	}
+
+	public boolean insertarLinea(Linea linea) {
+		assert linea != null;
+		return lineas.add(linea);
+	}
+
+	public Linea getLinea(int numero){
+		assert numero>0&&numero<=lineas.size();
+		return lineas.get(numero-1);
+	}
+
+	public Linea getLast(){
+		return getLinea(lineas.size());
+	}
+	public void setCliente(Cliente cliente2) {
+		this.cliente=cliente2;
 	}
 
 	public int getNumero() {
@@ -41,14 +48,8 @@ public class Pedido implements Serializable {
 		return fecha;
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		boolean retorno = super.equals(obj);
-		if (!retorno) {
-			Pedido pedido = (Pedido) obj;
-			retorno = this.numero == pedido.numero;
-		}
-		return retorno;
+	public ArrayList<Linea> getLineas() {
+		return lineas;
 	}
-
+	
 }

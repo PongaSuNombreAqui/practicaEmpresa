@@ -3,49 +3,60 @@ package modelo;
 import java.io.Serializable;
 
 public class Cliente implements Serializable {
-	private int numero;
-	private String nombre;
-	private String ID;
+	private String dniCif;
+	private String razonSocial;
+	private String direccion;
+	private String telefono;
 
-	public Cliente(int numero, String nombre, String ID) {
+	public Cliente(String dniCif, String razonSocial, String direccion, String telefono) {
 		super();
-		this.numero = numero;
-		this.nombre = nombre;
-		this.ID = ID;
+		this.dniCif = dniCif;
+		this.razonSocial = razonSocial;
+		this.direccion = direccion;
+		this.telefono = telefono;
 	}
 
-	public String getID() {
-		return this.ID;
+	public String getDireccion() {
+		return direccion;
 	}
 
-	public void setID(String ID) {
-		this.ID = ID;
+	public void setDireccion(String direccion) {
+		this.direccion = direccion;
 	}
 
-	public int getNumero() {
-		return numero;
+	public String getTelefono() {
+		return telefono;
 	}
 
-	public void setNumero(int numero) {
-		this.numero = numero;
+	public void setTelefono(String telefono) {
+		this.telefono = telefono;
 	}
 
-	public String getNombre() {
-		return nombre;
+	public String getDniCif() {
+		return dniCif;
 	}
 
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-
+	public String getRazonSocial() {
+		return razonSocial;
 	}
 
 	@Override
 	public boolean equals(Object obj) {
+		Cliente cliente = (Cliente) obj;
 		boolean retorno = super.equals(obj);
-		if (!retorno) {
-			Cliente cliente = (Cliente) obj;
-			retorno = this.ID.equals(cliente.ID);
+		if(!retorno){
+			retorno = this.dniCif.equals(cliente.dniCif);
 		}
 		return retorno;
+	}
+
+	@Override
+	public int hashCode() {
+		return dniCif.hashCode();
+	}
+
+	@Override
+	public String toString() {
+		return razonSocial;
 	}
 }
