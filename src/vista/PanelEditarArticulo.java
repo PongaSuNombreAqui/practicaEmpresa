@@ -12,12 +12,12 @@ import javax.swing.SwingConstants;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 
-public class VentanaEditar extends JPanel {
+public class PanelEditarArticulo extends JPanel {
 
 	private JTextField nuevoPrecio;
 	private JButton btnEditar;
 
-	public VentanaEditar() {
+	public PanelEditarArticulo() {
 		setBounds(0, 0, 400, 300);
 		setBorder(new MatteBorder(2, 2, 2, 2, (Color) new Color(0, 0, 0)));
 		GridBagLayout gridBagLayout = new GridBagLayout();
@@ -83,7 +83,7 @@ public class VentanaEditar extends JPanel {
 
 		btnEditar = new JButton("Editar");
 		btnEditar.setName("botonEditar");
-		btnEditar.setBackground(Color.GRAY);
+		btnEditar.setBackground(Color.LIGHT_GRAY);
 		btnEditar.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
 		btnEditar.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		GridBagConstraints gbc_btnEditar = new GridBagConstraints();

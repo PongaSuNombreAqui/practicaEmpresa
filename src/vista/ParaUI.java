@@ -21,8 +21,8 @@ public class ParaUI extends UI {
 	PanelCliente panelCliente;
 	PanelArticulo panelArticulo;
 	PanelMain panelMain;
-	VentanaEditar ventanaEditar;
-
+	PanelEditarArticulo panelEditarArticulo;
+	
 	public ParaUI() {
 		super();
 		this.panelMain = new PanelMain();
@@ -40,6 +40,8 @@ public class ParaUI extends UI {
 		ponerListenersPedido();
 		ponerListenerArticulo();
 		ponerListenerCliente();
+		
+		
 	}
 
 	private void ponerListenerArticulo() {
@@ -68,16 +70,16 @@ public class ParaUI extends UI {
 
 		panelArticulo.getBtnBuscar().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				panelArticulo.aniadir(ventanaEditar);
+				panelArticulo.aniadir(panelEditarArticulo);
 				panelArticulo.revalidate();
 			}
 
 		});
 
-		ventanaEditar.getBtnEditar().addActionListener(new ActionListener() {
+		panelEditarArticulo.getBtnEditar().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				accionesArticulo.editar(panelArticulo.getDetallesNombre().getText(),
-						Integer.valueOf(ventanaEditar.getNuevoPrecio().getText()));
+						Integer.valueOf(panelEditarArticulo.getNuevoPrecio().getText()));
 			}
 		});
 
@@ -186,7 +188,7 @@ public class ParaUI extends UI {
 	private void prepararTablaArticulo() {
 		this.panelArticulo = new PanelArticulo();
 		panelGeneralArticulo.add(panelArticulo);
-		this.ventanaEditar = new VentanaEditar();
+		this.panelEditarArticulo = new PanelEditarArticulo();
 
 	}
 
