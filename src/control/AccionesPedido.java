@@ -15,13 +15,13 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
-public class AccionesPedido {
+public class AccionesPedido<K> {
 
 	public boolean crear( String dniNif) {
-		Cliente cliente = (Cliente) new AlmacenCliente<>().obtener(dniNif);
+		Cliente cliente = (Cliente) new AlmacenIndice<>(Utiles.pathClientes).leer((K)dniNif);
 		int numero=getNumeroPosiblePedido();
 		Pedido pedido = new Pedido(numero, cliente);
-		AlmacenPedido almacen = new AlmacenPedido();
+		AlmacenRuta almacen = new AlmacenRuta();
 		if(almacen.grabar(cliente.getDniCif(), pedido)){
 			aumentarNumeroPedido(numero);
 			return true;
@@ -43,14 +43,14 @@ public class AccionesPedido {
 	}
 	
 	public void consultar(String id, int numeroPedido) {
-		AlmacenPedido almacen = new AlmacenPedido();
+		AlmacenRuta almacen = new AlmacenRuta();
 		Pedido pedido = almacen.leer(id, numeroPedido);
 		// ?
 
 	}
 	public void aniadirArticuloATabla(JTable tabla, String nombre) {
 		DefaultTableModel dm = (DefaultTableModel) tabla.getModel();
-		Articulo item = new AlmacenArticulo<Articulo>().leer(nombre);
+		Articulo item = (Articulo) new AlmacenIndice<>(Utiles.pathArticulos).leer(nombre);
 		dm.addRow(introducirRejilla(item));
 	}
 	private Object[] introducirRejilla(Articulo item) {

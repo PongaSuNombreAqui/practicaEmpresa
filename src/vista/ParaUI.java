@@ -7,6 +7,8 @@ import java.util.ArrayList;
 
 import javax.swing.JComboBox;
 import javax.swing.SwingWorker;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 import control.AccionesArticulo;
 import control.AccionesCliente;
@@ -135,7 +137,6 @@ public class ParaUI extends UI {
 			public void actionPerformed(ActionEvent e) {
 				accionesPedido.aniadirArticuloATabla(panelTabla.getTabla(),
 						(String) panelPedido.getComboArticulos().getSelectedItem());
-				// TODO pilla el nombre del combobox donde esta los articulos
 				panelPedido.getBtnCheck().setEnabled(true);
 				panelPedido.getBtnDelete().setEnabled(true);
 				panelPedido.revalidate();
@@ -143,7 +144,7 @@ public class ParaUI extends UI {
 		});
 		panelPedido.getBtnCheck().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// TODO no se que hace el check
+				// TODO no se que hace el check(posible cancelar pedido)
 			}
 		});
 		panelPedido.getBtnNuevoPedido().addActionListener(new ActionListener() {
@@ -168,13 +169,10 @@ public class ParaUI extends UI {
 				panelPedido.getBtnCheck().setEnabled(false);
 				panelPedido.getBtnAdd().setEnabled(false);
 				panelPedido.getComboClientes().setEnabled(true);
-				ArrayList<Linea> lineas = new ArrayList<>();// TODO sacar las
-															// lineas de pedido
-															// desde la tabla,
-															// cada fila una
-															// linwa
+				ArrayList<Linea> lineas = new ArrayList<>();
+				// TODO sacar las  lineas de pedido desde la tabla, cada fila una linwa
+				//TODO no se puede encargar si no hay nada en la tabla
 				String dniNif = getClienteIDFromCombo(panelPedido.getComboClientesCrear());
-				// TODO add linea al pedido
 				if (accionesPedido.crear(dniNif)) {
 					panelPedido.getTxtMensaje().setText("Pedido completado satisfactoriamente");
 				} else {
@@ -204,6 +202,13 @@ public class ParaUI extends UI {
 		panelPedido.getBtnVer().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				panelPedido.getBtnVer().setEnabled(false);
+			}
+		});
+		DefaultTableModel dm=(DefaultTableModel) panelTabla.getTabla().getModel();
+		dm.addTableModelListener(new TableModelListener() {
+			@Override
+			public void tableChanged(TableModelEvent e) {
+				//TODO actualizar los precios totales, si aumentan la cantidad aumenta el total
 			}
 		});
 	}

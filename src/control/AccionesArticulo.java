@@ -7,21 +7,22 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 
 import modelo.Articulo;
+import utiles.Utiles;
 
 public class AccionesArticulo {
 
 	public boolean crearArticulo(String nombre, Float precio, int id, String descripcion) {
 		Articulo newArticulo = new Articulo(id, nombre, descripcion, precio);
-		Articulo item = (Articulo) new AlmacenArticulo<>().leer(nombre);// esto no tira
+		Articulo item = (Articulo) new AlmacenIndice<>(Utiles.pathArticulos).leer(nombre);
 		if (item == null) {
-			new AlmacenArticulo<>().grabar(newArticulo, id, nombre);
+			new AlmacenIndice<>(Utiles.pathArticulos).grabar(newArticulo, id, nombre);
 			return true;
 		}
 		return false;
 	}
 
 	public void consultar(String nombre, JLabel nombreArt, JLabel id, JLabel precio, JLabel descripcion) {
-		Articulo item = (Articulo) new AlmacenArticulo<>().leer(nombre);
+		Articulo item = (Articulo) new AlmacenIndice<>(Utiles.pathArticulos).leer(nombre);
 		nombreArt.setText(item.getNombre());
 		id.setText(String.valueOf(item.getIdArticulo()));
 		precio.setText(String.valueOf(item.getCurrentPrice()));
@@ -29,14 +30,14 @@ public class AccionesArticulo {
 	}
 
 	public void editar(String nombre, float nuevoPrecio) {
-		Articulo item = (Articulo) new AlmacenArticulo<>().leer(nombre);
-		item.insertarNuevoPrecio(nuevoPrecio, false);// TODO oferta??
+		Articulo item = (Articulo) new AlmacenIndice<>(Utiles.pathArticulos).leer(nombre);
+		item.insertarNuevoPrecio(nuevoPrecio, false);
 		System.out.println(item.getCurrentPrice());
-		new AlmacenArticulo<>().grabar(item, item.getIdArticulo(), item.getNombre());
+		new AlmacenIndice<>(Utiles.pathArticulos).grabar(item, item.getIdArticulo(), item.getNombre());
 	}
 
 	public void consultarPrecioAnterior(String nombreArt, String nuevoPrecio) {
-		Articulo item = (Articulo) new AlmacenArticulo<>().leer(nombreArt);
+		Articulo item = (Articulo) new AlmacenIndice<>(Utiles.pathArticulos).leer(nombreArt);
 		// item.insertarNuevoPrecio(nuevoPrecio, true);
 		// return precio;
 
@@ -44,7 +45,7 @@ public class AccionesArticulo {
 
 	public void insertarArticulosEnCombo(JComboBox combo) {
 		combo.removeAllItems();
-		TreeMap indiceMap = new AlmacenArticulo<>().obtenerIndice();
+		TreeMap indiceMap = new AlmacenIndice<>(Utiles.pathArticulos).obtenerIndice();
 		if (!(indiceMap == null)) {
 			Set keySet = indiceMap.keySet();
 			for (Object object : keySet) {
@@ -55,7 +56,7 @@ public class AccionesArticulo {
 	}
 
 	public boolean comprobarExistencia(String nombreArt) {
-		Articulo item = (Articulo) new AlmacenArticulo<>().leer(nombreArt);
+		Articulo item = (Articulo) new AlmacenIndice<>(Utiles.pathArticulos).leer(nombreArt);
 		if (item == null) {
 			return false;
 		}

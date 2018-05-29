@@ -9,7 +9,7 @@ import javax.swing.JComboBox;
 import modelo.Cliente;
 import utiles.Utiles;
 
-public class AccionesCliente {
+public class AccionesCliente<K> {
 
 	public void insertarPedidosEnCombo(JComboBox combo, String cadena) {
 		cadena=cadena.substring(cadena.lastIndexOf(" ")+1);
@@ -24,11 +24,11 @@ public class AccionesCliente {
 	}
 	
 	public void insertarClientesEnCombo(JComboBox combo) {
-		TreeMap indiceMap = new AlmacenCliente<>().obtenerMap();
+		TreeMap indiceMap = new AlmacenIndice<>(Utiles.pathClientes).obtenerMap();
 		if (!(indiceMap==null)) {
 			Set keySet = indiceMap.keySet();
 			for (Object object : keySet) {
-				Cliente cliente=(Cliente) new AlmacenCliente<>().obtener(object);
+				Cliente cliente=(Cliente) new AlmacenIndice<>(Utiles.pathClientes).leer((K)object);
 				combo.addItem(cliente.getRazonSocial()+" "+cliente.getDniCif());
 			}
 		}

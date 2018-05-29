@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 import control.AccionesPedido;
-import control.AlmacenPedido;
+import control.AlmacenRuta;
 import modelo.Articulo;
 import modelo.Cliente;
 import modelo.Pedido;
