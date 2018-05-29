@@ -19,6 +19,7 @@ public class AccionesCliente<K> {
 				combo.addItem("Pedido " + pedidos[i].getName().replace(".ped", ""));
 			}
 		}else{
+			//TODO mostrar en el panel de mensaje
 			System.out.println("no tiene pedidos");
 		}
 	}

@@ -21,7 +21,7 @@ public class AccionesPedido<K> {
 		Cliente cliente = (Cliente) new AlmacenIndice<>(Utiles.pathClientes).leer((K)dniNif);
 		int numero=getNumeroPosiblePedido();
 		Pedido pedido = new Pedido(numero, cliente);
-		AlmacenRuta almacen = new AlmacenRuta();
+		AlmacenRuta almacen = new AlmacenRuta(Utiles.pathPedidos);
 		if(almacen.grabar(cliente.getDniCif(), pedido)){
 			aumentarNumeroPedido(numero);
 			return true;
@@ -43,7 +43,7 @@ public class AccionesPedido<K> {
 	}
 	
 	public void consultar(String id, int numeroPedido) {
-		AlmacenRuta almacen = new AlmacenRuta();
+		AlmacenRuta almacen = new AlmacenRuta(Utiles.pathPedidos);
 		Pedido pedido = almacen.leer(id, numeroPedido);
 		// ?
 

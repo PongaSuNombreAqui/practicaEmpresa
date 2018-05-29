@@ -13,6 +13,8 @@ import javax.swing.table.DefaultTableModel;
 import control.AccionesArticulo;
 import control.AccionesCliente;
 import control.AccionesPedido;
+import control.AlmacenIndice;
+import modelo.Cliente;
 import modelo.Linea;
 
 public class ParaUI extends UI {
@@ -172,6 +174,7 @@ public class ParaUI extends UI {
 				ArrayList<Linea> lineas = new ArrayList<>();
 				// TODO sacar las  lineas de pedido desde la tabla, cada fila una linwa
 				//TODO no se puede encargar si no hay nada en la tabla
+				//TODO que la combobox del nombre no este vacia, por si intenta crear un pedido sin clientes en la aplicacion
 				String dniNif = getClienteIDFromCombo(panelPedido.getComboClientesCrear());
 				if (accionesPedido.crear(dniNif)) {
 					panelPedido.getTxtMensaje().setText("Pedido completado satisfactoriamente");
