@@ -28,21 +28,18 @@ public class AccionesArticulo {
 		descripcion.setText(item.getDescripcion());
 	}
 
-	public void editar(String nombre, int nuevoPrecio) {
+	public void editar(String nombre, float nuevoPrecio) {
 		Articulo item = (Articulo) new AlmacenArticulo<>().leer(nombre);
-		item.insertarNuevoPrecio(nuevoPrecio, true);// TODO oferta??
+		item.insertarNuevoPrecio(nuevoPrecio, false);// TODO oferta??
+		System.out.println(item.getCurrentPrice());
 		new AlmacenArticulo<>().grabar(item, item.getIdArticulo(), item.getNombre());
 	}
 
-	/**
-	 * 
-	 * @param articulo
-	 * 
-	 * @return precio
-	 */
-	public String consultarPrecioAnterior(String articulo) {
-		String precio = "";// Precio que estamos buscando
-		return precio;
+
+	public void consultarPrecioAnterior(String nombreArt,String nuevoPrecio) {
+		Articulo item = (Articulo) new AlmacenArticulo<>().leer(nombreArt);
+//		item.insertarNuevoPrecio(nuevoPrecio, true);
+//		return precio;
 
 	}
 

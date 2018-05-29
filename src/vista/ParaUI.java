@@ -21,7 +21,8 @@ public class ParaUI extends UI {
 	PanelCliente panelCliente;
 	PanelArticulo panelArticulo;
 	PanelMain panelMain;
-
+	PanelEditarArticulo panelEditarArticulo;
+	
 	public ParaUI() {
 		super();
 		this.panelMain = new PanelMain();
@@ -39,6 +40,8 @@ public class ParaUI extends UI {
 		ponerListenersPedido();
 		ponerListenerArticulo();
 		ponerListenerCliente();
+		
+		
 	}
 
 	private void ponerListenerArticulo() {
@@ -53,23 +56,33 @@ public class ParaUI extends UI {
 
 		panelArticulo.getBtnCrear().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(accionesArticulo.crearArticulo(panelArticulo.getCrearNombre().getText(),
+				if (accionesArticulo.crearArticulo(panelArticulo.getCrearNombre().getText(),
 						Float.valueOf(panelArticulo.getCrearPrecio().getText()),
 						Integer.valueOf(panelArticulo.getCrearID().getText()),
-						panelArticulo.getCrearDescripcion().getText())){
-				accionesArticulo.insertarArticulosEnCombo(panelPedido.getComboArticulos());
-				}else{
-					//mensaje Error: el articulo ya existe
-					System.out.println(" el articulo ya existe");
+						panelArticulo.getCrearDescripcion().getText())) {
+					accionesArticulo.insertarArticulosEnCombo(panelPedido.getComboArticulos());
+				} else {
+					// mensaje Error: el articulo ya existe
+					System.out.println("EL articulo ya existe");
 				}
 			}
 		});
 
-		panelArticulo.getBtnCrear().addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+		panelArticulo.getBtnBuscar().addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				panelArticulo.aniadir(panelEditarArticulo);
+				panelArticulo.revalidate();
+			}
 
+		});
+
+		panelEditarArticulo.getBtnEditar().addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				accionesArticulo.editar(panelArticulo.getDetallesNombre().getText(),
+						Integer.valueOf(panelEditarArticulo.getNuevoPrecio().getText()));
 			}
 		});
+
 	}
 
 	private void ponerListenerCliente() {
@@ -175,6 +188,7 @@ public class ParaUI extends UI {
 	private void prepararTablaArticulo() {
 		this.panelArticulo = new PanelArticulo();
 		panelGeneralArticulo.add(panelArticulo);
+		this.panelEditarArticulo = new PanelEditarArticulo();
 
 	}
 

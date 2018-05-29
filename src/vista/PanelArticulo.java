@@ -34,6 +34,8 @@ public class PanelArticulo extends JPanel {
 	private JLabel detallesDescripcion;
 	private int contador = 1;
 	private JTextField crearDescripcion;
+	private JPanel ventana;
+	private JLabel mensajeCrear;
 
 	public PanelArticulo() {
 		setVisible(true);
@@ -46,9 +48,9 @@ public class PanelArticulo extends JPanel {
 		add(panel_1);
 		GridBagLayout gbl_panel_1 = new GridBagLayout();
 		gbl_panel_1.columnWidths = new int[] { 95, 147, 76, 0 };
-		gbl_panel_1.rowHeights = new int[] { 25, 20, 25, 18, 25, 25, 0 };
+		gbl_panel_1.rowHeights = new int[] { 25, 20, 25, 18, 25, 25, 0, 0 };
 		gbl_panel_1.columnWeights = new double[] { 1.0, 1.0, 1.0, Double.MIN_VALUE };
-		gbl_panel_1.rowWeights = new double[] { 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, Double.MIN_VALUE };
+		gbl_panel_1.rowWeights = new double[] { 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, Double.MIN_VALUE };
 		panel_1.setLayout(gbl_panel_1);
 
 		JLabel lblNewLabel = new JLabel("Crear Art\u00EDculo");
@@ -66,7 +68,7 @@ public class PanelArticulo extends JPanel {
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
 		GridBagConstraints gbc_lblNewLabel_1 = new GridBagConstraints();
 		gbc_lblNewLabel_1.fill = GridBagConstraints.HORIZONTAL;
-		gbc_lblNewLabel_1.insets = new Insets(10, 0, 10, 0);
+		gbc_lblNewLabel_1.insets = new Insets(10, 0, 10, 5);
 		gbc_lblNewLabel_1.gridx = 0;
 		gbc_lblNewLabel_1.gridy = 1;
 		panel_1.add(lblNewLabel_1, gbc_lblNewLabel_1);
@@ -76,7 +78,7 @@ public class PanelArticulo extends JPanel {
 		crearNombre.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
 		crearNombre.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		GridBagConstraints gbc_crearNombre = new GridBagConstraints();
-		gbc_crearNombre.insets = new Insets(10, 0, 10, 0);
+		gbc_crearNombre.insets = new Insets(10, 0, 10, 5);
 		gbc_crearNombre.fill = GridBagConstraints.BOTH;
 		gbc_crearNombre.gridx = 1;
 		gbc_crearNombre.gridy = 1;
@@ -88,7 +90,7 @@ public class PanelArticulo extends JPanel {
 		lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		GridBagConstraints gbc_lblNewLabel_2 = new GridBagConstraints();
 		gbc_lblNewLabel_2.fill = GridBagConstraints.HORIZONTAL;
-		gbc_lblNewLabel_2.insets = new Insets(10, 0, 10, 0);
+		gbc_lblNewLabel_2.insets = new Insets(10, 0, 10, 5);
 		gbc_lblNewLabel_2.gridx = 0;
 		gbc_lblNewLabel_2.gridy = 2;
 		panel_1.add(lblNewLabel_2, gbc_lblNewLabel_2);
@@ -98,7 +100,7 @@ public class PanelArticulo extends JPanel {
 		crearID.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
 		crearID.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		GridBagConstraints gbc_crearID = new GridBagConstraints();
-		gbc_crearID.insets = new Insets(10, 0, 10, 0);
+		gbc_crearID.insets = new Insets(10, 0, 10, 5);
 		gbc_crearID.fill = GridBagConstraints.BOTH;
 		gbc_crearID.gridx = 1;
 		gbc_crearID.gridy = 2;
@@ -110,7 +112,7 @@ public class PanelArticulo extends JPanel {
 		lblNewLabel_3.setHorizontalAlignment(SwingConstants.CENTER);
 		GridBagConstraints gbc_lblNewLabel_3 = new GridBagConstraints();
 		gbc_lblNewLabel_3.fill = GridBagConstraints.HORIZONTAL;
-		gbc_lblNewLabel_3.insets = new Insets(10, 0, 10, 0);
+		gbc_lblNewLabel_3.insets = new Insets(10, 0, 10, 5);
 		gbc_lblNewLabel_3.gridx = 0;
 		gbc_lblNewLabel_3.gridy = 3;
 		panel_1.add(lblNewLabel_3, gbc_lblNewLabel_3);
@@ -120,7 +122,7 @@ public class PanelArticulo extends JPanel {
 		crearPrecio.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
 		crearPrecio.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		GridBagConstraints gbc_crearPrecio = new GridBagConstraints();
-		gbc_crearPrecio.insets = new Insets(10, 0, 10, 0);
+		gbc_crearPrecio.insets = new Insets(10, 0, 10, 5);
 		gbc_crearPrecio.fill = GridBagConstraints.BOTH;
 		gbc_crearPrecio.gridx = 1;
 		gbc_crearPrecio.gridy = 3;
@@ -132,7 +134,7 @@ public class PanelArticulo extends JPanel {
 		lblDescripcin.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		GridBagConstraints gbc_lblDescripcin = new GridBagConstraints();
 		gbc_lblDescripcin.fill = GridBagConstraints.BOTH;
-		gbc_lblDescripcin.insets = new Insets(10, 0, 10, 0);
+		gbc_lblDescripcin.insets = new Insets(10, 0, 10, 5);
 		gbc_lblDescripcin.gridx = 0;
 		gbc_lblDescripcin.gridy = 4;
 		panel_1.add(lblDescripcin, gbc_lblDescripcin);
@@ -142,7 +144,7 @@ public class PanelArticulo extends JPanel {
 		crearDescripcion.setHorizontalAlignment(SwingConstants.CENTER);
 		crearDescripcion.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		GridBagConstraints gbc_crearDescripcion = new GridBagConstraints();
-		gbc_crearDescripcion.insets = new Insets(10, 0, 10, 0);
+		gbc_crearDescripcion.insets = new Insets(10, 0, 10, 5);
 		gbc_crearDescripcion.fill = GridBagConstraints.BOTH;
 		gbc_crearDescripcion.gridx = 1;
 		gbc_crearDescripcion.gridy = 4;
@@ -159,6 +161,17 @@ public class PanelArticulo extends JPanel {
 		gbc_btnCrear.gridx = 1;
 		gbc_btnCrear.gridy = 5;
 		panel_1.add(btnCrear, gbc_btnCrear);
+
+		mensajeCrear = new JLabel("");
+		mensajeCrear.setForeground(Color.BLACK);
+		mensajeCrear.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		mensajeCrear.setHorizontalAlignment(SwingConstants.CENTER);
+		GridBagConstraints gbc_mensajeCrear = new GridBagConstraints();
+		gbc_mensajeCrear.fill = GridBagConstraints.BOTH;
+		gbc_mensajeCrear.insets = new Insets(10, 0, 10, 0);
+		gbc_mensajeCrear.gridx = 1;
+		gbc_mensajeCrear.gridy = 6;
+		panel_1.add(mensajeCrear, gbc_mensajeCrear);
 
 		JPanel panel = new JPanel();
 		panel.setMaximumSize(new Dimension(400, 500));
@@ -204,14 +217,7 @@ public class PanelArticulo extends JPanel {
 
 		btnBuscar = new JButton("Buscar");
 		btnBuscar.setBackground(Color.LIGHT_GRAY);
-		btnBuscar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				aniadir();
-				contentPane.updateUI();
-				revalidate();
-			}
 
-		});
 		btnBuscar.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		btnBuscar.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
 		GridBagConstraints gbc_btnBuscar = new GridBagConstraints();
@@ -314,10 +320,10 @@ public class PanelArticulo extends JPanel {
 		contentPane.setLayout(new BorderLayout(0, 0));
 	}
 
-	private void aniadir() {
+	public void aniadir(JPanel ventanaEditar) {
 		if (contador == 1) {
 			setLayout(new GridLayout(0, 3, 0, 0));
-			JPanel ventana = new VentanaEditar();
+			ventana = ventanaEditar;
 			add(ventana, BorderLayout.EAST);
 			contador--;
 		}
@@ -370,5 +376,17 @@ public class PanelArticulo extends JPanel {
 	public JTextField getCrearDescripcion() {
 		return crearDescripcion;
 	}
-	
+
+	public JPanel getVentana() {
+		return ventana;
+	}
+
+	public JLabel getMensajeCrear() {
+		return mensajeCrear;
+	}
+
+	public void setMensajeCrear(JLabel mensajeCrear) {
+		this.mensajeCrear = mensajeCrear;
+	}
+
 }
