@@ -34,6 +34,7 @@ public class PanelArticulo extends JPanel {
 	private JLabel detallesDescripcion;
 	private int contador = 1;
 	private JTextField crearDescripcion;
+	private JPanel ventana;
 
 	public PanelArticulo() {
 		setVisible(true);
@@ -204,14 +205,7 @@ public class PanelArticulo extends JPanel {
 
 		btnBuscar = new JButton("Buscar");
 		btnBuscar.setBackground(Color.LIGHT_GRAY);
-		btnBuscar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				aniadir();
-				contentPane.updateUI();
-				revalidate();
-			}
-
-		});
+	
 		btnBuscar.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		btnBuscar.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
 		GridBagConstraints gbc_btnBuscar = new GridBagConstraints();
@@ -314,10 +308,10 @@ public class PanelArticulo extends JPanel {
 		contentPane.setLayout(new BorderLayout(0, 0));
 	}
 
-	private void aniadir() {
+	public void aniadir(JPanel ventanaEditar) {
 		if (contador == 1) {
 			setLayout(new GridLayout(0, 3, 0, 0));
-			JPanel ventana = new VentanaEditar();
+			 ventana =  ventanaEditar;
 			add(ventana, BorderLayout.EAST);
 			contador--;
 		}
@@ -369,6 +363,10 @@ public class PanelArticulo extends JPanel {
 
 	public JTextField getCrearDescripcion() {
 		return crearDescripcion;
+	}
+
+	public JPanel getVentana() {
+		return ventana;
 	}
 	
 }
