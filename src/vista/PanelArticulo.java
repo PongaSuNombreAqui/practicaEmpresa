@@ -36,6 +36,7 @@ public class PanelArticulo extends JPanel {
 	private JTextField crearDescripcion;
 	private JPanel ventana;
 	private JLabel mensajeCrear;
+	private JLabel mensajeConsulta;
 
 	public PanelArticulo() {
 		setVisible(true);
@@ -179,9 +180,9 @@ public class PanelArticulo extends JPanel {
 		add(panel);
 		GridBagLayout gbl_panel = new GridBagLayout();
 		gbl_panel.columnWidths = new int[] { 65, 157, 40, 0 };
-		gbl_panel.rowHeights = new int[] { 25, 25, 25, 25, 25, 25, 25, 25, 25, 0 };
+		gbl_panel.rowHeights = new int[] { 25, 25, 25, 0, 25, 25, 25, 25, 25, 25, 0 };
 		gbl_panel.columnWeights = new double[] { 1.0, 1.0, 1.0, Double.MIN_VALUE };
-		gbl_panel.rowWeights = new double[] { 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, Double.MIN_VALUE };
+		gbl_panel.rowWeights = new double[] { 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, Double.MIN_VALUE };
 		panel.setLayout(gbl_panel);
 
 		JLabel label = new JLabel("Consultar Art\u00EDculo");
@@ -227,6 +228,16 @@ public class PanelArticulo extends JPanel {
 		gbc_btnBuscar.gridy = 2;
 		panel.add(btnBuscar, gbc_btnBuscar);
 
+		mensajeConsulta = new JLabel("");
+		mensajeConsulta.setHorizontalAlignment(SwingConstants.CENTER);
+		mensajeConsulta.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		GridBagConstraints gbc_mensajeConsulta = new GridBagConstraints();
+		gbc_mensajeConsulta.fill = GridBagConstraints.BOTH;
+		gbc_mensajeConsulta.insets = new Insets(0, 0, 5, 5);
+		gbc_mensajeConsulta.gridx = 1;
+		gbc_mensajeConsulta.gridy = 3;
+		panel.add(mensajeConsulta, gbc_mensajeConsulta);
+
 		JLabel lblDetallesartculo = new JLabel("Detalles Art\u00EDculo");
 		lblDetallesartculo.setBorder(new MatteBorder(0, 0, 2, 0, (Color) new Color(0, 0, 0)));
 		lblDetallesartculo.setHorizontalAlignment(SwingConstants.CENTER);
@@ -234,7 +245,7 @@ public class PanelArticulo extends JPanel {
 		GridBagConstraints gbc_lblDetallesartculo = new GridBagConstraints();
 		gbc_lblDetallesartculo.insets = new Insets(0, 0, 5, 5);
 		gbc_lblDetallesartculo.gridx = 1;
-		gbc_lblDetallesartculo.gridy = 3;
+		gbc_lblDetallesartculo.gridy = 4;
 		panel.add(lblDetallesartculo, gbc_lblDetallesartculo);
 
 		JLabel label_2 = new JLabel("Nombre :");
@@ -243,7 +254,7 @@ public class PanelArticulo extends JPanel {
 		GridBagConstraints gbc_label_2 = new GridBagConstraints();
 		gbc_label_2.insets = new Insets(0, 0, 5, 5);
 		gbc_label_2.gridx = 0;
-		gbc_label_2.gridy = 4;
+		gbc_label_2.gridy = 5;
 		panel.add(label_2, gbc_label_2);
 
 		detallesNombre = new JLabel("");
@@ -252,9 +263,9 @@ public class PanelArticulo extends JPanel {
 		detallesNombre.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		GridBagConstraints gbc_detallesNombre = new GridBagConstraints();
 		gbc_detallesNombre.fill = GridBagConstraints.BOTH;
-		gbc_detallesNombre.insets = new Insets(10, 0, 10, 0);
+		gbc_detallesNombre.insets = new Insets(10, 0, 10, 5);
 		gbc_detallesNombre.gridx = 1;
-		gbc_detallesNombre.gridy = 4;
+		gbc_detallesNombre.gridy = 5;
 		panel.add(detallesNombre, gbc_detallesNombre);
 
 		JLabel label_3 = new JLabel("ID :");
@@ -263,7 +274,7 @@ public class PanelArticulo extends JPanel {
 		GridBagConstraints gbc_label_3 = new GridBagConstraints();
 		gbc_label_3.insets = new Insets(0, 0, 5, 5);
 		gbc_label_3.gridx = 0;
-		gbc_label_3.gridy = 5;
+		gbc_label_3.gridy = 6;
 		panel.add(label_3, gbc_label_3);
 
 		detallesID = new JLabel("");
@@ -272,9 +283,9 @@ public class PanelArticulo extends JPanel {
 		detallesID.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
 		GridBagConstraints gbc_detallesID = new GridBagConstraints();
 		gbc_detallesID.fill = GridBagConstraints.BOTH;
-		gbc_detallesID.insets = new Insets(10, 0, 10, 0);
+		gbc_detallesID.insets = new Insets(10, 0, 10, 5);
 		gbc_detallesID.gridx = 1;
-		gbc_detallesID.gridy = 5;
+		gbc_detallesID.gridy = 6;
 		panel.add(detallesID, gbc_detallesID);
 
 		JLabel label_4 = new JLabel("Precio :");
@@ -283,7 +294,7 @@ public class PanelArticulo extends JPanel {
 		GridBagConstraints gbc_label_4 = new GridBagConstraints();
 		gbc_label_4.insets = new Insets(0, 0, 5, 5);
 		gbc_label_4.gridx = 0;
-		gbc_label_4.gridy = 6;
+		gbc_label_4.gridy = 7;
 		panel.add(label_4, gbc_label_4);
 
 		detallesPrecio = new JLabel("");
@@ -292,9 +303,9 @@ public class PanelArticulo extends JPanel {
 		detallesPrecio.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
 		GridBagConstraints gbc_detallesPrecio = new GridBagConstraints();
 		gbc_detallesPrecio.fill = GridBagConstraints.BOTH;
-		gbc_detallesPrecio.insets = new Insets(10, 0, 10, 0);
+		gbc_detallesPrecio.insets = new Insets(10, 0, 10, 5);
 		gbc_detallesPrecio.gridx = 1;
-		gbc_detallesPrecio.gridy = 6;
+		gbc_detallesPrecio.gridy = 7;
 		panel.add(detallesPrecio, gbc_detallesPrecio);
 
 		JLabel lblDescripcion = new JLabel("Descripci\u00F3n :");
@@ -302,7 +313,7 @@ public class PanelArticulo extends JPanel {
 		GridBagConstraints gbc_lblDescripcion = new GridBagConstraints();
 		gbc_lblDescripcion.insets = new Insets(0, 0, 5, 5);
 		gbc_lblDescripcion.gridx = 0;
-		gbc_lblDescripcion.gridy = 7;
+		gbc_lblDescripcion.gridy = 8;
 		panel.add(lblDescripcion, gbc_lblDescripcion);
 
 		detallesDescripcion = new JLabel("");
@@ -311,9 +322,9 @@ public class PanelArticulo extends JPanel {
 		GridBagConstraints gbc_detallesDescripcion = new GridBagConstraints();
 		gbc_detallesDescripcion.fill = GridBagConstraints.BOTH;
 		gbc_detallesDescripcion.gridheight = 2;
-		gbc_detallesDescripcion.insets = new Insets(10, 0, 10, 0);
+		gbc_detallesDescripcion.insets = new Insets(10, 0, 10, 5);
 		gbc_detallesDescripcion.gridx = 1;
-		gbc_detallesDescripcion.gridy = 7;
+		gbc_detallesDescripcion.gridy = 8;
 		panel.add(detallesDescripcion, gbc_detallesDescripcion);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -385,8 +396,8 @@ public class PanelArticulo extends JPanel {
 		return mensajeCrear;
 	}
 
-	public void setMensajeCrear(JLabel mensajeCrear) {
-		this.mensajeCrear = mensajeCrear;
+	public JLabel getMensajeConsulta() {
+		return mensajeConsulta;
 	}
 
 }

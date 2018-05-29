@@ -1,10 +1,12 @@
 package vista;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.JComboBox;
+import javax.swing.SwingWorker;
 import javax.swing.table.DefaultTableModel;
 import control.AccionesArticulo;
 import control.AccionesCliente;
@@ -22,7 +24,7 @@ public class ParaUI extends UI {
 	PanelArticulo panelArticulo;
 	PanelMain panelMain;
 	PanelEditarArticulo panelEditarArticulo;
-	
+
 	public ParaUI() {
 		super();
 		this.panelMain = new PanelMain();
@@ -40,11 +42,40 @@ public class ParaUI extends UI {
 		ponerListenersPedido();
 		ponerListenerArticulo();
 		ponerListenerCliente();
-		
-		
+
+	}
+
+	private void Pausa(int tiempo) {
+
+		final SwingWorker worker = new SwingWorker() {
+			@Override
+			protected Object doInBackground() throws Exception {
+				try {
+					Thread.sleep(tiempo * 1000);
+				} catch (InterruptedException e1) {
+					e1.printStackTrace();
+				}
+				return null;
+			}
+		};
+		worker.execute();
 	}
 
 	private void ponerListenerArticulo() {
+
+		final SwingWorker worker = new SwingWorker() {
+			@Override
+			protected Object doInBackground() throws Exception {
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e1) {
+					e1.printStackTrace();
+				}
+				panelArticulo.getMensajeCrear().setText("");
+				panelArticulo.getMensajeConsulta().setText("");
+				return null;
+			}
+		};
 
 		panelArticulo.getBtnBuscar().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -56,24 +87,33 @@ public class ParaUI extends UI {
 
 		panelArticulo.getBtnCrear().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				// Thread
 				if (accionesArticulo.crearArticulo(panelArticulo.getCrearNombre().getText(),
 						Float.valueOf(panelArticulo.getCrearPrecio().getText()),
 						Integer.valueOf(panelArticulo.getCrearID().getText()),
 						panelArticulo.getCrearDescripcion().getText())) {
 					accionesArticulo.insertarArticulosEnCombo(panelPedido.getComboArticulos());
+					panelArticulo.getMensajeCrear().setForeground(Color.GREEN);
+					panelArticulo.getMensajeCrear().setText("El articulo ha sido creado");
 				} else {
-					// mensaje Error: el articulo ya existe
-					System.out.println("EL articulo ya existe");
+					panelArticulo.getMensajeCrear().setForeground(Color.RED);
+					panelArticulo.getMensajeCrear().setText("Error : El articulo ya existe!!");
 				}
+				worker.execute();
 			}
 		});
 
 		panelArticulo.getBtnBuscar().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				panelArticulo.aniadir(panelEditarArticulo);
-				panelArticulo.revalidate();
+				if (true == accionesArticulo.comprobarExistencia(panelArticulo.getNombreConsultado().getText())) {
+					panelArticulo.aniadir(panelEditarArticulo);
+					panelArticulo.revalidate();
+				} else {
+					panelArticulo.getMensajeConsulta().setForeground(Color.RED);
+					panelArticulo.getMensajeConsulta().setText("Error : El articulo no existe!!");
+				}
+				worker.execute();
 			}
-
 		});
 
 		panelEditarArticulo.getBtnEditar().addActionListener(new ActionListener() {
