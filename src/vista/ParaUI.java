@@ -124,25 +124,35 @@ public class ParaUI extends UI {
 		panelPedido.getBtnEncargar().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				panelPedido.getBtnNuevoPedido().setEnabled(true);
-				panelPedido.getComboArticulos().setEnabled(false);
-				panelPedido.getBtnEncargar().setEnabled(false);
-				panelPedido.getBtnDelete().setEnabled(false);
-				panelPedido.getComboClientesCrear().setEditable(false);
-				panelPedido.getBtnCheck().setEnabled(false);
-				panelPedido.getBtnAdd().setEnabled(false);
-				panelPedido.getComboClientes().setEnabled(true);
-				// TODO no se puede encargar si no hay nada en la tabla
-				// TODO que la combobox del nombre no este vacia, por si intenta
-				// crear un pedido sin clientes en la aplicacion
-				// TODO borrar tabla al encargar elpedido
-				DefaultTableModel modelo = (DefaultTableModel) panelTabla.getTabla().getModel();
-				String dniNif = getClienteIDFromCombo(panelPedido.getComboClientesCrear());
-				if (logica.crear(dniNif, modelo)) {
-					panelPedido.getTxtMensaje().setText("Pedido completado satisfactoriamente");
+				if (panelPedido.getComboClientesCrear().getItemCount() != 0) {
+					if (panelTabla.getTabla().getRowCount() != 0) {
+						panelPedido.getBtnNuevoPedido().setEnabled(true);
+						panelPedido.getComboArticulos().setEnabled(false);
+						panelPedido.getBtnEncargar().setEnabled(false);
+						panelPedido.getBtnDelete().setEnabled(false);
+						panelPedido.getComboClientesCrear().setEditable(false);
+						panelPedido.getBtnCheck().setEnabled(false);
+						panelPedido.getBtnAdd().setEnabled(false);
+						panelPedido.getComboClientes().setEnabled(true);
+						// TODO no se puede encargar si no hay nada en la tabla
+						// TODO que la combobox del nombre no este vacia, por si intenta crear un pedido
+						// sin clientes en la aplicacion
+						//TODO borrar tabla al encargar elpedido (eliminarPedidoRejilla)
+						
+						String dniNif = getClienteIDFromCombo(panelPedido.getComboClientesCrear());
+						if (logica.crear(dniNif, modelo)) {
+							panelPedido.getTxtMensaje().setText("Pedido completado satisfactoriamente");
+							eliminarPedidoRejilla();
+						} else {
+							panelPedido.getTxtMensaje().setText("Fallo al encargar el pedido");
+						}
+					} else {
+						panelPedido.getTxtMensaje().setText("Nada que encargar");
+					}
 				} else {
-					panelPedido.getTxtMensaje().setText("Fallo al encargar el pedido");
+					panelPedido.getTxtMensaje().setText("No hay clientes");
 				}
+				
 			}
 
 		});
