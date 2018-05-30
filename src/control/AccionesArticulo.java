@@ -8,6 +8,7 @@ import javax.swing.JLabel;
 
 import modelo.Articulo;
 import utiles.Utiles;
+import vista.PanelArticulo;
 
 public class AccionesArticulo {
 
@@ -32,7 +33,6 @@ public class AccionesArticulo {
 	public void editar(String nombre, float nuevoPrecio) {
 		Articulo item = (Articulo) new AlmacenIndice<>(Utiles.pathArticulos).leer(nombre);
 		item.insertarNuevoPrecio(nuevoPrecio, false);
-		System.out.println(item.getCurrentPrice());
 		new AlmacenIndice<>(Utiles.pathArticulos).grabar(item, item.getIdArticulo(), item.getNombre());
 	}
 
