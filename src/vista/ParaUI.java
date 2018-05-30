@@ -184,13 +184,14 @@ public class ParaUI extends UI {
 				panelPedido.getBtnCheck().setEnabled(false);
 				panelPedido.getBtnAdd().setEnabled(false);
 				panelPedido.getComboClientes().setEnabled(true);
-				ArrayList<Linea> lineas = new ArrayList<>();
+				
 				// TODO sacar las lineas de pedido desde la tabla, cada fila una linwa
 				// TODO no se puede encargar si no hay nada en la tabla
 				// TODO que la combobox del nombre no este vacia, por si intenta crear un pedido
 				// sin clientes en la aplicacion
+				DefaultTableModel modelo = (DefaultTableModel) panelTabla.getTabla().getModel();
 				String dniNif = getClienteIDFromCombo(panelPedido.getComboClientesCrear());
-				if (accionesPedido.crear(dniNif)) {
+				if (accionesPedido.crear(dniNif, modelo)) {
 					panelPedido.getTxtMensaje().setText("Pedido completado satisfactoriamente");
 				} else {
 					panelPedido.getTxtMensaje().setText("Fallo al encargar el pedido");
@@ -201,8 +202,12 @@ public class ParaUI extends UI {
 		panelPedido.getBtnDelete().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				DefaultTableModel model = (DefaultTableModel) panelTabla.getTabla().getModel();
-				int seleccionada = panelTabla.getTabla().getSelectedRow();
-				model.removeRow(seleccionada);
+				if (!panelTabla.getTabla().getSelectionModel().isSelectionEmpty()) {
+					int seleccionada = panelTabla.getTabla().getSelectedRow();
+					model.removeRow(seleccionada);
+				} else {
+					panelPedido.getTxtMensaje().setText("No se ha seleccionado linea de pedido");
+				}
 			}
 		});
 		panelPedido.getComboArticulos().addActionListener((e) -> panelPedido.getBtnAdd().setEnabled(true));
@@ -219,6 +224,10 @@ public class ParaUI extends UI {
 		panelPedido.getBtnVer().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				panelPedido.getBtnVer().setEnabled(false);
+				String dniNif = getClienteIDFromCombo(panelPedido.getComboClientesCrear());
+				int numeroPedido = getNumeroPedidoFromCombo(panelPedido.getComboPedidos());				
+				eliminarPedidoRejilla();
+				accionesPedido.consultar(panelTabla.getTabla(), numeroPedido, dniNif);
 			}
 		});
 		DefaultTableModel dm = (DefaultTableModel) panelTabla.getTabla().getModel();
@@ -258,6 +267,21 @@ public class ParaUI extends UI {
 		String cadenaCliente = combo.getSelectedItem().toString();
 		String dniNif = cadenaCliente.substring(cadenaCliente.indexOf(" ") + 1);
 		return dniNif;
+	}
+	
+	protected int getNumeroPedidoFromCombo(JComboBox comboPedidos) {
+		String numeroPedido = comboPedidos.getSelectedItem().toString();
+		numeroPedido = numeroPedido.substring(numeroPedido.lastIndexOf(" ") + 1);
+		return Integer.parseInt(numeroPedido);
+	}
+
+	private void eliminarPedidoRejilla() {
+		DefaultTableModel modelo = (DefaultTableModel) panelTabla.getTabla().getModel(); 
+		int rows = modelo.getRowCount(); 
+		for(int i = rows - 1; i >=0; i--)
+		{
+		   modelo.removeRow(i);
+		}
 	}
 
 }
