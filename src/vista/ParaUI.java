@@ -11,18 +11,14 @@ import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 
-import control.acciones.AccionesArticulo;
-import control.acciones.AccionesCliente;
-import control.acciones.AccionesPedido;
+import control.Logica;
 import control.almacenes.AlmacenIndice;
 import modelo.Cliente;
 import modelo.Linea;
 
 public class ParaUI extends UI {
 
-	AccionesArticulo accionesArticulo;
-	AccionesCliente accionesCliente;
-	AccionesPedido accionesPedido;
+	Logica logica;
 	PanelPedido panelPedido;
 	PanelTabla panelTabla;
 	PanelCliente panelCliente;
@@ -35,9 +31,8 @@ public class ParaUI extends UI {
 		this.panelMain = new PanelMain();
 		panelGeneralMain.add(panelMain);
 
-		this.accionesArticulo = new AccionesArticulo();
-		this.accionesCliente = new AccionesCliente();
-		this.accionesPedido = new AccionesPedido();
+		this.logica = new Logica();
+
 
 		prepararTablaPedido();
 		prepararTablaArticulo();
@@ -54,10 +49,10 @@ public class ParaUI extends UI {
 
 		panelArticulo.getBtnBuscar().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (true == accionesArticulo.comprobarExistencia(panelArticulo.getNombreConsultado().getText())) {
+				if (true == logica.comprobarExistencia(panelArticulo.getNombreConsultado().getText())) {
 					panelArticulo.aniadir(panelEditarArticulo);
 					panelArticulo.revalidate();
-					accionesArticulo.consultar(panelArticulo.getNombreConsultado().getText(),
+					logica.consultar(panelArticulo.getNombreConsultado().getText(),
 							panelArticulo.getDetallesNombre(), panelArticulo.getDetallesID(),
 							panelArticulo.getDetallesPrecio(), panelArticulo.getDetallesDescripcion());
 				} else {
@@ -70,11 +65,11 @@ public class ParaUI extends UI {
 
 		panelArticulo.getBtnCrear().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (accionesArticulo.crearArticulo(panelArticulo.getCrearNombre().getText(),
+				if (logica.crearArticulo(panelArticulo.getCrearNombre().getText(),
 						Float.valueOf(panelArticulo.getCrearPrecio().getText()),
 						Integer.valueOf(panelArticulo.getCrearID().getText()),
 						panelArticulo.getCrearDescripcion().getText())) {
-					accionesArticulo.insertarArticulosEnCombo(panelPedido.getComboArticulos());
+					logica.insertarArticulosEnCombo(panelPedido.getComboArticulos());
 					panelArticulo.getMensajeCrear().setForeground(Color.GREEN);
 					panelArticulo.getMensajeCrear().setText("El articulo ha sido creado");
 				} else {
@@ -87,7 +82,7 @@ public class ParaUI extends UI {
 
 		panelEditarArticulo.getBtnEditar().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				accionesArticulo.editar(panelArticulo.getDetallesNombre().getText(),
+				logica.editar(panelArticulo.getDetallesNombre().getText(),
 						Integer.valueOf(panelEditarArticulo.getNuevoPrecio().getText()));
 				panelArticulo.getDetallesPrecio().setText(panelEditarArticulo.getNuevoPrecio().getText());
 			}
@@ -103,7 +98,7 @@ public class ParaUI extends UI {
 	private void ponerListenersPedido() {
 		panelPedido.getBtnAdd().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				accionesPedido.aniadirArticuloATabla(panelTabla.getTabla(),
+				logica.aniadirArticuloATabla(panelTabla.getTabla(),
 						(String) panelPedido.getComboArticulos().getSelectedItem());
 				panelPedido.getBtnCheck().setEnabled(true);
 				panelPedido.getBtnDelete().setEnabled(true);
@@ -123,7 +118,7 @@ public class ParaUI extends UI {
 				panelPedido.getBtnNuevoPedido().setEnabled(false);
 				panelPedido.getBtnVer().setEnabled(false);
 				panelPedido.getComboClientes().setEnabled(false);
-				panelPedido.getTxtNumeroPedido().setText(String.valueOf(accionesPedido.getNumeroPosiblePedido()));
+				panelPedido.getTxtNumeroPedido().setText(String.valueOf(logica.getNumeroPosiblePedido()));
 			}
 		});
 		panelPedido.getBtnEncargar().addActionListener(new ActionListener() {
@@ -138,12 +133,12 @@ public class ParaUI extends UI {
 				panelPedido.getBtnAdd().setEnabled(false);
 				panelPedido.getComboClientes().setEnabled(true);
 				// TODO no se puede encargar si no hay nada en la tabla
-				// TODO que la combobox del nombre no este vacia, por si intenta crear un pedido
-				// sin clientes en la aplicacion
-				//TODO borrar tabla al encargar elpedido
+				// TODO que la combobox del nombre no este vacia, por si intenta
+				// crear un pedido sin clientes en la aplicacion
+				// TODO borrar tabla al encargar elpedido
 				DefaultTableModel modelo = (DefaultTableModel) panelTabla.getTabla().getModel();
 				String dniNif = getClienteIDFromCombo(panelPedido.getComboClientesCrear());
-				if (accionesPedido.crear(dniNif, modelo)) {
+				if (logica.crear(dniNif, modelo)) {
 					panelPedido.getTxtMensaje().setText("Pedido completado satisfactoriamente");
 				} else {
 					panelPedido.getTxtMensaje().setText("Fallo al encargar el pedido");
@@ -167,7 +162,7 @@ public class ParaUI extends UI {
 			public void actionPerformed(ActionEvent e) {
 				panelPedido.getComboPedidos().removeAllItems();
 				panelPedido.getComboPedidos().setEnabled(true);
-				accionesCliente.insertarPedidosEnCombo(panelPedido.getComboPedidos(),
+				logica.insertarPedidosEnCombo(panelPedido.getComboPedidos(),
 						(String) panelPedido.getComboClientes().getSelectedItem());
 				panelPedido.revalidate();
 				panelPedido.getBtnVer().setEnabled(true);
@@ -177,16 +172,17 @@ public class ParaUI extends UI {
 			public void actionPerformed(ActionEvent e) {
 				panelPedido.getBtnVer().setEnabled(false);
 				String dniNif = getClienteIDFromCombo(panelPedido.getComboClientesCrear());
-				int numeroPedido = getNumeroPedidoFromCombo(panelPedido.getComboPedidos());				
+				int numeroPedido = getNumeroPedidoFromCombo(panelPedido.getComboPedidos());
 				eliminarPedidoRejilla();
-				accionesPedido.consultar(panelTabla.getTabla(), numeroPedido, dniNif);
+				logica.consultar(panelTabla.getTabla(), numeroPedido, dniNif);
 			}
 		});
 		DefaultTableModel dm = (DefaultTableModel) panelTabla.getTabla().getModel();
 		dm.addTableModelListener(new TableModelListener() {
 			@Override
 			public void tableChanged(TableModelEvent e) {
-				// TODO actualizar los precios totales, si aumentan la cantidad aumenta el total
+				// TODO actualizar los precios totales, si aumentan la cantidad
+				// aumenta el total
 			}
 		});
 	}
@@ -197,9 +193,9 @@ public class ParaUI extends UI {
 		this.panelPedido.addPanelTabla(panelTabla); // mete el paneltabla en el
 													// panelpedido
 		panelGeneralPedido.add(panelPedido);
-		accionesArticulo.insertarArticulosEnCombo(panelPedido.getComboArticulos());
-		accionesCliente.insertarClientesEnCombo(panelPedido.getComboClientes());
-		accionesCliente.insertarClientesEnCombo(panelPedido.getComboClientesCrear());
+		logica.insertarArticulosEnCombo(panelPedido.getComboArticulos());
+		logica.insertarClientesEnCombo(panelPedido.getComboClientes());
+		logica.insertarClientesEnCombo(panelPedido.getComboClientesCrear());
 	}
 
 	private void prepararTablaCliente() {
@@ -220,7 +216,7 @@ public class ParaUI extends UI {
 		String dniNif = cadenaCliente.substring(cadenaCliente.indexOf(" ") + 1);
 		return dniNif;
 	}
-	
+
 	protected int getNumeroPedidoFromCombo(JComboBox comboPedidos) {
 		String numeroPedido = comboPedidos.getSelectedItem().toString();
 		numeroPedido = numeroPedido.substring(numeroPedido.lastIndexOf(" ") + 1);
@@ -228,11 +224,10 @@ public class ParaUI extends UI {
 	}
 
 	private void eliminarPedidoRejilla() {
-		DefaultTableModel modelo = (DefaultTableModel) panelTabla.getTabla().getModel(); 
-		int rows = modelo.getRowCount(); 
-		for(int i = rows - 1; i >=0; i--)
-		{
-		   modelo.removeRow(i);
+		DefaultTableModel modelo = (DefaultTableModel) panelTabla.getTabla().getModel();
+		int rows = modelo.getRowCount();
+		for (int i = rows - 1; i >= 0; i--) {
+			modelo.removeRow(i);
 		}
 	}
 
