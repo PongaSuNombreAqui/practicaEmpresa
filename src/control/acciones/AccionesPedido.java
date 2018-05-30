@@ -1,6 +1,5 @@
 package control.acciones;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 
 import modelo.Cliente;
@@ -9,9 +8,7 @@ import modelo.Pedido;
 import modelo.acceso.DAO;
 import utiles.Utiles;
 import modelo.Articulo;
-import javax.swing.JLabel;
 import javax.swing.JTable;
-import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
@@ -21,18 +18,15 @@ import control.almacenes.AlmacenRuta;
 public class AccionesPedido<K> {
 
 
-	public boolean crear(String dniNif, JTable tabla) {
+	public boolean crear(Cliente cliente, JTable tabla) {
 		DefaultTableModel modelo = (DefaultTableModel) tabla.getModel();
-		Cliente cliente = (Cliente) new AlmacenIndice<>(Utiles.pathClientes).leer((K)dniNif);
 		int numero = getNumeroPosiblePedido();
-
 		Pedido pedido = new Pedido(numero, cliente);
 		ArrayList<Linea> lineas = extraerPedidoRejilla(modelo);
 		for (Linea linea : lineas) {
 			pedido.insertarLinea(linea);
 		}
-		AlmacenRuta almacen = new AlmacenRuta(Utiles.pathPedidos);
-		if (almacen.grabar(cliente.getDniCif(), pedido)) {
+		if (new AlmacenRuta(Utiles.pathPedidos).grabar(cliente.getDniCif(), pedido)) {
 			aumentarNumeroPedido(numero);
 			return true;
 		}
@@ -52,15 +46,12 @@ public class AccionesPedido<K> {
 		return leer;
 	}
 	
-	public void consultar(JTable tabla, int numeroPedido, String id) {
-	AlmacenRuta almacen = new AlmacenRuta(Utiles.pathPedidos);
-		Pedido pedido = almacen.leer(id, numeroPedido);
+	public void consultar(JTable tabla, Pedido pedido) {
 		introducirPedidoRejilla(tabla, pedido);
 	}
 
-	public void aniadirArticuloATabla(JTable tabla, String nombre) {
+	public void aniadirArticuloATabla(JTable tabla, Articulo item) {
 		DefaultTableModel dm = (DefaultTableModel) tabla.getModel();
-		Articulo item = (Articulo) new AlmacenIndice<>(Utiles.pathArticulos).leer(nombre);
 		dm.addRow(introducirRejilla(item));
 	}
 

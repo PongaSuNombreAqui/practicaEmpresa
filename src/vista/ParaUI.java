@@ -3,8 +3,6 @@ package vista;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-
 import javax.swing.JComboBox;
 import javax.swing.SwingWorker;
 import javax.swing.event.TableModelEvent;
@@ -12,9 +10,6 @@ import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 
 import control.Logica;
-import control.almacenes.AlmacenIndice;
-import modelo.Cliente;
-import modelo.Linea;
 
 public class ParaUI extends UI {
 
@@ -32,7 +27,6 @@ public class ParaUI extends UI {
 		panelGeneralMain.add(panelMain);
 
 		this.logica = new Logica();
-
 
 		prepararTablaPedido();
 		prepararTablaArticulo();
@@ -140,7 +134,7 @@ public class ParaUI extends UI {
 						//TODO borrar tabla al encargar elpedido (eliminarPedidoRejilla)
 						
 						String dniNif = getClienteIDFromCombo(panelPedido.getComboClientesCrear());
-						if (logica.crear(dniNif, modelo)) {
+						if (logica.crear(dniNif, panelTabla.getTabla())) {
 							panelPedido.getTxtMensaje().setText("Pedido completado satisfactoriamente");
 							eliminarPedidoRejilla();
 						} else {
