@@ -140,10 +140,10 @@ public class ParaUI extends UI {
 				// TODO no se puede encargar si no hay nada en la tabla
 				// TODO que la combobox del nombre no este vacia, por si intenta crear un pedido
 				// sin clientes en la aplicacion
-				//TODO borrar tabla al encargar elpedido
-				DefaultTableModel modelo = (DefaultTableModel) panelTabla.getTabla().getModel();
+				//TODO borrar tabla al encargar elpedido (eliminarPedidoRejilla)
+				
 				String dniNif = getClienteIDFromCombo(panelPedido.getComboClientesCrear());
-				if (accionesPedido.crear(dniNif, modelo)) {
+				if (accionesPedido.crear(dniNif, panelTabla.getTabla())) {
 					panelPedido.getTxtMensaje().setText("Pedido completado satisfactoriamente");
 				} else {
 					panelPedido.getTxtMensaje().setText("Fallo al encargar el pedido");

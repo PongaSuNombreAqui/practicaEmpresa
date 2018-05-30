@@ -21,7 +21,8 @@ import control.almacenes.AlmacenRuta;
 public class AccionesPedido<K> {
 
 
-	public boolean crear(String dniNif, TableModel modelo) {
+	public boolean crear(String dniNif, JTable tabla) {
+		DefaultTableModel modelo = (DefaultTableModel) tabla.getModel();
 		Cliente cliente = (Cliente) new AlmacenIndice<>(Utiles.pathClientes).leer((K)dniNif);
 		int numero = getNumeroPosiblePedido();
 
