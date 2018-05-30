@@ -184,11 +184,10 @@ public class ParaUI extends UI {
 				panelPedido.getBtnCheck().setEnabled(false);
 				panelPedido.getBtnAdd().setEnabled(false);
 				panelPedido.getComboClientes().setEnabled(true);
-				
-				// TODO sacar las lineas de pedido desde la tabla, cada fila una linwa
 				// TODO no se puede encargar si no hay nada en la tabla
 				// TODO que la combobox del nombre no este vacia, por si intenta crear un pedido
 				// sin clientes en la aplicacion
+				//TODO borrar tabla al encargar elpedido
 				DefaultTableModel modelo = (DefaultTableModel) panelTabla.getTabla().getModel();
 				String dniNif = getClienteIDFromCombo(panelPedido.getComboClientesCrear());
 				if (accionesPedido.crear(dniNif, modelo)) {

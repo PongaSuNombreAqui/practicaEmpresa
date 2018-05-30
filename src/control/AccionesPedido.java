@@ -71,13 +71,12 @@ public class AccionesPedido<K> {
 	 */
 	public ArrayList<Linea> extraerPedidoRejilla(TableModel modelo){
 		ArrayList<Linea> retorno = new ArrayList<>();
-		AlmacenArticulo almacen = new AlmacenArticulo();
 		int rows = modelo.getRowCount(); 
 		for(int i = rows - 1; i >=0; i--)	
 		{
 			String nombreArticulo = modelo.getValueAt(i, 1).toString();
 			int cantidad = Integer.parseInt(modelo.getValueAt(i, 3).toString());
-			Articulo item = new AlmacenArticulo<Articulo>().leer(nombreArticulo);
+			Articulo item = (Articulo) new AlmacenIndice<>(Utiles.pathArticulos).leer(nombreArticulo);
 			retorno.add(new Linea(item, cantidad));
 		}
 		return retorno;
