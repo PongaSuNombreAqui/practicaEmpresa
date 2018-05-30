@@ -69,10 +69,28 @@ public class ParaUI extends UI {
 
 		panelArticulo.getBtnBuscar().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				final SwingWorker borrarMensajeConsulta = new SwingWorker() {
+					@Override
+					protected Object doInBackground() throws Exception {
+						try {
+							Thread.sleep(2000);
+						} catch (InterruptedException e1) {
+							e1.printStackTrace();
+						}
+						panelArticulo.getMensajeConsulta().setText("");
+						return null;
+					}
+				};
 				if (true == accionesArticulo.comprobarExistencia(panelArticulo.getNombreConsultado().getText())) {
+					panelArticulo.aniadir(panelEditarArticulo);
+					panelArticulo.revalidate();
 					accionesArticulo.consultar(panelArticulo.getNombreConsultado().getText(),
 							panelArticulo.getDetallesNombre(), panelArticulo.getDetallesID(),
 							panelArticulo.getDetallesPrecio(), panelArticulo.getDetallesDescripcion());
+				} else {
+					panelArticulo.getMensajeConsulta().setForeground(Color.RED);
+					panelArticulo.getMensajeConsulta().setText("Error : El articulo no existe!!");
+					borrarMensajeConsulta.execute();
 				}
 			}
 		});
@@ -103,32 +121,6 @@ public class ParaUI extends UI {
 					panelArticulo.getMensajeCrear().setText("Error : El articulo ya existe!!");
 				}
 				borrarMensajeCrear.execute();
-			}
-		});
-
-		panelArticulo.getBtnBuscar().addActionListener(new ActionListener() {
-			final SwingWorker borrarMensajeConsulta = new SwingWorker() {
-				@Override
-				protected Object doInBackground() throws Exception {
-					try {
-						Thread.sleep(2000);
-					} catch (InterruptedException e1) {
-						e1.printStackTrace();
-					}
-					panelArticulo.getMensajeConsulta().setText("");
-					return null;
-				}
-			};
-
-			public void actionPerformed(ActionEvent arg0) {
-				if (true == accionesArticulo.comprobarExistencia(panelArticulo.getNombreConsultado().getText())) {
-					panelArticulo.aniadir(panelEditarArticulo);
-					panelArticulo.revalidate();
-				} else {
-					panelArticulo.getMensajeConsulta().setForeground(Color.RED);
-					panelArticulo.getMensajeConsulta().setText("Error : El articulo no existe!!");
-					borrarMensajeConsulta.execute();
-				}
 			}
 		});
 
