@@ -46,16 +46,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="6" language="java" name="modelo.LineaDePedido" project="practicaEmpresa" 
-    file="/practicaEmpresa/src/modelo/LineaDePedido.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="135" width="156" x="270" y="120"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <class id="7" language="java" name="control.AccionesCliente" project="practicaEmpresa" 
+  <class id="6" language="java" name="control.AccionesCliente" project="practicaEmpresa" 
     file="/practicaEmpresa/src/control/AccionesCliente.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="81" width="116" x="2443" y="686"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -64,7 +55,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="8" language="java" name="control.AlmacenProveedores" project="practicaEmpresa" 
+  <class id="7" language="java" name="control.AlmacenProveedores" project="practicaEmpresa" 
     file="/practicaEmpresa/src/control/AlmacenProveedores.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="135" width="174" x="869" y="120"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -73,7 +64,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="9" language="java" name="vista.Main" project="practicaEmpresa" file="/practicaEmpresa/src/vista/Main.java" 
+  <class id="8" language="java" name="vista.Main" project="practicaEmpresa" file="/practicaEmpresa/src/vista/Main.java" 
     binary="false" corner="BOTTOM_RIGHT">    
     <position height="99" width="113" x="1083" y="120"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -82,7 +73,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="10" language="java" name="vista.UI" project="practicaEmpresa" file="/practicaEmpresa/src/vista/UI.java" 
+  <class id="9" language="java" name="vista.UI" project="practicaEmpresa" file="/practicaEmpresa/src/vista/UI.java" 
     binary="false" corner="BOTTOM_RIGHT">    
     <position height="189" width="126" x="2443" y="120"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -91,7 +82,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="11" language="java" name="modelo.DAO.MyObjectOutputStream" project="practicaEmpresa" 
+  <class id="10" language="java" name="modelo.DAO.MyObjectOutputStream" project="practicaEmpresa" 
     file="/practicaEmpresa/src/modelo/DAO.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="2716" y="473"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -100,7 +91,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="12" language="java" name="modelo.Articulo" project="practicaEmpresa" 
+  <class id="11" language="java" name="modelo.Articulo" project="practicaEmpresa" 
     file="/practicaEmpresa/src/modelo/Articulo.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="225" width="138" x="270" y="421"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -109,7 +100,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="13" language="java" name="vista.PanelPedido" project="practicaEmpresa" 
+  <class id="12" language="java" name="vista.PanelPedido" project="practicaEmpresa" 
     file="/practicaEmpresa/src/vista/PanelPedido.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="81" width="95" x="1236" y="120"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -118,8 +109,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="14" language="java" name="control.AlmacenPedido" project="practicaEmpresa" 
-    file="/practicaEmpresa/src/control/AlmacenPedido.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="13" language="java" name="control.AlmacenRuta" project="practicaEmpresa" 
+    file="/practicaEmpresa/src/control/AlmacenRuta.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="153" width="170" x="1371" y="120"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -127,7 +118,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="15" language="java" name="control.AlmacenArticulo" project="practicaEmpresa" 
+  <class id="14" language="java" name="control.AlmacenArticulo" project="practicaEmpresa" 
     file="/practicaEmpresa/src/control/AlmacenArticulo.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="189" width="178" x="1581" y="120"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -136,7 +127,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="16" language="java" name="modelo.Pedido" project="practicaEmpresa" 
+  <class id="15" language="java" name="modelo.Pedido" project="practicaEmpresa" 
     file="/practicaEmpresa/src/modelo/Pedido.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="225" width="138" x="1799" y="120"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -145,7 +136,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="17" language="java" name="control.AlmacenCliente" project="practicaEmpresa" 
+  <class id="16" language="java" name="control.AlmacenCliente" project="practicaEmpresa" 
     file="/practicaEmpresa/src/control/AlmacenCliente.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="171" width="157" x="1977" y="120"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -154,7 +145,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="18" language="java" name="modelo.DAO" project="practicaEmpresa" file="/practicaEmpresa/src/modelo/DAO.java" 
+  <class id="17" language="java" name="modelo.DAO" project="practicaEmpresa" file="/practicaEmpresa/src/modelo/DAO.java" 
     binary="false" corner="BOTTOM_RIGHT">    
     <position height="225" width="219" x="2609" y="120"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -163,7 +154,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="19" language="java" name="control.AccionesPedido" project="practicaEmpresa" 
+  <class id="18" language="java" name="control.AccionesPedido" project="practicaEmpresa" 
     file="/practicaEmpresa/src/control/AccionesPedido.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="81" width="116" x="2599" y="686"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -172,7 +163,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="20" language="java" name="vista.ParaUI" project="practicaEmpresa" 
+  <class id="19" language="java" name="vista.ParaUI" project="practicaEmpresa" 
     file="/practicaEmpresa/src/vista/ParaUI.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="81" width="87" x="2443" y="421"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -181,16 +172,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="21" language="java" name="modelo.LineaPedido" project="practicaEmpresa" 
-    file="/practicaEmpresa/src/modelo/LineaPedido.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="81" width="94" x="2174" y="120"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <class id="22" language="java" name="vista.PanelCliente" project="practicaEmpresa" 
+  <class id="20" language="java" name="vista.PanelCliente" project="practicaEmpresa" 
     file="/practicaEmpresa/src/vista/PanelCliente.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="81" width="95" x="2308" y="120"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -199,54 +181,62 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <association id="23">    
-    <end type="SOURCE" refId="8" navigable="false">      
-      <attribute id="24" name="lista"/>      
-      <multiplicity id="25" minimum="0" maximum="2147483647"/>    
-    </end>    
-    <end type="TARGET" refId="4" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="26">    
-    <end type="SOURCE" refId="6" navigable="false">      
-      <attribute id="27" name="articulo"/>      
-      <multiplicity id="28" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="12" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="29">    
-    <end type="SOURCE" refId="20" navigable="false">      
-      <attribute id="30" name="accionesArticulo"/>      
-      <multiplicity id="31" minimum="0" maximum="1"/>    
+  <association id="21">    
+    <end type="SOURCE" refId="19" navigable="false">      
+      <attribute id="22" name="accionesArticulo">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="23" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
     </end>    
     <end type="TARGET" refId="2" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="32">    
-    <end type="SOURCE" refId="20" navigable="false">      
-      <attribute id="33" name="accionesPedido"/>      
-      <multiplicity id="34" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="19" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="35">    
-    <end type="SOURCE" refId="20" navigable="false">      
-      <attribute id="36" name="accionesCliente"/>      
-      <multiplicity id="37" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="7" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <nesting id="38">    
-    <end type="SOURCE" refId="18"/>    
-    <end type="TARGET" refId="11"/>  
-  </nesting>  
-  <generalization id="39">    
-    <end type="SOURCE" refId="20"/>    
+  <nesting id="24">    
+    <end type="SOURCE" refId="17"/>    
     <end type="TARGET" refId="10"/>  
+  </nesting>  
+  <generalization id="25">    
+    <end type="SOURCE" refId="19"/>    
+    <end type="TARGET" refId="9"/>  
   </generalization>  
+  <association id="26">    
+    <end type="SOURCE" refId="7" navigable="false">      
+      <attribute id="27" name="lista">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="28" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="4" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="29">    
+    <end type="SOURCE" refId="19" navigable="false">      
+      <attribute id="30" name="accionesCliente">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="31" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="6" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="32">    
+    <end type="SOURCE" refId="19" navigable="false">      
+      <attribute id="33" name="accionesPedido">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="34" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="18" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
   <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
     sort-features="false" accessors="true" visibility="true">    
     <attributes public="true" package="true" protected="true" private="true" static="true"/>    

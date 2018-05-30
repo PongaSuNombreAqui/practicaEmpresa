@@ -15,17 +15,17 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
-public class AccionesPedido {
+public class AccionesPedido<K> {
 
 	public boolean crear(String dniNif, TableModel modelo) {
-		Cliente cliente = (Cliente) new AlmacenCliente<>().obtener(dniNif);
+		Cliente cliente = (Cliente) new AlmacenIndice<>(Utiles.pathClientes).leer((K)dniNif);
 		int numero=getNumeroPosiblePedido();
 		Pedido pedido = new Pedido(numero, cliente);
 		ArrayList<Linea> lineas = extraerPedidoRejilla(modelo);
 		for (Linea linea : lineas) {
 			pedido.insertarLinea(linea);
 		}
-		AlmacenPedido almacen = new AlmacenPedido();
+		AlmacenRuta almacen = new AlmacenRuta(Utiles.pathPedidos);
 		if(almacen.grabar(cliente.getDniCif(), pedido)){
 			aumentarNumeroPedido(numero);
 			return true;
@@ -45,15 +45,15 @@ public class AccionesPedido {
 		return leer;
 	}
 	
-	public void consultar(JTable tabla, int numeroPedido, String cliente) {
-		AlmacenPedido almacen = new AlmacenPedido();
-		Pedido pedido = almacen.leer(cliente, numeroPedido);
+	public void consultar(JTable tabla, int numeroPedido, String id) {
+	AlmacenRuta almacen = new AlmacenRuta(Utiles.pathPedidos);
+		Pedido pedido = almacen.leer(id, numeroPedido);
 		introducirPedidoRejilla(tabla, pedido);
 	}
 	
 	public void aniadirArticuloATabla(JTable tabla, String nombre) {
 		DefaultTableModel dm = (DefaultTableModel) tabla.getModel();
-		Articulo item = new AlmacenArticulo<Articulo>().leer(nombre);
+		Articulo item = (Articulo) new AlmacenIndice<>(Utiles.pathArticulos).leer(nombre);
 		dm.addRow(introducirRejilla(item));
 	}
 	private Object[] introducirRejilla(Articulo item) {
@@ -92,9 +92,6 @@ public class AccionesPedido {
 	 */
 	public void introducirPedidoRejilla(JTable tabla, Pedido pedido){
 		DefaultTableModel modelo = (DefaultTableModel) tabla.getModel();
-//		for (int i = 1; i <= pedido.getLineas().size(); i++) {
-//			modelo.addRow(pedido.getLinea(i).toVector());
-//		}
 		for (int i = pedido.getLineas().size(); i > 0; i--) {
 			modelo.addRow(pedido.getLinea(i).toVector());
 		}

@@ -1,14 +1,20 @@
 package vista;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.JComboBox;
+import javax.swing.SwingWorker;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 import control.AccionesArticulo;
 import control.AccionesCliente;
 import control.AccionesPedido;
+import control.AlmacenIndice;
+import modelo.Cliente;
 import modelo.Linea;
 
 public class ParaUI extends UI {
@@ -21,6 +27,7 @@ public class ParaUI extends UI {
 	PanelCliente panelCliente;
 	PanelArticulo panelArticulo;
 	PanelMain panelMain;
+	PanelEditarArticulo panelEditarArticulo;
 
 	public ParaUI() {
 		super();
@@ -39,10 +46,99 @@ public class ParaUI extends UI {
 		ponerListenersPedido();
 		ponerListenerArticulo();
 		ponerListenerCliente();
+
+	}
+
+	private void Pausa(int tiempo) {
+
+		final SwingWorker worker = new SwingWorker() {
+			@Override
+			protected Object doInBackground() throws Exception {
+				try {
+					Thread.sleep(tiempo * 1000);
+				} catch (InterruptedException e1) {
+					e1.printStackTrace();
+				}
+				return null;
+			}
+		};
+		worker.execute();
 	}
 
 	private void ponerListenerArticulo() {
-		// TODO Auto-generated method stub
+
+		panelArticulo.getBtnBuscar().addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (true == accionesArticulo.comprobarExistencia(panelArticulo.getNombreConsultado().getText())) {
+					accionesArticulo.consultar(panelArticulo.getNombreConsultado().getText(),
+							panelArticulo.getDetallesNombre(), panelArticulo.getDetallesID(),
+							panelArticulo.getDetallesPrecio(), panelArticulo.getDetallesDescripcion());
+				}
+			}
+		});
+
+		panelArticulo.getBtnCrear().addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				final SwingWorker borrarMensajeCrear = new SwingWorker() {
+					@Override
+					protected Object doInBackground() throws Exception {
+						try {
+							Thread.sleep(2000);
+						} catch (InterruptedException e1) {
+							e1.printStackTrace();
+						}
+						panelArticulo.getMensajeCrear().setText("");
+						return null;
+					}
+				};
+				if (accionesArticulo.crearArticulo(panelArticulo.getCrearNombre().getText(),
+						Float.valueOf(panelArticulo.getCrearPrecio().getText()),
+						Integer.valueOf(panelArticulo.getCrearID().getText()),
+						panelArticulo.getCrearDescripcion().getText())) {
+					accionesArticulo.insertarArticulosEnCombo(panelPedido.getComboArticulos());
+					panelArticulo.getMensajeCrear().setForeground(Color.GREEN);
+					panelArticulo.getMensajeCrear().setText("El articulo ha sido creado");
+				} else {
+					panelArticulo.getMensajeCrear().setForeground(Color.RED);
+					panelArticulo.getMensajeCrear().setText("Error : El articulo ya existe!!");
+				}
+				borrarMensajeCrear.execute();
+			}
+		});
+
+		panelArticulo.getBtnBuscar().addActionListener(new ActionListener() {
+			final SwingWorker borrarMensajeConsulta = new SwingWorker() {
+				@Override
+				protected Object doInBackground() throws Exception {
+					try {
+						Thread.sleep(2000);
+					} catch (InterruptedException e1) {
+						e1.printStackTrace();
+					}
+					panelArticulo.getMensajeConsulta().setText("");
+					return null;
+				}
+			};
+
+			public void actionPerformed(ActionEvent arg0) {
+				if (true == accionesArticulo.comprobarExistencia(panelArticulo.getNombreConsultado().getText())) {
+					panelArticulo.aniadir(panelEditarArticulo);
+					panelArticulo.revalidate();
+				} else {
+					panelArticulo.getMensajeConsulta().setForeground(Color.RED);
+					panelArticulo.getMensajeConsulta().setText("Error : El articulo no existe!!");
+					borrarMensajeConsulta.execute();
+				}
+			}
+		});
+
+		panelEditarArticulo.getBtnEditar().addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				accionesArticulo.editar(panelArticulo.getDetallesNombre().getText(),
+						Integer.valueOf(panelEditarArticulo.getNuevoPrecio().getText()));
+				panelArticulo.getDetallesPrecio().setText(panelEditarArticulo.getNuevoPrecio().getText());
+			}
+		});
 
 	}
 
@@ -56,7 +152,6 @@ public class ParaUI extends UI {
 			public void actionPerformed(ActionEvent e) {
 				accionesPedido.aniadirArticuloATabla(panelTabla.getTabla(),
 						(String) panelPedido.getComboArticulos().getSelectedItem());
-				// TODO pilla el nombre del combobox donde esta los articulos
 				panelPedido.getBtnCheck().setEnabled(true);
 				panelPedido.getBtnDelete().setEnabled(true);
 				panelPedido.revalidate();
@@ -64,7 +159,7 @@ public class ParaUI extends UI {
 		});
 		panelPedido.getBtnCheck().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// TODO no se que hace el check
+				// TODO no se que hace el check(posible cancelar pedido)
 			}
 		});
 		panelPedido.getBtnNuevoPedido().addActionListener(new ActionListener() {
@@ -89,6 +184,11 @@ public class ParaUI extends UI {
 				panelPedido.getBtnCheck().setEnabled(false);
 				panelPedido.getBtnAdd().setEnabled(false);
 				panelPedido.getComboClientes().setEnabled(true);
+				
+				// TODO sacar las lineas de pedido desde la tabla, cada fila una linwa
+				// TODO no se puede encargar si no hay nada en la tabla
+				// TODO que la combobox del nombre no este vacia, por si intenta crear un pedido
+				// sin clientes en la aplicacion
 				DefaultTableModel modelo = (DefaultTableModel) panelTabla.getTabla().getModel();
 				String dniNif = getClienteIDFromCombo(panelPedido.getComboClientesCrear());
 				if (accionesPedido.crear(dniNif, modelo)) {
@@ -130,6 +230,13 @@ public class ParaUI extends UI {
 				accionesPedido.consultar(panelTabla.getTabla(), numeroPedido, dniNif);
 			}
 		});
+		DefaultTableModel dm = (DefaultTableModel) panelTabla.getTabla().getModel();
+		dm.addTableModelListener(new TableModelListener() {
+			@Override
+			public void tableChanged(TableModelEvent e) {
+				// TODO actualizar los precios totales, si aumentan la cantidad aumenta el total
+			}
+		});
 	}
 
 	private void prepararTablaPedido() {
@@ -152,6 +259,7 @@ public class ParaUI extends UI {
 	private void prepararTablaArticulo() {
 		this.panelArticulo = new PanelArticulo();
 		panelGeneralArticulo.add(panelArticulo);
+		this.panelEditarArticulo = new PanelEditarArticulo();
 
 	}
 

@@ -1,19 +1,23 @@
-package pruebas;
+package test;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 
 import control.AccionesPedido;
-import control.AlmacenPedido;
+import control.AlmacenRuta;
 import modelo.Articulo;
 import modelo.Cliente;
+<<<<<<< HEAD:src/pruebas/PruebaNumeroPedido.java
 import modelo.Linea;
+=======
+>>>>>>> upstream/master:src/test/PruebaNumeroPedido.java
 import modelo.Pedido;
 
 public class PruebaNumeroPedido {
 	
 	public static void main(String[] args) {
 		AccionesPedido acc = new AccionesPedido();
+<<<<<<< HEAD:src/pruebas/PruebaNumeroPedido.java
 		
 //		LocalDate fecha = null;
 //		Cliente cliente = new Cliente(1, "Prueba1", "123456789A");
@@ -22,6 +26,16 @@ public class PruebaNumeroPedido {
 //		ArrayList<LineaPedido> lineaPedido = new ArrayList<>();
 //		lineaPedido.add(new LineaPedido(articulo, 3));
 		
+=======
+//		MODELO CAMBIADO, NEW TEST
+//		LocalDate fecha = null;
+//		Cliente cliente = new Cliente(1, "Prueba1", "123456789A");
+//		Cliente cliente2 = new Cliente(2, "Prueba2", "987654321E");
+//		Articulo articulo = new Articulo(0, "PruebaArticulo", 15);
+//		ArrayList<LineaPedido> lineaPedido = new ArrayList<>();
+//		lineaPedido.add(new LineaPedido(articulo, 3));
+//		
+>>>>>>> upstream/master:src/test/PruebaNumeroPedido.java
 //		ArrayList lineaPedido = new ArrayList<>();
 //		acc.crear(lineaPedido, cliente2, fecha);
 //		acc.crear(lineaPedido, cliente, fecha);

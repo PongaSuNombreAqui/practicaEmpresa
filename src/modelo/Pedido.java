@@ -51,5 +51,13 @@ public class Pedido implements Serializable {
 	public ArrayList<Linea> getLineas() {
 		return lineas;
 	}
-	
+	@Override
+	public boolean equals(Object obj) {
+		Pedido elemento=(Pedido)obj;
+		boolean retorno=super.equals(elemento);
+		if(!retorno){
+			retorno=this.numero==elemento.getNumero();
+		}
+		return retorno;
+	}
 }
