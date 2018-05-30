@@ -9,7 +9,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import control.AlmacenIndice;
+import control.almacenes.AlmacenIndice;
 import modelo.Articulo;
 
 public class AlmacenArticuloTest<T,K> {

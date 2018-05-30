@@ -8,7 +8,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import control.AlmacenRuta;
+import control.almacenes.AlmacenRuta;
 import modelo.Cliente;
 import modelo.Pedido;
 

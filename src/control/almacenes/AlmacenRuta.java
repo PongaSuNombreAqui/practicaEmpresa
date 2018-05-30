@@ -1,9 +1,9 @@
-package control;
+package control.almacenes;
 
 import java.io.File;
 
-import modelo.DAO;
 import modelo.Pedido;
+import modelo.acceso.DAO;
 import utiles.Utiles;
 
 public class AlmacenRuta {

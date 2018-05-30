@@ -10,10 +10,11 @@ import javax.swing.SwingWorker;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
-import control.AccionesArticulo;
-import control.AccionesCliente;
-import control.AccionesPedido;
-import control.AlmacenIndice;
+
+import control.acciones.AccionesArticulo;
+import control.acciones.AccionesCliente;
+import control.acciones.AccionesPedido;
+import control.almacenes.AlmacenIndice;
 import modelo.Cliente;
 import modelo.Linea;
 

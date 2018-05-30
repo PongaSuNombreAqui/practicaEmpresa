@@ -1,10 +1,10 @@
-package control;
+package control.almacenes;
 
 import java.io.File;
 import java.util.TreeMap;
 import java.util.Map.Entry;
 
-import modelo.DAO;
+import modelo.acceso.DAO;
 import utiles.Utiles;
 
 public class AlmacenIndice<T, K> {
