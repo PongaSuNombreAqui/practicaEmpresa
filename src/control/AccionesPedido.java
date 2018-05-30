@@ -17,10 +17,16 @@ import javax.swing.table.TableModel;
 
 public class AccionesPedido<K> {
 
-	public boolean crear(String dniNif) {
-		Cliente cliente = (Cliente) new AlmacenIndice<>(Utiles.pathClientes).leer((K) dniNif);
+
+	public boolean crear(String dniNif, TableModel modelo) {
+		Cliente cliente = (Cliente) new AlmacenIndice<>(Utiles.pathClientes).leer((K)dniNif);
 		int numero = getNumeroPosiblePedido();
+
 		Pedido pedido = new Pedido(numero, cliente);
+		ArrayList<Linea> lineas = extraerPedidoRejilla(modelo);
+		for (Linea linea : lineas) {
+			pedido.insertarLinea(linea);
+		}
 		AlmacenRuta almacen = new AlmacenRuta(Utiles.pathPedidos);
 		if (almacen.grabar(cliente.getDniCif(), pedido)) {
 			aumentarNumeroPedido(numero);
@@ -41,12 +47,11 @@ public class AccionesPedido<K> {
 		}
 		return leer;
 	}
-
-	public void consultar(String id, int numeroPedido) {
-		AlmacenRuta almacen = new AlmacenRuta(Utiles.pathPedidos);
+	
+	public void consultar(JTable tabla, int numeroPedido, String id) {
+	AlmacenRuta almacen = new AlmacenRuta(Utiles.pathPedidos);
 		Pedido pedido = almacen.leer(id, numeroPedido);
-		// ?
-
+		introducirPedidoRejilla(tabla, pedido);
 	}
 
 	public void aniadirArticuloATabla(JTable tabla, String nombre) {
@@ -71,18 +76,31 @@ public class AccionesPedido<K> {
 	 */
 	public ArrayList<Linea> extraerPedidoRejilla(TableModel modelo) {
 		ArrayList<Linea> retorno = new ArrayList<>();
-		// TODO
+		int rows = modelo.getRowCount(); 
+		for(int i = rows - 1; i >=0; i--)	
+		{
+			String nombreArticulo = modelo.getValueAt(i, 1).toString();
+			int cantidad = Integer.parseInt(modelo.getValueAt(i, 3).toString());
+			Articulo item = (Articulo) new AlmacenIndice<>(Utiles.pathArticulos).leer(nombreArticulo);
+			retorno.add(new Linea(item, cantidad));
+		}
 		return retorno;
 	}
 
 	/**
 	 * Vuelca los datos de un arraylist en un modelo de una tabla
-	 * 
+	 * @param pedido 
 	 * @param modelo
+	 * @param cliente 
+	 * @param pedido 
 	 * @param listaObjeto
 	 */
-	public void introducirPedidoRejilla(TableModel modelo, ArrayList<Linea> listaObjeto) {
-		// TODO
+
+	public void introducirPedidoRejilla(JTable tabla, Pedido pedido){
+		DefaultTableModel modelo = (DefaultTableModel) tabla.getModel();
+		for (int i = pedido.getLineas().size(); i > 0; i--) {
+			modelo.addRow(pedido.getLinea(i).toVector());
+		}
 	}
 
 }

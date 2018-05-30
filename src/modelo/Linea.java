@@ -35,13 +35,23 @@ public class Linea implements Serializable {
 		return articulo.getNombre() + " " + String.valueOf(cantidad);
 	}
 
+//	public Vector toVector() {
+//		 Vector vector = new Vector();
+//		 vector.add(articulo.getNombre());
+//		 vector.add(articulo.getDescripcion());
+//		 vector.add(articulo.getCurrentPrice());
+//		 vector.add(cantidad);
+//		 vector.add(articulo.getCurrentPrice()*cantidad);
+//		return vector;
+//	}
+	
 	public Vector toVector() {
-		Vector vector = new Vector();
-		vector.add(articulo.getNombre());
-		vector.add(articulo.getDescripcion());
-		vector.add(articulo.getCurrentPrice());
-		vector.add(cantidad);
-		vector.add(articulo.getCurrentPrice() * cantidad);
+		 Vector vector = new Vector();
+		 vector.add(articulo.getIdArticulo());
+		 vector.add(articulo.getNombre());
+		 vector.add(articulo.getCurrentPrice());
+		 vector.add(cantidad);
+		 vector.add(articulo.getCurrentPrice()*cantidad);
 		return vector;
 	}
 }
