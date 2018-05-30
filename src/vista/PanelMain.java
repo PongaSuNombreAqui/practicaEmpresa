@@ -16,12 +16,12 @@ public class PanelMain extends JPanel {
 	public PanelMain() {
 		setBackground(Color.GRAY);
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[]{0, 360, 0, 0};
-		gridBagLayout.rowHeights = new int[]{0, 0, 24, 59, 47, 47, 0};
-		gridBagLayout.columnWeights = new double[]{1.0, 1.0, 1.0, Double.MIN_VALUE};
-		gridBagLayout.rowWeights = new double[]{1.0, 1.0, 1.0, 1.0, 1.0, 1.0, Double.MIN_VALUE};
+		gridBagLayout.columnWidths = new int[] { 0, 360, 0, 0 };
+		gridBagLayout.rowHeights = new int[] { 0, 0, 24, 59, 47, 47, 0 };
+		gridBagLayout.columnWeights = new double[] { 1.0, 1.0, 1.0, Double.MIN_VALUE };
+		gridBagLayout.rowWeights = new double[] { 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, Double.MIN_VALUE };
 		setLayout(gridBagLayout);
-		
+
 		JLabel lblNombreEmpresa = new JLabel("Nombre empresa");
 		lblNombreEmpresa.setFont(new Font("Comic Sans MS", Font.BOLD, 20));
 		GridBagConstraints gbc_lblNombreEmpresa = new GridBagConstraints();
@@ -29,7 +29,7 @@ public class PanelMain extends JPanel {
 		gbc_lblNombreEmpresa.gridx = 1;
 		gbc_lblNombreEmpresa.gridy = 1;
 		add(lblNombreEmpresa, gbc_lblNombreEmpresa);
-		
+
 		JLabel lblDatos = new JLabel("datos");
 		GridBagConstraints gbc_lblDatos = new GridBagConstraints();
 		gbc_lblDatos.insets = new Insets(0, 0, 5, 5);

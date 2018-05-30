@@ -46,13 +46,14 @@ public class Articulo implements Serializable {
 
 	@Override
 	public boolean equals(Object obj) {
-		Articulo elemento=(Articulo)obj;
-		boolean retorno=super.equals(elemento);
-		if(!retorno){
-			retorno=idArticulo==elemento.getIdArticulo();
+		Articulo elemento = (Articulo) obj;
+		boolean retorno = super.equals(elemento);
+		if (!retorno) {
+			retorno = idArticulo == elemento.getIdArticulo();
 		}
 		return retorno;
 	}
+
 	public void insertarNuevoPrecio(float nuevoPrecio, boolean oferta) {
 		assert nuevoPrecio > 0;
 		precios.getLast().setFechaFinal();

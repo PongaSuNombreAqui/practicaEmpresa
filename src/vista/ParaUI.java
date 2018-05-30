@@ -49,48 +49,26 @@ public class ParaUI extends UI {
 
 	}
 
-	private void Pausa(int tiempo) {
-
-		final SwingWorker worker = new SwingWorker() {
-			@Override
-			protected Object doInBackground() throws Exception {
-				try {
-					Thread.sleep(tiempo * 1000);
-				} catch (InterruptedException e1) {
-					e1.printStackTrace();
-				}
-				return null;
-			}
-		};
-		worker.execute();
-	}
-
 	private void ponerListenerArticulo() {
 
 		panelArticulo.getBtnBuscar().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (true == accionesArticulo.comprobarExistencia(panelArticulo.getNombreConsultado().getText())) {
+					panelArticulo.aniadir(panelEditarArticulo);
+					panelArticulo.revalidate();
 					accionesArticulo.consultar(panelArticulo.getNombreConsultado().getText(),
 							panelArticulo.getDetallesNombre(), panelArticulo.getDetallesID(),
 							panelArticulo.getDetallesPrecio(), panelArticulo.getDetallesDescripcion());
+				} else {
+					panelArticulo.getMensajeConsulta().setForeground(Color.RED);
+					panelArticulo.getMensajeConsulta().setText("Error : El articulo no existe!!");
+					Pausa(2);
 				}
 			}
 		});
 
 		panelArticulo.getBtnCrear().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				final SwingWorker borrarMensajeCrear = new SwingWorker() {
-					@Override
-					protected Object doInBackground() throws Exception {
-						try {
-							Thread.sleep(2000);
-						} catch (InterruptedException e1) {
-							e1.printStackTrace();
-						}
-						panelArticulo.getMensajeCrear().setText("");
-						return null;
-					}
-				};
 				if (accionesArticulo.crearArticulo(panelArticulo.getCrearNombre().getText(),
 						Float.valueOf(panelArticulo.getCrearPrecio().getText()),
 						Integer.valueOf(panelArticulo.getCrearID().getText()),
@@ -102,33 +80,7 @@ public class ParaUI extends UI {
 					panelArticulo.getMensajeCrear().setForeground(Color.RED);
 					panelArticulo.getMensajeCrear().setText("Error : El articulo ya existe!!");
 				}
-				borrarMensajeCrear.execute();
-			}
-		});
-
-		panelArticulo.getBtnBuscar().addActionListener(new ActionListener() {
-			final SwingWorker borrarMensajeConsulta = new SwingWorker() {
-				@Override
-				protected Object doInBackground() throws Exception {
-					try {
-						Thread.sleep(2000);
-					} catch (InterruptedException e1) {
-						e1.printStackTrace();
-					}
-					panelArticulo.getMensajeConsulta().setText("");
-					return null;
-				}
-			};
-
-			public void actionPerformed(ActionEvent arg0) {
-				if (true == accionesArticulo.comprobarExistencia(panelArticulo.getNombreConsultado().getText())) {
-					panelArticulo.aniadir(panelEditarArticulo);
-					panelArticulo.revalidate();
-				} else {
-					panelArticulo.getMensajeConsulta().setForeground(Color.RED);
-					panelArticulo.getMensajeConsulta().setText("Error : El articulo no existe!!");
-					borrarMensajeConsulta.execute();
-				}
+				Pausa(2);
 			}
 		});
 
@@ -283,4 +235,21 @@ public class ParaUI extends UI {
 		}
 	}
 
+	private void Pausa(int tiempo) {
+
+		final SwingWorker worker = new SwingWorker() {
+			@Override
+			protected Object doInBackground() throws Exception {
+				try {
+					Thread.sleep(tiempo * 1000);
+				} catch (InterruptedException e1) {
+					e1.printStackTrace();
+				}
+				panelArticulo.getMensajeConsulta().setText("");
+				panelArticulo.getMensajeCrear().setText("");
+				return null;
+			}
+		};
+		worker.execute();
+	}
 }

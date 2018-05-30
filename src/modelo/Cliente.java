@@ -44,7 +44,7 @@ public class Cliente implements Serializable {
 	public boolean equals(Object obj) {
 		Cliente cliente = (Cliente) obj;
 		boolean retorno = super.equals(obj);
-		if(!retorno){
+		if (!retorno) {
 			retorno = this.dniCif.equals(cliente.dniCif);
 		}
 		return retorno;

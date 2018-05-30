@@ -27,11 +27,14 @@ public class AlmacenIndice<T, K> {
 			this.indice = new TreeMap<>();
 		}
 	}
-	
+
 	/**
 	 * graba un cliente en un fichero con indice
-	 * @param t es el objeto cliente
-	 * @param k es la clave, 
+	 * 
+	 * @param t
+	 *            es el objeto cliente
+	 * @param k
+	 *            es la clave,
 	 * @return true si se graba, false si no
 	 */
 	public boolean grabar(T t, K k) {
@@ -53,10 +56,12 @@ public class AlmacenIndice<T, K> {
 		}
 		return retorno;
 	}
-	
+
 	/**
 	 * leer un objeto cliente desde el dni
-	 * @param k es el dniCif del cliente a leer
+	 * 
+	 * @param k
+	 *            es el dniCif del cliente a leer
 	 * @return
 	 */
 	public T leer(K k) {
@@ -69,12 +74,16 @@ public class AlmacenIndice<T, K> {
 		}
 		return retorno;
 	}
-	
+
 	/**
 	 * grabar un objeto articulo en el fichero
-	 * @param t el objeto articulo
-	 * @param numero el ID del articulo
-	 * @param nombre el nombre del articulo
+	 * 
+	 * @param t
+	 *            el objeto articulo
+	 * @param numero
+	 *            el ID del articulo
+	 * @param nombre
+	 *            el nombre del articulo
 	 * @return true si se graba, false si no
 	 */
 	public boolean grabar(T t, Integer numero, String nombre) {
@@ -89,11 +98,12 @@ public class AlmacenIndice<T, K> {
 			retorno = new DAO<>().grabar(pathIndice, this.indice);
 		}
 		return retorno;
-	} 
-	
+	}
+
 	/**
 	 * lee un objeto articulo con el nombre dado
-	 * @param nombre 
+	 * 
+	 * @param nombre
 	 * @return el objeto articulo
 	 */
 	public T leer(String nombre) {
@@ -108,17 +118,17 @@ public class AlmacenIndice<T, K> {
 		}
 		return retorno;
 	}
-	
+
 	public TreeMap obtenerIndice() {
 		if (Utiles.comprobarExiste(pathIndice)) {
 			return (TreeMap) new DAO<>().leer(pathIndice);
 		}
 		return null;
 	}
-	
-	public TreeMap obtenerMap(){
-		if(Utiles.comprobarExiste(pathIndice)){
-		return (TreeMap) new DAO<T>().leer(pathIndice);
+
+	public TreeMap obtenerMap() {
+		if (Utiles.comprobarExiste(pathIndice)) {
+			return (TreeMap) new DAO<T>().leer(pathIndice);
 		}
 		return null;
 	}
