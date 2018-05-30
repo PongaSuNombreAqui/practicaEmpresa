@@ -60,7 +60,5 @@ public class PanelTabla extends JPanel {
 		scrollPane = new JScrollPane(tabla);
 		add(scrollPane, gbc_scrollPane);
 
-
 	}
-
 }

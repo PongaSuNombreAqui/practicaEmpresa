@@ -7,12 +7,12 @@ import modelo.Pedido;
 import utiles.Utiles;
 
 public class AlmacenRuta {
-	private StringBuilder pathComun ;
+	private StringBuilder pathComun;
 	private int lenghtDir;
 
 	public AlmacenRuta(String path) {
 		super();
-		pathComun=new StringBuilder(path);
+		pathComun = new StringBuilder(path);
 		File file = new File(pathComun.toString());
 		if (!file.exists()) {
 			file.mkdirs();

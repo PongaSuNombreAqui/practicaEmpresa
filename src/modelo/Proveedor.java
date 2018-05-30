@@ -2,7 +2,7 @@ package modelo;
 
 import java.io.Serializable;
 
-public class Proveedor implements Serializable,Comparable<Proveedor>{
+public class Proveedor implements Serializable, Comparable<Proveedor> {
 	private String nombre;
 
 	public Proveedor(String nombre) {
@@ -10,7 +10,6 @@ public class Proveedor implements Serializable,Comparable<Proveedor>{
 		this.nombre = nombre;
 	}
 
-	
 	public String getNombre() {
 		return nombre;
 	}
@@ -24,5 +23,5 @@ public class Proveedor implements Serializable,Comparable<Proveedor>{
 	public int compareTo(Proveedor o) {
 		return nombre.compareTo(o.nombre);
 	}
-	
+
 }

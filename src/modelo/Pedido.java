@@ -24,16 +24,17 @@ public class Pedido implements Serializable {
 		return lineas.add(linea);
 	}
 
-	public Linea getLinea(int numero){
-		assert numero>0&&numero<=lineas.size();
-		return lineas.get(numero-1);
+	public Linea getLinea(int numero) {
+		assert numero > 0 && numero <= lineas.size();
+		return lineas.get(numero - 1);
 	}
 
-	public Linea getLast(){
+	public Linea getLast() {
 		return getLinea(lineas.size());
 	}
+
 	public void setCliente(Cliente cliente2) {
-		this.cliente=cliente2;
+		this.cliente = cliente2;
 	}
 
 	public int getNumero() {
@@ -51,12 +52,13 @@ public class Pedido implements Serializable {
 	public ArrayList<Linea> getLineas() {
 		return lineas;
 	}
+
 	@Override
 	public boolean equals(Object obj) {
-		Pedido elemento=(Pedido)obj;
-		boolean retorno=super.equals(elemento);
-		if(!retorno){
-			retorno=this.numero==elemento.getNumero();
+		Pedido elemento = (Pedido) obj;
+		boolean retorno = super.equals(elemento);
+		if (!retorno) {
+			retorno = this.numero == elemento.getNumero();
 		}
 		return retorno;
 	}
