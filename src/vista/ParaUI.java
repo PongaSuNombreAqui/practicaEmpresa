@@ -67,31 +67,30 @@ public class ParaUI extends UI {
 
 	private void ponerListenerArticulo() {
 
-		final SwingWorker worker = new SwingWorker() {
-			@Override
-			protected Object doInBackground() throws Exception {
-				try {
-					Thread.sleep(1000);
-				} catch (InterruptedException e1) {
-					e1.printStackTrace();
-				}
-				panelArticulo.getMensajeCrear().setText("");
-				panelArticulo.getMensajeConsulta().setText("");
-				return null;
-			}
-		};
-
 		panelArticulo.getBtnBuscar().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				accionesArticulo.consultar(panelArticulo.getNombreConsultado().getText(),
-						panelArticulo.getDetallesNombre(), panelArticulo.getDetallesID(),
-						panelArticulo.getDetallesPrecio(), panelArticulo.getDetallesDescripcion());
+				if (true == accionesArticulo.comprobarExistencia(panelArticulo.getNombreConsultado().getText())) {
+					accionesArticulo.consultar(panelArticulo.getNombreConsultado().getText(),
+							panelArticulo.getDetallesNombre(), panelArticulo.getDetallesID(),
+							panelArticulo.getDetallesPrecio(), panelArticulo.getDetallesDescripcion());
+				}
 			}
 		});
 
 		panelArticulo.getBtnCrear().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// Thread
+				final SwingWorker borrarMensajeCrear = new SwingWorker() {
+					@Override
+					protected Object doInBackground() throws Exception {
+						try {
+							Thread.sleep(2000);
+						} catch (InterruptedException e1) {
+							e1.printStackTrace();
+						}
+						panelArticulo.getMensajeCrear().setText("");
+						return null;
+					}
+				};
 				if (accionesArticulo.crearArticulo(panelArticulo.getCrearNombre().getText(),
 						Float.valueOf(panelArticulo.getCrearPrecio().getText()),
 						Integer.valueOf(panelArticulo.getCrearID().getText()),
@@ -103,11 +102,24 @@ public class ParaUI extends UI {
 					panelArticulo.getMensajeCrear().setForeground(Color.RED);
 					panelArticulo.getMensajeCrear().setText("Error : El articulo ya existe!!");
 				}
-				worker.execute();
+				borrarMensajeCrear.execute();
 			}
 		});
 
 		panelArticulo.getBtnBuscar().addActionListener(new ActionListener() {
+			final SwingWorker borrarMensajeConsulta = new SwingWorker() {
+				@Override
+				protected Object doInBackground() throws Exception {
+					try {
+						Thread.sleep(2000);
+					} catch (InterruptedException e1) {
+						e1.printStackTrace();
+					}
+					panelArticulo.getMensajeConsulta().setText("");
+					return null;
+				}
+			};
+
 			public void actionPerformed(ActionEvent arg0) {
 				if (true == accionesArticulo.comprobarExistencia(panelArticulo.getNombreConsultado().getText())) {
 					panelArticulo.aniadir(panelEditarArticulo);
@@ -115,8 +127,8 @@ public class ParaUI extends UI {
 				} else {
 					panelArticulo.getMensajeConsulta().setForeground(Color.RED);
 					panelArticulo.getMensajeConsulta().setText("Error : El articulo no existe!!");
+					borrarMensajeConsulta.execute();
 				}
-				worker.execute();
 			}
 		});
 
@@ -124,6 +136,7 @@ public class ParaUI extends UI {
 			public void actionPerformed(ActionEvent e) {
 				accionesArticulo.editar(panelArticulo.getDetallesNombre().getText(),
 						Integer.valueOf(panelEditarArticulo.getNuevoPrecio().getText()));
+				panelArticulo.getDetallesPrecio().setText(panelEditarArticulo.getNuevoPrecio().getText());
 			}
 		});
 
@@ -172,9 +185,10 @@ public class ParaUI extends UI {
 				panelPedido.getBtnAdd().setEnabled(false);
 				panelPedido.getComboClientes().setEnabled(true);
 				ArrayList<Linea> lineas = new ArrayList<>();
-				// TODO sacar las  lineas de pedido desde la tabla, cada fila una linwa
-				//TODO no se puede encargar si no hay nada en la tabla
-				//TODO que la combobox del nombre no este vacia, por si intenta crear un pedido sin clientes en la aplicacion
+				// TODO sacar las lineas de pedido desde la tabla, cada fila una linwa
+				// TODO no se puede encargar si no hay nada en la tabla
+				// TODO que la combobox del nombre no este vacia, por si intenta crear un pedido
+				// sin clientes en la aplicacion
 				String dniNif = getClienteIDFromCombo(panelPedido.getComboClientesCrear());
 				if (accionesPedido.crear(dniNif)) {
 					panelPedido.getTxtMensaje().setText("Pedido completado satisfactoriamente");
@@ -207,11 +221,11 @@ public class ParaUI extends UI {
 				panelPedido.getBtnVer().setEnabled(false);
 			}
 		});
-		DefaultTableModel dm=(DefaultTableModel) panelTabla.getTabla().getModel();
+		DefaultTableModel dm = (DefaultTableModel) panelTabla.getTabla().getModel();
 		dm.addTableModelListener(new TableModelListener() {
 			@Override
 			public void tableChanged(TableModelEvent e) {
-				//TODO actualizar los precios totales, si aumentan la cantidad aumenta el total
+				// TODO actualizar los precios totales, si aumentan la cantidad aumenta el total
 			}
 		});
 	}
