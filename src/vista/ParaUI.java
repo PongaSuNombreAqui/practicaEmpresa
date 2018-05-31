@@ -194,14 +194,18 @@ public class ParaUI extends UI {
 		panelPedido.getBtnVer().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (!comprobarPedidoProceso()) {
-					panelPedido.getBtnVer().setEnabled(false);
-					panelPedido.getComboPedidos().setEnabled(false);
-					String dniNif = getItemFromCombo(panelPedido.getComboClientes());
-					int numeroPedido =Integer.valueOf(getItemFromCombo(panelPedido.getComboPedidos()));
-					eliminarPedidoRejilla();
-					panelPedido.getTxtMensaje()
-							.setText("Mostrando el pedido " + numeroPedido + " del cliente con dni: " + dniNif);
-					logica.consultar(panelTabla.getTabla(), numeroPedido, dniNif);
+					if (panelPedido.getComboPedidos().getItemCount() != 0 && panelPedido.getComboClientes().getItemCount() != 0) {
+						panelPedido.getBtnVer().setEnabled(false);
+						panelPedido.getComboPedidos().setEnabled(false);
+						String dniNif = getItemFromCombo(panelPedido.getComboClientes());
+						int numeroPedido =Integer.valueOf(getItemFromCombo(panelPedido.getComboPedidos()));
+						eliminarPedidoRejilla();
+						panelPedido.getTxtMensaje()
+								.setText("Mostrando el pedido " + numeroPedido + " del cliente con dni: " + dniNif);
+						logica.consultar(panelTabla.getTabla(), numeroPedido, dniNif);
+					} else {
+						panelPedido.getTxtMensaje().setText("No se ha seleccionado pedido");
+					}
 				}
 			}
 		});
@@ -211,6 +215,7 @@ public class ParaUI extends UI {
 			public void tableChanged(TableModelEvent e) {
 				// TODO actualizar los precios totales, si aumentan la cantidad
 				// aumenta el total
+				
 			}
 		});
 	}
