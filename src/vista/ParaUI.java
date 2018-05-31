@@ -10,24 +10,26 @@ import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 
 import control.Logica;
+import utiles.Utiles;
 
 public class ParaUI extends UI {
 
-	Logica logica;
-	PanelPedido panelPedido;
-	PanelTabla panelTabla;
-	PanelCliente panelCliente;
-	PanelArticulo panelArticulo;
-	PanelMain panelMain;
-	PanelEditarArticulo panelEditarArticulo;
-
+	private Logica logica;
+	private PanelPedido panelPedido;
+	private PanelTabla panelTabla;
+	private PanelCliente panelCliente;
+	private PanelArticulo panelArticulo;
+	private PanelMain panelMain;
+	private PanelEditarArticulo panelEditarArticulo;
+	private boolean pedidoProceso;
+	private DefaultTableModel modeloTabla;
 	public ParaUI() {
 		super();
 		this.panelMain = new PanelMain();
 		panelGeneralMain.add(panelMain);
 
 		this.logica = new Logica();
-
+		
 		prepararTablaPedido();
 		prepararTablaArticulo();
 		prepararTablaCliente();
@@ -92,97 +94,119 @@ public class ParaUI extends UI {
 	private void ponerListenersPedido() {
 		panelPedido.getBtnAdd().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				logica.aniadirArticuloATabla(panelTabla.getTabla(),
-						(String) panelPedido.getComboArticulos().getSelectedItem());
-				panelPedido.getBtnCheck().setEnabled(true);
-				panelPedido.getBtnDelete().setEnabled(true);
-				panelPedido.revalidate();
+				if (comprobarPedidoProceso()) {
+					String nombreArticulo = panelPedido.getComboArticulos().getSelectedItem().toString();
+					logica.aniadirArticuloATabla(panelTabla.getTabla(), nombreArticulo);
+					panelPedido.revalidate();
+					panelPedido.getTxtMensaje().setText("Insertado en el pedido el articulo " + nombreArticulo);
+				}
 			}
 		});
-		panelPedido.getBtnCheck().addActionListener(new ActionListener() {
+		panelPedido.getBtnCancelar().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// TODO no se que hace el check(posible cancelar pedido)
+				if (comprobarPedidoProceso()) {
+					pedidoProceso=false;
+					eliminarPedidoRejilla();
+					panelPedido.getTxtMensaje().setText("El pedido ha sido cancelado");
+				}
 			}
 		});
 		panelPedido.getBtnNuevoPedido().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				panelPedido.getComboArticulos().setEnabled(true);
-				panelPedido.getBtnEncargar().setEnabled(true);
-				panelPedido.getComboClientesCrear().setEnabled(true);
-				panelPedido.getBtnNuevoPedido().setEnabled(false);
-				panelPedido.getBtnVer().setEnabled(false);
-				panelPedido.getComboClientes().setEnabled(false);
-				panelPedido.getTxtNumeroPedido().setText(String.valueOf(logica.getNumeroPosiblePedido()));
+				if (!comprobarPedidoProceso()) {
+					pedidoProceso = true;
+					String numeroPedido = String.valueOf(logica.getNumeroPosiblePedido());
+					panelPedido.getTxtNumeroPedido().setText(numeroPedido);
+					panelPedido.getTxtMensaje().setText("Nuevo pedido numero " + numeroPedido + " en proceso");
+					logica.insertarArticulosEnCombo(panelPedido.getComboArticulos());
+					logica.insertarClientesEnCombo(panelPedido.getComboClientesCrear());
+					eliminarPedidoRejilla();
+				}
 			}
+
 		});
 		panelPedido.getBtnEncargar().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
-				if (panelPedido.getComboClientesCrear().getItemCount() != 0) {
-					if (panelTabla.getTabla().getRowCount() != 0) {
-						panelPedido.getBtnNuevoPedido().setEnabled(true);
-						panelPedido.getComboArticulos().setEnabled(false);
-						panelPedido.getBtnEncargar().setEnabled(false);
-						panelPedido.getBtnDelete().setEnabled(false);
-						panelPedido.getComboClientesCrear().setEditable(false);
-						panelPedido.getBtnCheck().setEnabled(false);
-						panelPedido.getBtnAdd().setEnabled(false);
-						panelPedido.getComboClientes().setEnabled(true);
-						// TODO no se puede encargar si no hay nada en la tabla
-						// TODO que la combobox del nombre no este vacia, por si intenta crear un pedido
-						// sin clientes en la aplicacion
-						// TODO borrar tabla al encargar elpedido (eliminarPedidoRejilla)
-
-						String dniNif = getClienteIDFromCombo(panelPedido.getComboClientesCrear());
-						if (logica.crear(dniNif, panelTabla.getTabla())) {
-							panelPedido.getTxtMensaje().setText("Pedido completado satisfactoriamente");
-							eliminarPedidoRejilla();
+				if (comprobarPedidoProceso()) {
+					if (panelPedido.getComboClientesCrear().getItemCount() != 0) {
+						if (panelTabla.getTabla().getRowCount() != 0) {
+							// TODO no se puede encargar si no hay nada en la
+							// tabla
+							// TODO que la combobox del nombre no este vacia,
+							// por si
+							// intenta crear un pedido
+							// sin clientes en la aplicacion
+							// TODO borrar tabla al encargar elpedido
+							// (eliminarPedidoRejilla)
+							String dniNif = getItemFromCombo(panelPedido.getComboClientesCrear());
+							if (logica.crear(dniNif, panelTabla.getTabla())) {
+								pedidoProceso = false;
+								panelPedido.getTxtMensaje().setText("Pedido completado satisfactoriamente");
+								eliminarPedidoRejilla();
+							} else {
+								panelPedido.getTxtMensaje().setText("Fallo al encargar el pedido");
+							}
 						} else {
-							panelPedido.getTxtMensaje().setText("Fallo al encargar el pedido");
+							panelPedido.getTxtMensaje().setText("Nada que encargar");
 						}
 					} else {
-						panelPedido.getTxtMensaje().setText("Nada que encargar");
+						panelPedido.getTxtMensaje().setText("No hay clientes");
 					}
-				} else {
-					panelPedido.getTxtMensaje().setText("No hay clientes");
+
 				}
-
 			}
-
 		});
 		panelPedido.getBtnDelete().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				DefaultTableModel model = (DefaultTableModel) panelTabla.getTabla().getModel();
-				if (!panelTabla.getTabla().getSelectionModel().isSelectionEmpty()) {
-					int seleccionada = panelTabla.getTabla().getSelectedRow();
-					model.removeRow(seleccionada);
-				} else {
-					panelPedido.getTxtMensaje().setText("No se ha seleccionado linea de pedido");
+				if (comprobarPedidoProceso()) {
+					if (!panelTabla.getTabla().getSelectionModel().isSelectionEmpty()) {
+						int seleccionada = panelTabla.getTabla().getSelectedRow();
+						modeloTabla.removeRow(seleccionada);
+						panelPedido.getTxtMensaje().setText("Linea borrada satisfactoriamente");
+					} else {
+						panelPedido.getTxtMensaje().setText("No se ha seleccionado linea de pedido");
+					}
 				}
 			}
 		});
-		panelPedido.getComboArticulos().addActionListener((e) -> panelPedido.getBtnAdd().setEnabled(true));
+		panelPedido.getComboClientesCrear()
+				.addActionListener((e) -> panelPedido.getTxtMensaje().setText("Cliente para el pedido seleccionado"));
+
+		panelPedido.getComboArticulos().addActionListener((e) -> panelPedido.getTxtMensaje()
+				.setText("Articulo seleccionado, pulse add para introducirlo al pedido"));
+
+		panelPedido.getComboPedidos().addActionListener(
+				(e) -> panelPedido.getTxtMensaje().setText("Pedido seleccionado, pulse ver para ver detalles"));
+
 		panelPedido.getComboClientes().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				panelPedido.getComboPedidos().removeAllItems();
-				panelPedido.getComboPedidos().setEnabled(true);
-				logica.insertarPedidosEnCombo(panelPedido.getComboPedidos(),
-						(String) panelPedido.getComboClientes().getSelectedItem());
-				panelPedido.revalidate();
-				panelPedido.getBtnVer().setEnabled(true);
+				if (!comprobarPedidoProceso()) {
+					panelPedido.getComboPedidos().removeAllItems();
+					panelPedido.getComboPedidos().setEnabled(true);
+					logica.insertarPedidosEnCombo(panelPedido.getComboPedidos(),
+							(String) panelPedido.getComboClientes().getSelectedItem(),panelPedido.getTxtMensaje());
+					panelPedido.getBtnVer().setEnabled(true);
+					panelPedido.revalidate();
+				}
 			}
 		});
+
 		panelPedido.getBtnVer().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				panelPedido.getBtnVer().setEnabled(false);
-				String dniNif = getClienteIDFromCombo(panelPedido.getComboClientesCrear());
-				int numeroPedido = getNumeroPedidoFromCombo(panelPedido.getComboPedidos());
-				eliminarPedidoRejilla();
-				logica.consultar(panelTabla.getTabla(), numeroPedido, dniNif);
+				if (!comprobarPedidoProceso()) {
+					panelPedido.getBtnVer().setEnabled(false);
+					panelPedido.getComboPedidos().setEnabled(false);
+					String dniNif = getItemFromCombo(panelPedido.getComboClientes());
+					int numeroPedido =Integer.valueOf(getItemFromCombo(panelPedido.getComboPedidos()));
+					eliminarPedidoRejilla();
+					panelPedido.getTxtMensaje()
+							.setText("Mostrando el pedido " + numeroPedido + " del cliente con dni: " + dniNif);
+					logica.consultar(panelTabla.getTabla(), numeroPedido, dniNif);
+				}
 			}
 		});
-		DefaultTableModel dm = (DefaultTableModel) panelTabla.getTabla().getModel();
-		dm.addTableModelListener(new TableModelListener() {
+		
+		modeloTabla.addTableModelListener(new TableModelListener() {
 			@Override
 			public void tableChanged(TableModelEvent e) {
 				// TODO actualizar los precios totales, si aumentan la cantidad
@@ -197,9 +221,9 @@ public class ParaUI extends UI {
 		this.panelPedido.addPanelTabla(panelTabla); // mete el paneltabla en el
 													// panelpedido
 		panelGeneralPedido.add(panelPedido);
-		logica.insertarArticulosEnCombo(panelPedido.getComboArticulos());
 		logica.insertarClientesEnCombo(panelPedido.getComboClientes());
-		logica.insertarClientesEnCombo(panelPedido.getComboClientesCrear());
+		this.pedidoProceso = false;
+		this.modeloTabla = (DefaultTableModel) panelTabla.getTabla().getModel();
 	}
 
 	private void prepararTablaCliente() {
@@ -215,23 +239,16 @@ public class ParaUI extends UI {
 
 	}
 
-	private String getClienteIDFromCombo(JComboBox<String> combo) {
-		String cadenaCliente = combo.getSelectedItem().toString();
-		String dniNif = cadenaCliente.substring(cadenaCliente.indexOf(" ") + 1);
-		return dniNif;
-	}
-
-	protected int getNumeroPedidoFromCombo(JComboBox comboPedidos) {
-		String numeroPedido = comboPedidos.getSelectedItem().toString();
-		numeroPedido = numeroPedido.substring(numeroPedido.lastIndexOf(" ") + 1);
-		return Integer.parseInt(numeroPedido);
+	private String getItemFromCombo(JComboBox combo) {
+		String cadenaCliente = (String) combo.getSelectedItem();
+		 return cadenaCliente.substring(cadenaCliente.indexOf(Utiles.separador) + 1);
+		 
 	}
 
 	private void eliminarPedidoRejilla() {
-		DefaultTableModel modelo = (DefaultTableModel) panelTabla.getTabla().getModel();
-		int rows = modelo.getRowCount();
+		int rows = modeloTabla.getRowCount();
 		for (int i = rows - 1; i >= 0; i--) {
-			modelo.removeRow(i);
+			modeloTabla.removeRow(i);
 		}
 	}
 
@@ -250,5 +267,14 @@ public class ParaUI extends UI {
 			}
 		};
 		worker.execute();
+	}
+
+	private boolean comprobarPedidoProceso() {
+		if (!pedidoProceso) {
+			panelPedido.getTxtMensaje().setText("Accion no disponible si no esta creando un pedido");
+		} else {
+			panelPedido.getTxtMensaje().setText("Se esta crendo un pedido ahora mismo, cancelelo o completelo");
+		}
+		return pedidoProceso;
 	}
 }

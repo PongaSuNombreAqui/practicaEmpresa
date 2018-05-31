@@ -3,6 +3,8 @@ package control;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JTable;
+import javax.swing.JTextField;
+
 import control.acciones.AccionesArticulo;
 import control.acciones.AccionesCliente;
 import control.acciones.AccionesPedido;
@@ -71,11 +73,12 @@ public class Logica<K> {
 	};
 
 	public void insertarClientesEnCombo(JComboBox combo) {
+		combo.removeAllItems();
 		accionesCliente.insertarClientesEnCombo(combo);
 	}
 
-	public void insertarPedidosEnCombo(JComboBox combo, String cadena) {
-		accionesCliente.insertarPedidosEnCombo(combo, cadena);
+	public void insertarPedidosEnCombo(JComboBox combo, String cadena, JTextField txtField) {
+		accionesCliente.insertarPedidosEnCombo(combo, cadena, txtField);
 	}
 
 }
