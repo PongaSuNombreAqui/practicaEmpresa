@@ -9,11 +9,10 @@ import javax.swing.JLabel;
 import control.almacenes.AlmacenIndice;
 import modelo.Articulo;
 import utiles.Utiles;
-import vista.PanelArticulo;
 
 public class AccionesArticulo {
 
-	public boolean crearArticulo(Object newArticulo,  int id, String nombre ) {
+	public boolean crearArticulo(Object newArticulo, int id, String nombre) {
 		return new AlmacenIndice<>(Utiles.pathArticulos).grabar(newArticulo, id, nombre);
 	}
 

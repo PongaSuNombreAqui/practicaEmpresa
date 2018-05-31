@@ -13,21 +13,22 @@ import modelo.Cliente;
 import modelo.Pedido;
 
 public class AlmacenPedidoTest {
-	Cliente clienteUno,clienteDos, clienteTres ;
-	Pedido pedidoUno,pedidoDos, pedidoTres, pedidoCuatro, pedidoCinco,pedidoSeis;
+	Cliente clienteUno, clienteDos, clienteTres;
+	Pedido pedidoUno, pedidoDos, pedidoTres, pedidoCuatro, pedidoCinco, pedidoSeis;
 	String path = "./dataTest/pedidos/";
+
 	@Before
 	public void setUp() throws Exception {
-		Cliente clienteUno = new Cliente( "dni1","uno" ,"asd","123");
-		Cliente clienteDos = new Cliente( "dni2","uno" ,"asd","123");
-		Cliente clienteTres = new Cliente( "dni3","uno" ,"asd","123");
-		 pedidoUno = new Pedido(1, clienteUno);
-		 pedidoDos = new Pedido(2, clienteDos);
-		 pedidoTres = new Pedido(3, clienteUno);
-		 pedidoCuatro = new Pedido(4, clienteDos);
-		 pedidoCinco = new Pedido(5, clienteTres);
-		 pedidoSeis = new Pedido(6, clienteUno);
-		 
+		Cliente clienteUno = new Cliente("dni1", "uno", "asd", "123");
+		Cliente clienteDos = new Cliente("dni2", "uno", "asd", "123");
+		Cliente clienteTres = new Cliente("dni3", "uno", "asd", "123");
+		pedidoUno = new Pedido(1, clienteUno);
+		pedidoDos = new Pedido(2, clienteDos);
+		pedidoTres = new Pedido(3, clienteUno);
+		pedidoCuatro = new Pedido(4, clienteDos);
+		pedidoCinco = new Pedido(5, clienteTres);
+		pedidoSeis = new Pedido(6, clienteUno);
+
 	}
 
 	@After
@@ -59,10 +60,14 @@ public class AlmacenPedidoTest {
 		testGrabar();
 		assertEquals(pedidoUno, new AlmacenRuta(path).leer(pedidoUno.getCliente().getDniCif(), pedidoUno.getNumero()));
 		assertEquals(pedidoDos, new AlmacenRuta(path).leer(pedidoDos.getCliente().getDniCif(), pedidoDos.getNumero()));
-		assertEquals(pedidoTres, new AlmacenRuta(path).leer(pedidoTres.getCliente().getDniCif(), pedidoTres.getNumero()));
-		assertEquals(pedidoCuatro, new AlmacenRuta(path).leer(pedidoCuatro.getCliente().getDniCif(), pedidoCuatro.getNumero()));
-		assertEquals(pedidoCinco, new AlmacenRuta(path).leer(pedidoCinco.getCliente().getDniCif(), pedidoCinco.getNumero()));
-		assertEquals(pedidoSeis, new AlmacenRuta(path).leer(pedidoSeis.getCliente().getDniCif(), pedidoSeis.getNumero()));
+		assertEquals(pedidoTres,
+				new AlmacenRuta(path).leer(pedidoTres.getCliente().getDniCif(), pedidoTres.getNumero()));
+		assertEquals(pedidoCuatro,
+				new AlmacenRuta(path).leer(pedidoCuatro.getCliente().getDniCif(), pedidoCuatro.getNumero()));
+		assertEquals(pedidoCinco,
+				new AlmacenRuta(path).leer(pedidoCinco.getCliente().getDniCif(), pedidoCinco.getNumero()));
+		assertEquals(pedidoSeis,
+				new AlmacenRuta(path).leer(pedidoSeis.getCliente().getDniCif(), pedidoSeis.getNumero()));
 	}
 
 }
