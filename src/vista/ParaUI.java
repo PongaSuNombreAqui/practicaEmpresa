@@ -77,7 +77,7 @@ public class ParaUI extends UI {
 		panelEditarArticulo.getBtnEditar().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				logica.editar(panelArticulo.getDetallesNombre().getText(),
-						Integer.valueOf(panelEditarArticulo.getNuevoPrecio().getText()));
+						Float.valueOf(panelEditarArticulo.getNuevoPrecio().getText()));
 				panelArticulo.getDetallesPrecio().setText(panelEditarArticulo.getNuevoPrecio().getText());
 			}
 		});
