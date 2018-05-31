@@ -51,7 +51,7 @@ public class ParaUI extends UI {
 							panelArticulo.getDetallesDescripcion());
 				} else {
 					panelArticulo.getMensajeConsulta().setForeground(Color.RED);
-					panelArticulo.getMensajeConsulta().setText("Error : El articulo no existe!!");
+					panelArticulo.getMensajeConsulta().setText("Error: El articulo no existe!!");
 					Pausa(2);
 				}
 			}
@@ -65,10 +65,10 @@ public class ParaUI extends UI {
 						panelArticulo.getCrearDescripcion().getText())) {
 					logica.insertarArticulosEnCombo(panelPedido.getComboArticulos());
 					panelArticulo.getMensajeCrear().setForeground(Color.GREEN);
-					panelArticulo.getMensajeCrear().setText("El articulo ha sido creado");
+					panelArticulo.getMensajeCrear().setText("El articulo ha sido creado.");
 				} else {
 					panelArticulo.getMensajeCrear().setForeground(Color.RED);
-					panelArticulo.getMensajeCrear().setText("Error : El articulo ya existe!!");
+					panelArticulo.getMensajeCrear().setText("Error: El articulo ya existe!!");
 				}
 				Pausa(2);
 			}
@@ -235,12 +235,12 @@ public class ParaUI extends UI {
 		}
 	}
 
-	private void Pausa(int tiempo) {
+	private void Pausa(int tiempoSeg) {
 		final SwingWorker worker = new SwingWorker() {
 			@Override
 			protected Object doInBackground() throws Exception {
 				try {
-					Thread.sleep(tiempo * 1000);
+					Thread.sleep(tiempoSeg * 1000);
 				} catch (InterruptedException e1) {
 					e1.printStackTrace();
 				}
