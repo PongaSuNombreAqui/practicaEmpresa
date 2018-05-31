@@ -17,7 +17,6 @@ import control.almacenes.AlmacenRuta;
 
 public class AccionesPedido<K> {
 
-
 	public boolean crear(Cliente cliente, JTable tabla) {
 		DefaultTableModel modelo = (DefaultTableModel) tabla.getModel();
 		int numero = getNumeroPosiblePedido();
@@ -45,7 +44,7 @@ public class AccionesPedido<K> {
 		}
 		return leer;
 	}
-	
+
 	public void consultar(JTable tabla, Pedido pedido) {
 		introducirPedidoRejilla(tabla, pedido);
 	}
@@ -71,9 +70,8 @@ public class AccionesPedido<K> {
 	 */
 	public ArrayList<Linea> extraerPedidoRejilla(TableModel modelo) {
 		ArrayList<Linea> retorno = new ArrayList<>();
-		int rows = modelo.getRowCount(); 
-		for(int i = rows - 1; i >=0; i--)	
-		{
+		int rows = modelo.getRowCount();
+		for (int i = rows - 1; i >= 0; i--) {
 			String nombreArticulo = modelo.getValueAt(i, 1).toString();
 			int cantidad = Integer.parseInt(modelo.getValueAt(i, 3).toString());
 			Articulo item = (Articulo) new AlmacenIndice<>(Utiles.pathArticulos).leer(nombreArticulo);
@@ -84,14 +82,15 @@ public class AccionesPedido<K> {
 
 	/**
 	 * Vuelca los datos de un arraylist en un modelo de una tabla
-	 * @param pedido 
+	 * 
+	 * @param pedido
 	 * @param modelo
-	 * @param cliente 
-	 * @param pedido 
+	 * @param cliente
+	 * @param pedido
 	 * @param listaObjeto
 	 */
 
-	public void introducirPedidoRejilla(JTable tabla, Pedido pedido){
+	public void introducirPedidoRejilla(JTable tabla, Pedido pedido) {
 		DefaultTableModel modelo = (DefaultTableModel) tabla.getModel();
 		for (int i = pedido.getLineas().size(); i > 0; i--) {
 			modelo.addRow(pedido.getLinea(i).toVector());

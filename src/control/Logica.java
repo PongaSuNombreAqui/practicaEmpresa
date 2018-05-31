@@ -19,7 +19,6 @@ public class Logica<K> {
 	AccionesPedido accionesPedido;
 
 	public Logica() {
-
 		this.accionesArticulo = new AccionesArticulo();
 		this.accionesCliente = new AccionesCliente();
 		this.accionesPedido = new AccionesPedido();
@@ -37,7 +36,7 @@ public class Logica<K> {
 	public boolean crearArticulo(String nombre, Float precio, int id, String descripcion) {
 		Articulo newArticulo = new Articulo(id, nombre, descripcion, precio);
 		Articulo item = (Articulo) new AlmacenIndice<>(Utiles.pathArticulos).leer(nombre);
-		if(item == null){
+		if (item == null) {
 			return accionesArticulo.crearArticulo(newArticulo, id, nombre);
 		}
 		return false;
@@ -62,13 +61,13 @@ public class Logica<K> {
 	};
 
 	public boolean crear(String dniNif, JTable tabla) {
-		Cliente cliente = (Cliente) new AlmacenIndice<>(Utiles.pathClientes).leer((K)dniNif);
+		Cliente cliente = (Cliente) new AlmacenIndice<>(Utiles.pathClientes).leer((K) dniNif);
 		return accionesPedido.crear(cliente, tabla);
 	};
 
 	public void consultar(JTable tabla, int numeroPedido, String id) {
 		Pedido pedido = new AlmacenRuta(Utiles.pathPedidos).leer(id, numeroPedido);
-		accionesPedido.consultar(tabla,pedido);
+		accionesPedido.consultar(tabla, pedido);
 	};
 
 	public void insertarClientesEnCombo(JComboBox combo) {

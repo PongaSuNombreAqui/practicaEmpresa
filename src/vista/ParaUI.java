@@ -46,9 +46,9 @@ public class ParaUI extends UI {
 				if (true == logica.comprobarExistencia(panelArticulo.getNombreConsultado().getText())) {
 					panelArticulo.aniadir(panelEditarArticulo);
 					panelArticulo.revalidate();
-					logica.consultar(panelArticulo.getNombreConsultado().getText(),
-							panelArticulo.getDetallesNombre(), panelArticulo.getDetallesID(),
-							panelArticulo.getDetallesPrecio(), panelArticulo.getDetallesDescripcion());
+					logica.consultar(panelArticulo.getNombreConsultado().getText(), panelArticulo.getDetallesNombre(),
+							panelArticulo.getDetallesID(), panelArticulo.getDetallesPrecio(),
+							panelArticulo.getDetallesDescripcion());
 				} else {
 					panelArticulo.getMensajeConsulta().setForeground(Color.RED);
 					panelArticulo.getMensajeConsulta().setText("Error : El articulo no existe!!");
@@ -131,8 +131,8 @@ public class ParaUI extends UI {
 						// TODO no se puede encargar si no hay nada en la tabla
 						// TODO que la combobox del nombre no este vacia, por si intenta crear un pedido
 						// sin clientes en la aplicacion
-						//TODO borrar tabla al encargar elpedido (eliminarPedidoRejilla)
-						
+						// TODO borrar tabla al encargar elpedido (eliminarPedidoRejilla)
+
 						String dniNif = getClienteIDFromCombo(panelPedido.getComboClientesCrear());
 						if (logica.crear(dniNif, panelTabla.getTabla())) {
 							panelPedido.getTxtMensaje().setText("Pedido completado satisfactoriamente");
@@ -146,7 +146,7 @@ public class ParaUI extends UI {
 				} else {
 					panelPedido.getTxtMensaje().setText("No hay clientes");
 				}
-				
+
 			}
 
 		});
@@ -236,7 +236,6 @@ public class ParaUI extends UI {
 	}
 
 	private void Pausa(int tiempo) {
-
 		final SwingWorker worker = new SwingWorker() {
 			@Override
 			protected Object doInBackground() throws Exception {
