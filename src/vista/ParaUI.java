@@ -23,6 +23,8 @@ public class ParaUI extends UI {
 	private PanelEditarArticulo panelEditarArticulo;
 	private boolean pedidoProceso;
 	private DefaultTableModel modeloTabla;
+	private boolean bloquearListener = false;
+
 	public ParaUI() {
 		super();
 		this.panelMain = new PanelMain();
@@ -95,10 +97,12 @@ public class ParaUI extends UI {
 		panelPedido.getBtnAdd().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (comprobarPedidoProceso()) {
+					bloquearListener = true;
 					String nombreArticulo = panelPedido.getComboArticulos().getSelectedItem().toString();
 					logica.aniadirArticuloATabla(panelTabla.getTabla(), nombreArticulo);
 					panelPedido.revalidate();
 					panelPedido.getTxtMensaje().setText("Insertado en el pedido el articulo " + nombreArticulo);
+					bloquearListener = false;
 				}
 			}
 		});
@@ -106,7 +110,7 @@ public class ParaUI extends UI {
 			public void actionPerformed(ActionEvent e) {
 				if (comprobarPedidoProceso()) {
 					pedidoProceso=false;
-					eliminarPedidoRejilla();
+					logica.eliminarPedidoRejilla(panelTabla.getTabla());
 					panelPedido.getTxtMensaje().setText("El pedido ha sido cancelado");
 				}
 			}
@@ -120,7 +124,8 @@ public class ParaUI extends UI {
 					panelPedido.getTxtMensaje().setText("Nuevo pedido numero " + numeroPedido + " en proceso");
 					logica.insertarArticulosEnCombo(panelPedido.getComboArticulos());
 					logica.insertarClientesEnCombo(panelPedido.getComboClientesCrear());
-					eliminarPedidoRejilla();
+					logica.eliminarPedidoRejilla(panelTabla.getTabla());
+					bloquearListener = false;
 				}
 			}
 
@@ -130,19 +135,11 @@ public class ParaUI extends UI {
 				if (comprobarPedidoProceso()) {
 					if (panelPedido.getComboClientesCrear().getItemCount() != 0) {
 						if (panelTabla.getTabla().getRowCount() != 0) {
-							// TODO no se puede encargar si no hay nada en la
-							// tabla
-							// TODO que la combobox del nombre no este vacia,
-							// por si
-							// intenta crear un pedido
-							// sin clientes en la aplicacion
-							// TODO borrar tabla al encargar elpedido
-							// (eliminarPedidoRejilla)
 							String dniNif = getItemFromCombo(panelPedido.getComboClientesCrear());
 							if (logica.crear(dniNif, panelTabla.getTabla())) {
 								pedidoProceso = false;
 								panelPedido.getTxtMensaje().setText("Pedido completado satisfactoriamente");
-								eliminarPedidoRejilla();
+								logica.eliminarPedidoRejilla(panelTabla.getTabla());
 							} else {
 								panelPedido.getTxtMensaje().setText("Fallo al encargar el pedido");
 							}
@@ -195,11 +192,12 @@ public class ParaUI extends UI {
 			public void actionPerformed(ActionEvent e) {
 				if (!comprobarPedidoProceso()) {
 					if (panelPedido.getComboPedidos().getItemCount() != 0 && panelPedido.getComboClientes().getItemCount() != 0) {
+						bloquearListener = true;
 						panelPedido.getBtnVer().setEnabled(false);
 						panelPedido.getComboPedidos().setEnabled(false);
 						String dniNif = getItemFromCombo(panelPedido.getComboClientes());
 						int numeroPedido =Integer.valueOf(getItemFromCombo(panelPedido.getComboPedidos()));
-						eliminarPedidoRejilla();
+						logica.eliminarPedidoRejilla(panelTabla.getTabla());
 						panelPedido.getTxtMensaje()
 								.setText("Mostrando el pedido " + numeroPedido + " del cliente con dni: " + dniNif);
 						logica.consultar(panelTabla.getTabla(), numeroPedido, dniNif);
@@ -213,9 +211,12 @@ public class ParaUI extends UI {
 		modeloTabla.addTableModelListener(new TableModelListener() {
 			@Override
 			public void tableChanged(TableModelEvent e) {
-				// TODO actualizar los precios totales, si aumentan la cantidad
-				// aumenta el total
-				
+				if (panelTabla.getTabla().getRowCount() != 0 && !bloquearListener) {
+					bloquearListener = true;
+					System.out.println("Fire");
+					logica.cambiarPrecioRejilla(panelTabla.getTabla());
+					bloquearListener = false;
+				}			
 			}
 		});
 	}
@@ -250,12 +251,12 @@ public class ParaUI extends UI {
 		 
 	}
 
-	private void eliminarPedidoRejilla() {
-		int rows = modeloTabla.getRowCount();
-		for (int i = rows - 1; i >= 0; i--) {
-			modeloTabla.removeRow(i);
-		}
-	}
+//	private void eliminarPedidoRejilla() {
+//		int rows = modeloTabla.getRowCount();
+//		for (int i = rows - 1; i >= 0; i--) {
+//			modeloTabla.removeRow(i);
+//		}
+//	}
 
 	private void Pausa(int tiempoSeg) {
 		final SwingWorker worker = new SwingWorker() {

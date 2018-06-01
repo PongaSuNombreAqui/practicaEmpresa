@@ -81,4 +81,12 @@ public class Logica<K> {
 		accionesCliente.insertarPedidosEnCombo(combo, cadena, txtField);
 	}
 
+	public void cambiarPrecioRejilla(JTable tabla) {
+		accionesPedido.cambiarPrecioRejilla(tabla);
+	}
+
+	public void eliminarPedidoRejilla(JTable tabla) {
+		accionesPedido.eliminarPedidoRejilla(tabla);
+	}
+	
 }
