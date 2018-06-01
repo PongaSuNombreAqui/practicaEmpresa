@@ -6,7 +6,13 @@ import java.util.Map.Entry;
 
 import modelo.acceso.DAO;
 import utiles.Utiles;
-
+/**
+ * 
+ * @author fp-hermoso
+ *
+ * @param <T> object que guarda
+ * @param <K> key para guardarlo
+ */
 public class AlmacenIndice<T, K> {
 
 	private StringBuilder pathDatos;

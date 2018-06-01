@@ -11,7 +11,13 @@ import org.junit.Test;
 
 import control.almacenes.AlmacenIndice;
 import modelo.Articulo;
-
+/**
+ * 
+ * @author fp-hermoso
+ *
+ * @param <T> object
+ * @param <K> key
+ */
 public class AlmacenArticuloTest<T, K> {
 
 	Articulo articuloUno = new Articulo(0, "pan", null, 0);

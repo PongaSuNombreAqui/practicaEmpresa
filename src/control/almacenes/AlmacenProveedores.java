@@ -6,7 +6,11 @@ import java.util.TreeSet;
 import modelo.Proveedor;
 import modelo.acceso.DAO;
 import utiles.Utiles;
-
+/**
+ * 
+ * @author fp-hermoso
+ *
+ */
 public class AlmacenProveedores {
 
 	private TreeSet<Proveedor> lista; // esto tendria que ser un set, pero no tira (?)

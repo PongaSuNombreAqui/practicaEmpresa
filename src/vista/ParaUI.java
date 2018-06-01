@@ -3,6 +3,8 @@ package vista;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+
 import javax.swing.JComboBox;
 import javax.swing.SwingWorker;
 import javax.swing.event.TableModelEvent;
@@ -12,6 +14,11 @@ import javax.swing.table.DefaultTableModel;
 import control.Logica;
 import utiles.Utiles;
 
+/**
+ * 
+ * @author fp-hermoso
+ *
+ */
 public class ParaUI extends UI {
 
 	private Logica logica;
@@ -23,16 +30,25 @@ public class ParaUI extends UI {
 	private PanelEditarArticulo panelEditarArticulo;
 	private boolean pedidoProceso;
 	private DefaultTableModel modeloTabla;
+
+	/**
+	 * constructor ParaUI
+	 */
 	public ParaUI() {
 		super();
+
+		if (!Utiles.comprobarExiste(Utiles.main)) {
+			new File(Utiles.main).mkdirs();
+		}
+
 		this.panelMain = new PanelMain();
 		panelGeneralMain.add(panelMain);
 
 		this.logica = new Logica();
-		
-		prepararTablaPedido();
-		prepararTablaArticulo();
-		prepararTablaCliente();
+
+		prepararPanelPedido();
+		prepararPanelArticulo();
+		prepararPanelCliente();
 
 		// TODO action listeners all
 		ponerListenersPedido();
@@ -41,6 +57,9 @@ public class ParaUI extends UI {
 
 	}
 
+	/**
+	 * listeners que usa el panel de articulos
+	 */
 	private void ponerListenerArticulo() {
 
 		panelArticulo.getBtnBuscar().addActionListener(new ActionListener() {
@@ -54,6 +73,11 @@ public class ParaUI extends UI {
 				} else {
 					panelArticulo.getMensajeConsulta().setForeground(Color.RED);
 					panelArticulo.getMensajeConsulta().setText("Error: El articulo no existe!!");
+					panelArticulo.getNombreConsultado().setText("");
+					panelArticulo.getDetallesNombre().setText("");
+					panelArticulo.getDetallesID().setText("");
+					panelArticulo.getDetallesPrecio().setText("");;
+					panelArticulo.getDetallesDescripcion().setText("");
 					Pausa(2);
 				}
 			}
@@ -78,36 +102,48 @@ public class ParaUI extends UI {
 
 		panelEditarArticulo.getBtnEditar().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				logica.editar(panelArticulo.getDetallesNombre().getText(),
-						Float.valueOf(panelEditarArticulo.getNuevoPrecio().getText()));
-				panelArticulo.getDetallesPrecio().setText(panelEditarArticulo.getNuevoPrecio().getText());
+				if (!panelArticulo.getDetallesNombre().getText().isEmpty()) {
+					logica.editar(panelArticulo.getDetallesNombre().getText(),
+							Float.valueOf(panelEditarArticulo.getNuevoPrecio().getText()));
+					panelArticulo.getDetallesPrecio().setText(panelEditarArticulo.getNuevoPrecio().getText());
+				}else{
+					panelArticulo.getMensajeConsulta().setForeground(Color.RED);
+					panelArticulo.getMensajeConsulta().setText("Error: Vacio!!");
+					Pausa(2);
+				}
 			}
 		});
 
 	}
 
+	/**
+	 * listeners que usa el panel de clientes
+	 */
 	private void ponerListenerCliente() {
 		// TODO Auto-generated method stub
 
 	}
 
+	/**
+	 * listeners que usa el panel de pedidos
+	 */
 	private void ponerListenersPedido() {
 		panelPedido.getBtnAdd().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (comprobarPedidoProceso()) {
 					String nombreArticulo = panelPedido.getComboArticulos().getSelectedItem().toString();
-					logica.aniadirArticuloATabla(panelTabla.getTabla(), nombreArticulo);
+					logica.aniadirArticuloATabla(nombreArticulo, modeloTabla);
 					panelPedido.revalidate();
-					panelPedido.getTxtMensaje().setText("Insertado en el pedido el articulo " + nombreArticulo);
+					setMensaje("Insertado en el pedido el articulo " + nombreArticulo);
 				}
 			}
 		});
 		panelPedido.getBtnCancelar().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (comprobarPedidoProceso()) {
-					pedidoProceso=false;
-					eliminarPedidoRejilla();
-					panelPedido.getTxtMensaje().setText("El pedido ha sido cancelado");
+					pedidoProceso = false;
+					logica.eliminarPedidoRejilla(modeloTabla);
+					setMensaje("El pedido ha sido cancelado");
 				}
 			}
 		});
@@ -117,10 +153,10 @@ public class ParaUI extends UI {
 					pedidoProceso = true;
 					String numeroPedido = String.valueOf(logica.getNumeroPosiblePedido());
 					panelPedido.getTxtNumeroPedido().setText(numeroPedido);
-					panelPedido.getTxtMensaje().setText("Nuevo pedido numero " + numeroPedido + " en proceso");
+					setMensaje("Nuevo pedido numero " + numeroPedido + " en proceso");
 					logica.insertarArticulosEnCombo(panelPedido.getComboArticulos());
 					logica.insertarClientesEnCombo(panelPedido.getComboClientesCrear());
-					eliminarPedidoRejilla();
+					logica.eliminarPedidoRejilla(modeloTabla);
 				}
 			}
 
@@ -138,19 +174,19 @@ public class ParaUI extends UI {
 							// sin clientes en la aplicacion
 							// TODO borrar tabla al encargar elpedido
 							// (eliminarPedidoRejilla)
-							String dniNif = getItemFromCombo(panelPedido.getComboClientesCrear());
-							if (logica.crear(dniNif, panelTabla.getTabla())) {
+							String dniNif = logica.getItemFromCombo(panelPedido.getComboClientesCrear());
+							if (logica.crear(dniNif, modeloTabla)) {
 								pedidoProceso = false;
-								panelPedido.getTxtMensaje().setText("Pedido completado satisfactoriamente");
-								eliminarPedidoRejilla();
+								setMensaje("Pedido completado satisfactoriamente");
+								logica.eliminarPedidoRejilla(modeloTabla);
 							} else {
-								panelPedido.getTxtMensaje().setText("Fallo al encargar el pedido");
+								setMensaje("Fallo al encargar el pedido");
 							}
 						} else {
-							panelPedido.getTxtMensaje().setText("Nada que encargar");
+							setMensaje("Nada que encargar");
 						}
 					} else {
-						panelPedido.getTxtMensaje().setText("No hay clientes");
+						setMensaje("No hay clientes");
 					}
 
 				}
@@ -162,21 +198,20 @@ public class ParaUI extends UI {
 					if (!panelTabla.getTabla().getSelectionModel().isSelectionEmpty()) {
 						int seleccionada = panelTabla.getTabla().getSelectedRow();
 						modeloTabla.removeRow(seleccionada);
-						panelPedido.getTxtMensaje().setText("Linea borrada satisfactoriamente");
+						setMensaje("Linea borrada satisfactoriamente");
 					} else {
-						panelPedido.getTxtMensaje().setText("No se ha seleccionado linea de pedido");
+						setMensaje("No se ha seleccionado linea de pedido");
 					}
 				}
 			}
 		});
-		panelPedido.getComboClientesCrear()
-				.addActionListener((e) -> panelPedido.getTxtMensaje().setText("Cliente para el pedido seleccionado"));
+		panelPedido.getComboClientesCrear().addActionListener((e) -> setMensaje("Cliente para el pedido seleccionado"));
 
-		panelPedido.getComboArticulos().addActionListener((e) -> panelPedido.getTxtMensaje()
-				.setText("Articulo seleccionado, pulse add para introducirlo al pedido"));
+		panelPedido.getComboArticulos()
+				.addActionListener((e) -> setMensaje("Articulo seleccionado, pulse add para introducirlo al pedido"));
 
-		panelPedido.getComboPedidos().addActionListener(
-				(e) -> panelPedido.getTxtMensaje().setText("Pedido seleccionado, pulse ver para ver detalles"));
+		panelPedido.getComboPedidos()
+				.addActionListener((e) -> setMensaje("Pedido seleccionado, pulse ver para ver detalles"));
 
 		panelPedido.getComboClientes().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -184,7 +219,7 @@ public class ParaUI extends UI {
 					panelPedido.getComboPedidos().removeAllItems();
 					panelPedido.getComboPedidos().setEnabled(true);
 					logica.insertarPedidosEnCombo(panelPedido.getComboPedidos(),
-							(String) panelPedido.getComboClientes().getSelectedItem(),panelPedido.getTxtMensaje());
+							(String) panelPedido.getComboClientes().getSelectedItem(), panelPedido.getTxtMensaje());
 					panelPedido.getBtnVer().setEnabled(true);
 					panelPedido.revalidate();
 				}
@@ -196,26 +231,32 @@ public class ParaUI extends UI {
 				if (!comprobarPedidoProceso()) {
 					panelPedido.getBtnVer().setEnabled(false);
 					panelPedido.getComboPedidos().setEnabled(false);
-					String dniNif = getItemFromCombo(panelPedido.getComboClientes());
-					int numeroPedido =Integer.valueOf(getItemFromCombo(panelPedido.getComboPedidos()));
-					eliminarPedidoRejilla();
-					panelPedido.getTxtMensaje()
-							.setText("Mostrando el pedido " + numeroPedido + " del cliente con dni: " + dniNif);
+					String dniNif = logica.getItemFromCombo(panelPedido.getComboClientes());
+					int numeroPedido = Integer.valueOf(logica.getItemFromCombo(panelPedido.getComboPedidos()));
+					logica.eliminarPedidoRejilla(modeloTabla);
 					logica.consultar(panelTabla.getTabla(), numeroPedido, dniNif);
+					setMensaje("Mostrando el pedido " + numeroPedido + " del cliente con dni: " + dniNif);
 				}
 			}
 		});
-		
 		modeloTabla.addTableModelListener(new TableModelListener() {
 			@Override
 			public void tableChanged(TableModelEvent e) {
-				// TODO actualizar los precios totales, si aumentan la cantidad
-				// aumenta el total
+				if (pedidoProceso) {
+					// TODO actualizar los precios totales, si aumentan la
+					// cantidad
+					// aumenta el total
+				} else {
+					setMensaje("Es un pedido ya almacenado, no se puede editar");
+				}
 			}
 		});
 	}
 
-	private void prepararTablaPedido() {
+	/**
+	 * preparacion del panel pedido
+	 */
+	private void prepararPanelPedido() {
 		this.panelPedido = new PanelPedido(); // crea el panelpedido
 		this.panelTabla = new PanelTabla(); // crea el paneltabla
 		this.panelPedido.addPanelTabla(panelTabla); // mete el paneltabla en el
@@ -226,32 +267,31 @@ public class ParaUI extends UI {
 		this.modeloTabla = (DefaultTableModel) panelTabla.getTabla().getModel();
 	}
 
-	private void prepararTablaCliente() {
+	/**
+	 * preparacion del panel cliente
+	 */
+	private void prepararPanelCliente() {
 		this.panelCliente = new PanelCliente();
 		panelGeneralCliente.add(panelCliente);
 
 	}
 
-	private void prepararTablaArticulo() {
+	/**
+	 * preparacion del panel articulo
+	 */
+	private void prepararPanelArticulo() {
 		this.panelArticulo = new PanelArticulo();
 		panelGeneralArticulo.add(panelArticulo);
 		this.panelEditarArticulo = new PanelEditarArticulo();
 
 	}
 
-	private String getItemFromCombo(JComboBox combo) {
-		String cadenaCliente = (String) combo.getSelectedItem();
-		 return cadenaCliente.substring(cadenaCliente.indexOf(Utiles.separador) + 1);
-		 
-	}
-
-	private void eliminarPedidoRejilla() {
-		int rows = modeloTabla.getRowCount();
-		for (int i = rows - 1; i >= 0; i--) {
-			modeloTabla.removeRow(i);
-		}
-	}
-
+	/**
+	 * metodo que crea una pausa en la ejecucion del programa
+	 * 
+	 * @param tiempoSeg
+	 *            segundos de pausa
+	 */
 	private void Pausa(int tiempoSeg) {
 		final SwingWorker worker = new SwingWorker() {
 			@Override
@@ -269,12 +309,30 @@ public class ParaUI extends UI {
 		worker.execute();
 	}
 
+	/**
+	 * comprueba que hay un pedido en proceso o no e inserta un mensaje en el
+	 * panel pedido
+	 * 
+	 * @return true si hay un pedido en proceso, false si no hay pedido en
+	 *         proceso
+	 */
 	private boolean comprobarPedidoProceso() {
-		if (!pedidoProceso) {
-			panelPedido.getTxtMensaje().setText("Accion no disponible si no esta creando un pedido");
+		if (pedidoProceso) {
+			setMensaje("Se esta creando un pedido ahora mismo, cancelelo o completelo");
 		} else {
-			panelPedido.getTxtMensaje().setText("Se esta crendo un pedido ahora mismo, cancelelo o completelo");
+			setMensaje("Accion no disponible si no esta creando un pedido");
 		}
 		return pedidoProceso;
+	}
+
+	/**
+	 * Pone el texto dado en el textfield del panelPedido para que salga como
+	 * mensaje
+	 * 
+	 * @param mensaje
+	 *            cadena de texto a poner como mensaje
+	 */
+	private void setMensaje(String mensaje) {
+		panelPedido.getTxtMensaje().setText(mensaje);
 	}
 }
