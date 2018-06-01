@@ -250,13 +250,6 @@ public class ParaUI extends UI {
 		 
 	}
 
-//	private void eliminarPedidoRejilla() {
-//		int rows = modeloTabla.getRowCount();
-//		for (int i = rows - 1; i >= 0; i--) {
-//			modeloTabla.removeRow(i);
-//		}
-//	}
-
 	private void Pausa(int tiempoSeg) {
 		final SwingWorker worker = new SwingWorker() {
 			@Override
