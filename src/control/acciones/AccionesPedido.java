@@ -91,5 +91,22 @@ public class AccionesPedido<K> {
 			modelo.addRow(pedido.getLinea(i).toVector());
 		}
 	}
+	
+	public void cambiarPrecioRejilla(JTable tabla) {
+		DefaultTableModel modelo = (DefaultTableModel) tabla.getModel();
+		ArrayList<Linea> lineas = extraerPedidoRejilla(modelo);
+		eliminarPedidoRejilla(tabla);
+		for (int i = lineas.size() - 1; i >= 0; i--) {
+			modelo.addRow(lineas.get(i).toVector());
+		}
+	}
+
+	public void eliminarPedidoRejilla(JTable tabla) {
+		DefaultTableModel modelo = (DefaultTableModel) tabla.getModel();
+		int rows = modelo.getRowCount();
+		for (int i = rows - 1; i >= 0; i--) {
+			modelo.removeRow(i);
+		}
+	}
 
 }

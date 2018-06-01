@@ -30,6 +30,7 @@ public class ParaUI extends UI {
 	private PanelEditarArticulo panelEditarArticulo;
 	private boolean pedidoProceso;
 	private DefaultTableModel modeloTabla;
+	private boolean bloquearListener = false;
 
 	/**
 	 * constructor ParaUI
@@ -131,10 +132,12 @@ public class ParaUI extends UI {
 		panelPedido.getBtnAdd().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (comprobarPedidoProceso()) {
+					bloquearListener = true;
 					String nombreArticulo = panelPedido.getComboArticulos().getSelectedItem().toString();
 					logica.aniadirArticuloATabla(nombreArticulo, modeloTabla);
 					panelPedido.revalidate();
 					setMensaje("Insertado en el pedido el articulo " + nombreArticulo);
+					bloquearListener = false;
 				}
 			}
 		});
@@ -157,6 +160,7 @@ public class ParaUI extends UI {
 					logica.insertarArticulosEnCombo(panelPedido.getComboArticulos());
 					logica.insertarClientesEnCombo(panelPedido.getComboClientesCrear());
 					logica.eliminarPedidoRejilla(modeloTabla);
+					bloquearListener = false;
 				}
 			}
 
@@ -166,14 +170,6 @@ public class ParaUI extends UI {
 				if (comprobarPedidoProceso()) {
 					if (panelPedido.getComboClientesCrear().getItemCount() != 0) {
 						if (panelTabla.getTabla().getRowCount() != 0) {
-							// TODO no se puede encargar si no hay nada en la
-							// tabla
-							// TODO que la combobox del nombre no este vacia,
-							// por si
-							// intenta crear un pedido
-							// sin clientes en la aplicacion
-							// TODO borrar tabla al encargar elpedido
-							// (eliminarPedidoRejilla)
 							String dniNif = logica.getItemFromCombo(panelPedido.getComboClientesCrear());
 							if (logica.crear(dniNif, modeloTabla)) {
 								pedidoProceso = false;
@@ -229,13 +225,18 @@ public class ParaUI extends UI {
 		panelPedido.getBtnVer().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (!comprobarPedidoProceso()) {
-					panelPedido.getBtnVer().setEnabled(false);
-					panelPedido.getComboPedidos().setEnabled(false);
-					String dniNif = logica.getItemFromCombo(panelPedido.getComboClientes());
-					int numeroPedido = Integer.valueOf(logica.getItemFromCombo(panelPedido.getComboPedidos()));
-					logica.eliminarPedidoRejilla(modeloTabla);
-					logica.consultar(panelTabla.getTabla(), numeroPedido, dniNif);
-					setMensaje("Mostrando el pedido " + numeroPedido + " del cliente con dni: " + dniNif);
+					if (panelPedido.getComboPedidos().getItemCount() != 0 && panelPedido.getComboClientes().getItemCount() != 0) {
+						bloquearListener = true;
+						panelPedido.getBtnVer().setEnabled(false);
+						panelPedido.getComboPedidos().setEnabled(false);
+						String dniNif = logica.getItemFromCombo(panelPedido.getComboClientes());
+						int numeroPedido = Integer.valueOf(logica.getItemFromCombo(panelPedido.getComboPedidos()));
+						logica.eliminarPedidoRejilla(modeloTabla);
+						logica.consultar(panelTabla.getTabla(), numeroPedido, dniNif);
+						setMensaje("Mostrando el pedido " + numeroPedido + " del cliente con dni: " + dniNif);
+					} else {
+						setMensaje("No se ha seleccionado pedido");
+					}
 				}
 			}
 		});
@@ -243,9 +244,11 @@ public class ParaUI extends UI {
 			@Override
 			public void tableChanged(TableModelEvent e) {
 				if (pedidoProceso) {
-					// TODO actualizar los precios totales, si aumentan la
-					// cantidad
-					// aumenta el total
+					if (panelTabla.getTabla().getRowCount() != 0 && !bloquearListener) {
+						bloquearListener = true;
+						logica.cambiarPrecioRejilla(panelTabla.getTabla());
+						bloquearListener = false;
+					}
 				} else {
 					setMensaje("Es un pedido ya almacenado, no se puede editar");
 				}

@@ -163,4 +163,12 @@ public class Logica<K> {
 		}
 	}
 
+	public void cambiarPrecioRejilla(JTable tabla) {
+		accionesPedido.cambiarPrecioRejilla(tabla);
+	}
+
+	public void eliminarPedidoRejilla(JTable tabla) {
+		accionesPedido.eliminarPedidoRejilla(tabla);
+	}
+	
 }
