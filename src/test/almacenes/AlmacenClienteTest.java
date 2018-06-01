@@ -11,7 +11,12 @@ import org.junit.Test;
 
 import control.almacenes.AlmacenIndice;
 import modelo.Cliente;
-
+/**
+ * 
+ * @author fp-hermoso
+ *
+ * @param <K> key
+ */
 public class AlmacenClienteTest<K> {
 	ArrayList<Cliente> clientes = new ArrayList<>();
 

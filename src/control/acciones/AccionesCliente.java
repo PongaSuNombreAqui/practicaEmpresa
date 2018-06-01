@@ -10,11 +10,15 @@ import javax.swing.JTextField;
 import control.almacenes.AlmacenIndice;
 import modelo.Cliente;
 import utiles.Utiles;
-
+/**
+ * 
+ * @author fp-hermoso
+ *
+ * @param <K> clave almacen indice
+ */
 public class AccionesCliente<K> {
 
 	public void insertarPedidosEnCombo(JComboBox combo, String cadena, JTextField txtMensaje) {
-		cadena = cadena.substring(cadena.lastIndexOf(Utiles.separador) + 1);
 		if (Utiles.comprobarExiste("./data/pedidos/" + cadena)) {
 			File[] pedidos = new File("./data/pedidos/" + cadena).listFiles();
 			for (int i = 0; i < pedidos.length; i++) {
@@ -25,8 +29,7 @@ public class AccionesCliente<K> {
 		}
 	}
 
-	public void insertarClientesEnCombo(JComboBox combo) {
-		TreeMap indiceMap = new AlmacenIndice<>(Utiles.pathClientes).obtenerMap();
+	public void insertarClientesEnCombo(JComboBox<Object> combo, TreeMap indiceMap) {
 		if (!(indiceMap == null)) {
 			Set keySet = indiceMap.keySet();
 			for (Object object : keySet) {

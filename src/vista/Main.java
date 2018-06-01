@@ -1,7 +1,11 @@
 package vista;
 
 import java.awt.EventQueue;
-
+/**
+ * 
+ * @author fp-hermoso
+ *
+ */
 public class Main {
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {

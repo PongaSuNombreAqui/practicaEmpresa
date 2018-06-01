@@ -11,7 +11,11 @@ import org.junit.Test;
 import control.almacenes.AlmacenRuta;
 import modelo.Cliente;
 import modelo.Pedido;
-
+/**
+ * 
+ * @author fp-hermoso
+ *
+ */
 public class AlmacenPedidoTest {
 	Cliente clienteUno, clienteDos, clienteTres;
 	Pedido pedidoUno, pedidoDos, pedidoTres, pedidoCuatro, pedidoCinco, pedidoSeis;

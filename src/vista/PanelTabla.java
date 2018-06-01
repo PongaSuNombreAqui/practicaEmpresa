@@ -7,7 +7,11 @@ import javax.swing.table.DefaultTableModel;
 
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
-
+/**
+ * 
+ * @author fp-hermoso
+ *
+ */
 public class PanelTabla extends JPanel {
 
 	private JTable tabla;

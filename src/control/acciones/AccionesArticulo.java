@@ -28,13 +28,6 @@ public class AccionesArticulo {
 		new AlmacenIndice<>(Utiles.pathArticulos).grabar(item, item.getIdArticulo(), item.getNombre());
 	}
 
-	public void consultarPrecioAnterior(String nombreArt, String nuevoPrecio) {
-		Articulo item = (Articulo) new AlmacenIndice<>(Utiles.pathArticulos).leer(nombreArt);
-		// item.insertarNuevoPrecio(nuevoPrecio, true);
-		// return precio;
-
-	}
-
 	public void insertarArticulosEnCombo(JComboBox combo) {
 		combo.removeAllItems();
 		TreeMap indiceMap = new AlmacenIndice<>(Utiles.pathArticulos).obtenerIndice();
@@ -47,8 +40,7 @@ public class AccionesArticulo {
 
 	}
 
-	public boolean comprobarExistencia(String nombreArt) {
-		Articulo item = (Articulo) new AlmacenIndice<>(Utiles.pathArticulos).leer(nombreArt);
+	public boolean comprobarExistencia(Articulo item) {
 		if (item == null) {
 			return false;
 		}

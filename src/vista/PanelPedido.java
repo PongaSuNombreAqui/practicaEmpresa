@@ -23,7 +23,11 @@ import javax.swing.border.MatteBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
 import javax.swing.SwingConstants;
-
+/**
+ * 
+ * @author fp-hermoso
+ *
+ */
 public class PanelPedido extends JPanel {
 	private JButton btnAdd;
 	private JButton btnCancelar;

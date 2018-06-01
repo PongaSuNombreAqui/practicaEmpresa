@@ -10,7 +10,11 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.SwingConstants;
 import java.awt.GridLayout;
-
+/**
+ * 
+ * @author fp-hermoso
+ *
+ */
 public class UI extends JFrame {
 
 	private JPanel contentPane;

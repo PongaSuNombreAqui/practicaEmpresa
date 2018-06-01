@@ -17,8 +17,7 @@ import control.almacenes.AlmacenRuta;
 
 public class AccionesPedido<K> {
 
-	public boolean crear(Cliente cliente, JTable tabla) {
-		DefaultTableModel modelo = (DefaultTableModel) tabla.getModel();
+	public boolean crear(Cliente cliente, DefaultTableModel modelo) {
 		int numero = getNumeroPosiblePedido();
 		Pedido pedido = new Pedido(numero, cliente);
 		ArrayList<Linea> lineas = extraerPedidoRejilla(modelo);
@@ -45,12 +44,8 @@ public class AccionesPedido<K> {
 		return leer;
 	}
 
-	public void consultar(JTable tabla, Pedido pedido) {
-		introducirPedidoRejilla(tabla, pedido);
-	}
 
-	public void aniadirArticuloATabla(JTable tabla, Articulo item) {
-		DefaultTableModel dm = (DefaultTableModel) tabla.getModel();
+	public void aniadirArticuloATabla(Articulo item, DefaultTableModel dm) {
 		dm.addRow(introducirRejilla(item));
 	}
 

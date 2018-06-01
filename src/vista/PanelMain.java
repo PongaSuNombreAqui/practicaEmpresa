@@ -7,7 +7,11 @@ import javax.swing.JLabel;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.Font;
-
+/**
+ * 
+ * @author fp-hermoso
+ *
+ */
 public class PanelMain extends JPanel {
 
 	/**
