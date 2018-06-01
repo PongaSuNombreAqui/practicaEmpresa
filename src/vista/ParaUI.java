@@ -213,7 +213,6 @@ public class ParaUI extends UI {
 			public void tableChanged(TableModelEvent e) {
 				if (panelTabla.getTabla().getRowCount() != 0 && !bloquearListener) {
 					bloquearListener = true;
-					System.out.println("Fire");
 					logica.cambiarPrecioRejilla(panelTabla.getTabla());
 					bloquearListener = false;
 				}			
