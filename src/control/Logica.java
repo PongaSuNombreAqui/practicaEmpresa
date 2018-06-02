@@ -95,6 +95,19 @@ public class Logica<K> {
 		Articulo item = (Articulo) new AlmacenIndice<>(Utiles.pathArticulos).leer(nombre);
 		accionesPedido.aniadirArticuloATabla(item,modelo);
 	};
+	
+	public boolean agregarCliente(String dniCif, String razonSocial, String direccion, String telefono) {
+		return accionesCliente.agregarCliente(dniCif, razonSocial, direccion, telefono);
+	}
+
+	public void consultarCliente(String dniCif, JTextField lblDniCif, JTextField lblRazonSocial, JTextField lblDireccion, JTextField lblTelefono) {
+		accionesCliente.consultarCliente(dniCif, lblDniCif, lblRazonSocial, lblDireccion, lblTelefono);
+	}
+	
+	public void consultarRazonSocial(String nombre, JComboBox combo) {
+		accionesCliente.consultarRazonSocial(nombre, combo);
+	}
+	
 	/**
 	 * numero del siguiente pedido, si el pedido no se guarda, este no aumenta
 	 * @return	el numero del pedido
