@@ -116,6 +116,24 @@ public class ParaUI extends UI {
 					Pausa(2);
 				}
 			}
+		});		
+		panelEditarArticulo.getBtnBuscar().addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(!panelEditarArticulo.getTxtFecha().getText().isEmpty()){
+					if (!panelArticulo.getDetallesNombre().getText().isEmpty()) {
+						String fecha = panelEditarArticulo.getTxtFecha().getText();
+						float precioAnteriorSegunFecha = logica.getPrecioAnteriorSegunFecha(fecha,panelArticulo.getDetallesNombre().getText());
+						panelEditarArticulo.getLblPrecio().setText(String.valueOf(precioAnteriorSegunFecha));
+					}else{
+						panelArticulo.getMensajeConsulta().setForeground(Color.RED);
+						panelArticulo.getMensajeConsulta().setText("Error: Vacio!!");
+						Pausa(2);
+					}
+				}else{
+					panelEditarArticulo.getLblPrecio().setText("Error: Vacio!!");
+				}
+				
+			}
 		});
 
 	}
@@ -220,6 +238,9 @@ public class ParaUI extends UI {
 			}
 		});
 
+
+
+
 		panelCliente.getComboBox().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (panelCliente.getComboBox().getItemCount() > 0) {
@@ -230,11 +251,14 @@ public class ParaUI extends UI {
 				} 
 			}
 		});
-		
 		panelCliente.getBtnEliminarCliente().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				panelCliente.getLblMensaje().setText("NO IMPLEMENTADO");
-				//TODO
+				if(logica.eliminarCliente(panelCliente.getTxtDnicifResultado().getText())){
+					panelCliente.getLblMensaje().setText("Borrado");
+				}else{
+					panelCliente.getLblMensaje().setText("Fallo al borrar");
+				};
 			}
 		});
 	}

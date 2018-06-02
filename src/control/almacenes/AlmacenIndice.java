@@ -80,7 +80,14 @@ public class AlmacenIndice<T, K> {
 		}
 		return retorno;
 	}
-
+	
+	
+	public boolean borrar(K k) {
+		this.pathDatos.append("clientes.data");
+		indice = (TreeMap<K, Integer>) new DAO<T>().leer(pathIndice.toString());
+		indice.remove(k);
+		return new DAO<>().grabar(pathIndice, indice);
+	}
 	/**
 	 * grabar un objeto articulo en el fichero
 	 * 

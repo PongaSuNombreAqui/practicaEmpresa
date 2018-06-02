@@ -17,11 +17,7 @@ import utiles.Utiles;
  * @param <K> clave almacen indice
  */
 public class AccionesCliente<K> {
-	
-	public boolean agregarCliente(String dniCif, String razonSocial, String direccion, String telefono) {
-		Cliente cliente = new Cliente(dniCif, razonSocial, direccion, telefono);
-		return new AlmacenIndice<>(Utiles.pathClientes).grabar(cliente, dniCif);
-	}
+
 	
 	public void consultarRazonSocial(String nombre, JComboBox combo) {
 		TreeMap indiceMap = new AlmacenIndice<>(Utiles.pathClientes).obtenerMap();
@@ -37,9 +33,8 @@ public class AccionesCliente<K> {
 		}
 	}
 
-	public void consultarCliente(String dniCif, JTextField lblDniCif, JTextField lblRazonSocial,
+	public void consultarCliente(Cliente cliente, JTextField lblDniCif, JTextField lblRazonSocial,
 			JTextField lblDireccion, JTextField lblTelefono) {
-		Cliente cliente = (Cliente) new AlmacenIndice<>(Utiles.pathClientes).leer((K) dniCif);
 		if (cliente == null) {
 			System.out.println("Error");
 		} else {
@@ -50,9 +45,6 @@ public class AccionesCliente<K> {
 		}
 	}
 
-	public void BorrarCliente() {
-		// TODO
-	}
 
 	public void insertarPedidosEnCombo(JComboBox combo, String cadena, JTextField txtMensaje) {
 		if (Utiles.comprobarExiste("./data/pedidos/" + cadena)) {
