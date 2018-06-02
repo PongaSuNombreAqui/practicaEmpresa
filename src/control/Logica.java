@@ -149,8 +149,7 @@ public class Logica<K> {
 	 */
 	public String getItemFromCombo(JComboBox<Object> combo) {
 		String cadena = (String) combo.getSelectedItem();
-		return cadena.substring(cadena.indexOf(Utiles.separador) + 1);
-		 
+		return cadena.substring(cadena.lastIndexOf(Utiles.separador) + 1);
 	}
 	/**
 	 * vacia la tabla
