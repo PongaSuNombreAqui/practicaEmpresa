@@ -132,12 +132,16 @@ public class ParaUI extends UI {
 		panelPedido.getBtnAdd().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (comprobarPedidoProceso()) {
-					bloquearListener = true;
-					String nombreArticulo = panelPedido.getComboArticulos().getSelectedItem().toString();
-					logica.aniadirArticuloATabla(nombreArticulo, modeloTabla);
-					panelPedido.revalidate();
-					setMensaje("Insertado en el pedido el articulo " + nombreArticulo);
-					bloquearListener = false;
+					if (panelPedido.getComboArticulos().getItemCount() != 0) {
+						bloquearListener = true;
+						String nombreArticulo = panelPedido.getComboArticulos().getSelectedItem().toString();
+						logica.aniadirArticuloATabla(nombreArticulo, modeloTabla);
+						panelPedido.revalidate();
+						setMensaje("Insertado en el pedido el articulo " + nombreArticulo);
+						bloquearListener = false;
+					} else {
+						setMensaje("No hay articulos");
+					}
 				}
 			}
 		});
