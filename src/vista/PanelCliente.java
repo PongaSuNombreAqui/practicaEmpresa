@@ -330,7 +330,7 @@ public class PanelCliente extends JPanel {
 		gbl_panelMensaje.rowWeights = new double[] { 1.0, 1.0, Double.MIN_VALUE };
 		panelMensaje.setLayout(gbl_panelMensaje);
 
-		lblMensaje = new JLabel("Mensaje");
+		lblMensaje = new JLabel(" ");
 		lblMensaje.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		GridBagConstraints gbc_lblMensaje = new GridBagConstraints();
 		gbc_lblMensaje.insets = new Insets(0, 5, 5, 5);

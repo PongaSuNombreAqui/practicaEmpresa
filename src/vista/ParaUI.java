@@ -220,7 +220,6 @@ public class ParaUI extends UI {
 		});
 		panelCliente.getBtnEliminarCliente().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				panelCliente.getLblMensaje().setText("NO IMPLEMENTADO");
 				if(logica.eliminarCliente(panelCliente.getTxtDnicifResultado().getText())){
 					panelCliente.getLblMensaje().setText("Borrado");
 				}else{
