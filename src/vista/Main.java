@@ -1,6 +1,8 @@
 package vista;
 
 import java.awt.EventQueue;
+
+import javax.swing.UIManager;
 /**
  * 
  * @author fp-hermoso
@@ -11,6 +13,7 @@ public class Main {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
+					UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
 					ParaUI frame = new ParaUI();
 					frame.setVisible(true);
 				} catch (Exception e) {
