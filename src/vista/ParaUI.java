@@ -133,21 +133,26 @@ public class ParaUI extends UI {
 				String direccion = panelCliente.getTxtDireccion().getText();
 				String telefono = panelCliente.getTxtTelefono().getText();
 				if (!dniCif.isEmpty() && !razonSocial.isEmpty() && !direccion.isEmpty() && !telefono.isEmpty()) {
-					if (Validator.isPhone(telefono)) {
-						if (logica.agregarCliente(dniCif, razonSocial, direccion, telefono)) {
-							panelCliente.getLblMensaje()
-									.setText("Cliente " + razonSocial + " ha sido agregado correctamente");
-							panelCliente.getTxtDnicif().setText(null);
-							panelCliente.getTxtRazonSocial().setText(null);
-							panelCliente.getTxtDireccion().setText(null);
-							panelCliente.getTxtTelefono().setText(null);
+					if (Validator.isDniCif(dniCif)) {
+						if (Validator.isPhone(telefono)) {
+							if (logica.agregarCliente(dniCif, razonSocial, direccion, telefono)) {
+								panelCliente.getLblMensaje()
+										.setText("Cliente " + razonSocial + " ha sido agregado correctamente");
+								panelCliente.getTxtDnicif().setText(null);
+								panelCliente.getTxtRazonSocial().setText(null);
+								panelCliente.getTxtDireccion().setText(null);
+								panelCliente.getTxtTelefono().setText(null);
+							} else {
+								panelCliente.getLblMensaje()
+										.setText("Error en la operacion. Revise los campos de texto e intentelo de nuevo.");
+							}
 						} else {
-							panelCliente.getLblMensaje()
-									.setText("Error en la operacion. Revise los campos de texto e intentelo de nuevo.");
+							panelCliente.getLblMensaje().setText("El telefono introducido no es correcto");
+							panelCliente.getTxtTelefono().setBackground(Color.YELLOW);
 						}
 					} else {
-						panelCliente.getLblMensaje().setText("El telefono introducido no es correcto");
-						panelCliente.getTxtTelefono().setBackground(Color.YELLOW);
+						panelCliente.getLblMensaje().setText("El DNI o CIF introducido no es correcto");
+						panelCliente.getTxtDnicif().setBackground(Color.YELLOW);
 					}
 				} else {
 					panelCliente.getLblMensaje().setText("Debe rellenar los campos de texto para continuar");
@@ -203,6 +208,14 @@ public class ParaUI extends UI {
 		panelCliente.getTxtTelefono().addKeyListener(new KeyAdapter() {
 			public void keyTyped(KeyEvent e) {
 				if ((e.getKeyChar() < '0' || e.getKeyChar() > '9') || panelCliente.getTxtTelefono().getText().length() == 9) {
+					e.consume();
+				}
+			}
+		});
+		
+		panelCliente.getTxtDnicif().addKeyListener(new KeyAdapter() {
+			public void keyTyped(KeyEvent e) {
+				if (panelCliente.getTxtDnicif().getText().length() == 9) {
 					e.consume();
 				}
 			}
