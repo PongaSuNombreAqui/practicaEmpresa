@@ -158,9 +158,9 @@ public class PanelCliente extends JPanel {
 		add(panelConsultarCliente, gbc_panelConsultarCliente);
 		GridBagLayout gbl_panelConsultarCliente = new GridBagLayout();
 		gbl_panelConsultarCliente.columnWidths = new int[] { 0, 0, 0, 0 };
-		gbl_panelConsultarCliente.rowHeights = new int[] { 0, 0, 0, 0, 0 };
+		gbl_panelConsultarCliente.rowHeights = new int[] { 0, 0, 0, 0 };
 		gbl_panelConsultarCliente.columnWeights = new double[] { 0.0, 1.0, 0.0, Double.MIN_VALUE };
-		gbl_panelConsultarCliente.rowWeights = new double[] { 0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE };
+		gbl_panelConsultarCliente.rowWeights = new double[] { 0.0, 0.0, 1.0, Double.MIN_VALUE };
 		panelConsultarCliente.setLayout(gbl_panelConsultarCliente);
 
 		JLabel lblConsultarCliente = new JLabel("Consultar cliente");
