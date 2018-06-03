@@ -86,6 +86,40 @@ public class Logica<K> {
 		Articulo item = (Articulo) new AlmacenIndice<>(Utiles.pathArticulos).leer(nombre);
 		accionesArticulo.editar(item, nuevoPrecio);
 	};
+	
+	/**
+	 * Agrega cliente a la base de datos
+	 * @param dniCif			DNI o CIF del cliente
+	 * @param razonSocial		Nombre del cliente
+	 * @param direccion			Direccion del cliente
+	 * @param telefono			Telefono del cliente
+	 * @return					TRUE si se ha agregado FALSE si no se ha agregado
+	 */
+	public boolean agregarCliente(String dniCif, String razonSocial, String direccion, String telefono) {
+		return accionesCliente.agregarCliente(dniCif, razonSocial, direccion, telefono);
+	}
+	
+	/**
+	 * Muestra el cliente seleccionado
+	 * @param dniCif			DNI o CIF del cliente a consultar
+	 * @param lblDniCif			Etiqueta del DNI o CIF del cliente
+	 * @param lblRazonSocial	Etiqueta del nombre del cliente
+	 * @param lblDireccion		Etiqueta de la direccion del cliente
+	 * @param lblTelefono		Etiqueta del telefono del cliente
+	 */
+	public void consultarCliente(String dniCif, JTextField lblDniCif, JTextField lblRazonSocial, JTextField lblDireccion, JTextField lblTelefono) {
+		accionesCliente.consultarCliente(dniCif, lblDniCif, lblRazonSocial, lblDireccion, lblTelefono);
+	}
+	
+	/**
+	 * Escribe en el combo de clientes las coincidencias de la busqueda
+	 * @param nombre			Nombre o DNI/CIF del cliente a buscar
+	 * @param combo				Combo con los clientes que coincidan con nombre
+	 */
+	public void buscarCliente(String nombre, JComboBox combo) {
+		accionesCliente.buscarCliente(nombre, combo);
+	}
+	
 	/**
 	 * aniade el articulo dado a la tabla dada
 	 * @param tabla 	tabla donde quiere introducir el articulo
@@ -95,18 +129,6 @@ public class Logica<K> {
 		Articulo item = (Articulo) new AlmacenIndice<>(Utiles.pathArticulos).leer(nombre);
 		accionesPedido.aniadirArticuloATabla(item,modelo);
 	};
-	
-	public boolean agregarCliente(String dniCif, String razonSocial, String direccion, String telefono) {
-		return accionesCliente.agregarCliente(dniCif, razonSocial, direccion, telefono);
-	}
-
-	public void consultarCliente(String dniCif, JTextField lblDniCif, JTextField lblRazonSocial, JTextField lblDireccion, JTextField lblTelefono) {
-		accionesCliente.consultarCliente(dniCif, lblDniCif, lblRazonSocial, lblDireccion, lblTelefono);
-	}
-	
-	public void consultarRazonSocial(String nombre, JComboBox combo) {
-		accionesCliente.consultarRazonSocial(nombre, combo);
-	}
 	
 	/**
 	 * numero del siguiente pedido, si el pedido no se guarda, este no aumenta
@@ -174,13 +196,17 @@ public class Logica<K> {
 			modeloTabla.removeRow(i);
 		}
 	}
-
+	
+	/**
+	 * Cambia el precio total del articulo en tabla cuando se ajusta la cantidad
+	 * @param tabla				Tabla en la que se actualizara el pedido
+	 */
 	public void cambiarPrecioRejilla(JTable tabla) {
 		accionesPedido.cambiarPrecioRejilla(tabla);
 	}
 
-	public void eliminarPedidoRejilla(JTable tabla) {
-		accionesPedido.eliminarPedidoRejilla(tabla);
-	}
+//	public void eliminarPedidoRejilla(JTable tabla) {
+//		accionesPedido.eliminarPedidoRejilla(tabla);
+//	}
 	
 }

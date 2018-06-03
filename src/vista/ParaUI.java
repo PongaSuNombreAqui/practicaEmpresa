@@ -3,6 +3,8 @@ package vista;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
@@ -124,6 +126,88 @@ public class ParaUI extends UI {
 	 * listeners que usa el panel de clientes
 	 */
 	private void ponerListenerCliente() {
+		panelCliente.getBtnAgregar().addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String dniCif = panelCliente.getTxtDnicif().getText();
+				String razonSocial = panelCliente.getTxtRazonSocial().getText();
+				String direccion = panelCliente.getTxtDireccion().getText();
+				String telefono = panelCliente.getTxtTelefono().getText();
+				if (!dniCif.isEmpty() && !razonSocial.isEmpty() && !direccion.isEmpty() && !telefono.isEmpty()) {
+					if (Validator.isPhone(telefono)) {
+						if (logica.agregarCliente(dniCif, razonSocial, direccion, telefono)) {
+							panelCliente.getLblMensaje()
+									.setText("Cliente " + razonSocial + " ha sido agregado correctamente");
+							panelCliente.getTxtDnicif().setText(null);
+							panelCliente.getTxtRazonSocial().setText(null);
+							panelCliente.getTxtDireccion().setText(null);
+							panelCliente.getTxtTelefono().setText(null);
+						} else {
+							panelCliente.getLblMensaje()
+									.setText("Error en la operacion. Revise los campos de texto e intentelo de nuevo.");
+						}
+					} else {
+						panelCliente.getLblMensaje().setText("El telefono introducido no es correcto");
+						panelCliente.getTxtTelefono().setBackground(Color.YELLOW);
+					}
+				} else {
+					panelCliente.getLblMensaje().setText("Debe rellenar los campos de texto para continuar");
+					if (dniCif.isEmpty()) {
+						panelCliente.getTxtDnicif().setBackground(Color.YELLOW);
+					}
+					if (razonSocial.isEmpty()) {
+						panelCliente.getTxtRazonSocial().setBackground(Color.YELLOW);
+					}
+					if (direccion.isEmpty()) {
+						panelCliente.getTxtDireccion().setBackground(Color.YELLOW);
+					}
+					if (telefono.isEmpty()) {
+						panelCliente.getTxtTelefono().setBackground(Color.YELLOW);
+					}
+				}
+			}
+		});
+
+		panelCliente.getBtnBuscar().addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				btnBuscarCliente();
+				if (panelCliente.getTxtClienteConsulta().getText().isEmpty()) {
+					panelCliente.getTxtClienteConsulta().setBackground(Color.YELLOW);
+				}
+			}
+		});
+		
+		panelCliente.getTxtClienteConsulta().addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				btnBuscarCliente();
+			}
+		});
+
+		panelCliente.getComboBox().addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (panelCliente.getComboBox().getItemCount() > 0) {
+					String dniCif = logica.getItemFromCombo(panelCliente.getComboBox());
+					logica.consultarCliente(dniCif, panelCliente.getTxtDnicifResultado(),
+							panelCliente.getTxtRazonSocialResultado(), panelCliente.getTxtDireccionResultado(),
+							panelCliente.getTxtTelefonoResultado());
+				} 
+			}
+		});
+		
+		panelCliente.getBtnEliminarCliente().addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				panelCliente.getLblMensaje().setText("NO IMPLEMENTADO");
+				//TODO
+			}
+		});
+		
+		panelCliente.getTxtTelefono().addKeyListener(new KeyAdapter() {
+			public void keyTyped(KeyEvent e) {
+				if ((e.getKeyChar() < '0' || e.getKeyChar() > '9') || panelCliente.getTxtTelefono().getText().length() == 9) {
+					e.consume();
+				}
+			}
+		});
+		
 		panelCliente.getTxtDnicif().addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -152,89 +236,10 @@ public class ParaUI extends UI {
 			}
 		});
 
-		panelCliente.getTxtRazonSocialConsulta().addMouseListener(new MouseAdapter() {
+		panelCliente.getTxtClienteConsulta().addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				panelCliente.getTxtRazonSocialConsulta().setBackground(Color.WHITE);
-			}
-		});
-
-		panelCliente.getBtnAgregar().addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String dniCif = panelCliente.getTxtDnicif().getText();
-				String razonSocial = panelCliente.getTxtRazonSocial().getText();
-				String direccion = panelCliente.getTxtDireccion().getText();
-				String telefono = panelCliente.getTxtTelefono().getText();
-				if (!dniCif.isEmpty() && !razonSocial.isEmpty() && !direccion.isEmpty() && !telefono.isEmpty()) {
-					if (Validator.isPhone(telefono)) {
-						if (logica.agregarCliente(dniCif, razonSocial, direccion, telefono)) {
-							panelCliente.getLblMensaje()
-									.setText("Cliente " + razonSocial + " ha sido agregado correctamente");
-							panelCliente.getTxtDnicif().setText(null);
-							panelCliente.getTxtRazonSocial().setText(null);
-							panelCliente.getTxtDireccion().setText(null);
-							panelCliente.getTxtTelefono().setText(null);
-						} else {
-							panelCliente.getLblMensaje()
-									.setText("Error en la operacion. Revise los campos e intentelo de nuevo.");
-						}
-					} else {
-						panelCliente.getLblMensaje().setText("El telefono introducido no es correcto");
-						panelCliente.getTxtTelefono().setBackground(Color.YELLOW);
-					}
-				} else {
-					panelCliente.getLblMensaje().setText("Debe rellenar los campos para continuar");
-					if (dniCif.isEmpty()) {
-						panelCliente.getTxtDnicif().setBackground(Color.YELLOW);
-					}
-					if (razonSocial.isEmpty()) {
-						panelCliente.getTxtRazonSocial().setBackground(Color.YELLOW);
-					}
-					if (direccion.isEmpty()) {
-						panelCliente.getTxtDireccion().setBackground(Color.YELLOW);
-					}
-					if (telefono.isEmpty()) {
-						panelCliente.getTxtTelefono().setBackground(Color.YELLOW);
-					}
-				}
-			}
-		});
-
-		panelCliente.getBtnBuscar().addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String nombre = panelCliente.getTxtRazonSocialConsulta().getText();
-				if (!nombre.isEmpty()) {
-					if (panelCliente.getComboBox().getItemCount() > 0) {
-						panelCliente.getComboBox().removeAllItems();
-					}
-					logica.consultarRazonSocial(nombre, panelCliente.getComboBox());
-					if (panelCliente.getComboBox().getItemCount() == 0) {
-						panelCliente.getLblMensaje().setText("No hay coincidencias");
-					}
-				} else {
-					panelCliente.getLblMensaje().setText("Debe rellenar el campo de cliente");
-					if (panelCliente.getTxtRazonSocialConsulta().getText().isEmpty()) {
-						panelCliente.getTxtRazonSocialConsulta().setBackground(Color.YELLOW);
-					}
-				}
-			}
-		});
-
-		panelCliente.getComboBox().addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if (panelCliente.getComboBox().getItemCount() > 0) {
-					String dniCif = logica.getItemFromCombo(panelCliente.getComboBox());
-					logica.consultarCliente(dniCif, panelCliente.getTxtDnicifResultado(),
-							panelCliente.getTxtRazonSocialResultado(), panelCliente.getTxtDireccionResultado(),
-							panelCliente.getTxtTelefonoResultado());
-				} 
-			}
-		});
-		
-		panelCliente.getBtnEliminarCliente().addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				panelCliente.getLblMensaje().setText("NO IMPLEMENTADO");
-				//TODO
+				panelCliente.getTxtClienteConsulta().setBackground(Color.WHITE);
 			}
 		});
 	}
@@ -455,5 +460,24 @@ public class ParaUI extends UI {
 	 */
 	private void setMensaje(String mensaje) {
 		panelPedido.getTxtMensaje().setText(mensaje);
+	}
+
+	private void btnBuscarCliente() {
+		String nombre = panelCliente.getTxtClienteConsulta().getText();
+		if (!nombre.isEmpty()) {
+			if (panelCliente.getComboBox().getItemCount() > 0) {
+				panelCliente.getComboBox().removeAllItems();
+			}
+			logica.buscarCliente(nombre, panelCliente.getComboBox());
+			if (panelCliente.getComboBox().getItemCount() == 0) {
+				panelCliente.getTxtDnicifResultado().setText(null);
+				panelCliente.getTxtRazonSocialResultado().setText(null);
+				panelCliente.getTxtDireccionResultado().setText(null);
+				panelCliente.getTxtTelefonoResultado().setText(null);
+				panelCliente.getLblMensaje().setText("No hay coincidencias");
+			}
+		} else {
+			panelCliente.getLblMensaje().setText("Debe rellenar el campo de cliente");
+		}
 	}
 }
