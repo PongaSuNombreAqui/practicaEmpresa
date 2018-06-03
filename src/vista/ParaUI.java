@@ -205,9 +205,6 @@ public class ParaUI extends UI {
 			}
 		});
 
-
-
-
 		panelCliente.getComboBox().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (panelCliente.getComboBox().getItemCount() > 0) {
@@ -215,16 +212,33 @@ public class ParaUI extends UI {
 					logica.consultarCliente(dniCif, panelCliente.getTxtDnicifResultado(),
 							panelCliente.getTxtRazonSocialResultado(), panelCliente.getTxtDireccionResultado(),
 							panelCliente.getTxtTelefonoResultado());
-				} 
+					panelCliente.getBtnEliminarCliente().setEnabled(true);
+				} else {
+					panelCliente.getBtnEliminarCliente().setEnabled(false);
+				}
 			}
 		});
+		
 		panelCliente.getBtnEliminarCliente().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(logica.eliminarCliente(panelCliente.getTxtDnicifResultado().getText())){
-					panelCliente.getLblMensaje().setText("Borrado");
-				}else{
-					panelCliente.getLblMensaje().setText("Fallo al borrar");
-				};
+				int indice = panelCliente.getComboBox().getSelectedIndex();
+				if (indice >= 0) {
+					if (logica.eliminarCliente(panelCliente.getTxtDnicifResultado().getText())) {
+						// No se como evitar un NullPointerException sin hacer esto
+						if (panelCliente.getComboBox().getItemCount() != 1) {
+							panelCliente.getComboBox().removeItemAt(indice);
+						} else {
+							panelCliente.getTxtDnicifResultado().setText(null);
+							panelCliente.getTxtRazonSocialResultado().setText(null);
+							panelCliente.getTxtDireccionResultado().setText(null);
+							panelCliente.getTxtTelefonoResultado().setText(null);
+							panelCliente.getComboBox().removeAllItems();
+						}
+						panelCliente.getLblMensaje().setText("Borrado");
+					} else {
+						panelCliente.getLblMensaje().setText("Fallo al borrar");
+					}
+				}
 			}
 		});
 		
@@ -243,6 +257,12 @@ public class ParaUI extends UI {
 				}
 			}
 		});
+		
+//		panelCliente.getTxtClienteConsulta().addKeyListener(new KeyAdapter() {
+//			public void keyReleased(KeyEvent e) {
+//				btnBuscarCliente();
+//			}
+//		});
 		
 		panelCliente.getTxtDnicif().addMouseListener(new MouseAdapter() {
 			@Override

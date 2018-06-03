@@ -307,6 +307,7 @@ public class PanelCliente extends JPanel {
 		txtTelefonoResultado.setColumns(10);
 
 		btnEliminarCliente = new JButton("Eliminar cliente");
+		btnEliminarCliente.setEnabled(false);
 		btnEliminarCliente.setForeground(Color.RED);
 		btnEliminarCliente.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		GridBagConstraints gbc_btnEliminarCliente = new GridBagConstraints();
