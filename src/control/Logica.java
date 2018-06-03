@@ -1,5 +1,6 @@
 package control;
 
+import java.util.GregorianCalendar;
 import java.util.TreeMap;
 
 import javax.swing.JComboBox;
@@ -24,14 +25,16 @@ import utiles.Utiles;
  * @param <K> clave para el almacenIndice
  */
 public class Logica<K> {
+	Datos datos;
 	AccionesArticulo accionesArticulo;
 	AccionesCliente<K> accionesCliente;
 	AccionesPedido accionesPedido;
 
 	public Logica() {
+		this.datos=new Datos();
 		this.accionesArticulo = new AccionesArticulo();
 		this.accionesCliente = new AccionesCliente<>();
-		this.accionesPedido = new AccionesPedido<Object>();
+		this.accionesPedido = new AccionesPedido<Object>(this);
 	}
 	/**
 	 * comprueba la existencia de un Articulo
@@ -66,7 +69,7 @@ public class Logica<K> {
 		Articulo newArticulo = new Articulo(id, nombre, descripcion, precio);
 		Articulo item = (Articulo) new AlmacenIndice<>(Utiles.pathArticulos).leer(nombre);
 		if (item == null) {
-			return accionesArticulo.crearArticulo(newArticulo, id, nombre);
+			return datos.grabar(newArticulo);
 		}
 		return false;
 	};
@@ -84,7 +87,7 @@ public class Logica<K> {
 	 */
 	public void editar(String nombre, float nuevoPrecio) {
 		Articulo item = (Articulo) new AlmacenIndice<>(Utiles.pathArticulos).leer(nombre);
-		accionesArticulo.editar(item, nuevoPrecio);
+		accionesArticulo.editar(item, nuevoPrecio,this);
 	};
 	
 	/**
@@ -96,7 +99,8 @@ public class Logica<K> {
 	 * @return					TRUE si se ha agregado FALSE si no se ha agregado
 	 */
 	public boolean agregarCliente(String dniCif, String razonSocial, String direccion, String telefono) {
-		return accionesCliente.agregarCliente(dniCif, razonSocial, direccion, telefono);
+		Cliente cliente = new Cliente(dniCif, razonSocial, direccion, telefono);
+		return datos.grabar(cliente);
 	}
 	
 	/**
@@ -108,7 +112,8 @@ public class Logica<K> {
 	 * @param lblTelefono		Etiqueta del telefono del cliente
 	 */
 	public void consultarCliente(String dniCif, JTextField lblDniCif, JTextField lblRazonSocial, JTextField lblDireccion, JTextField lblTelefono) {
-		accionesCliente.consultarCliente(dniCif, lblDniCif, lblRazonSocial, lblDireccion, lblTelefono);
+		Cliente cliente = (Cliente) new AlmacenIndice<>(Utiles.pathClientes).leer((K) dniCif);
+		accionesCliente.consultarCliente(cliente, lblDniCif, lblRazonSocial, lblDireccion, lblTelefono);
 	}
 	
 	/**
@@ -205,8 +210,27 @@ public class Logica<K> {
 		accionesPedido.cambiarPrecioRejilla(tabla);
 	}
 
-//	public void eliminarPedidoRejilla(JTable tabla) {
-//		accionesPedido.eliminarPedidoRejilla(tabla);
-//	}
+
+	public void eliminarPedidoRejilla(JTable tabla) {
+		accionesPedido.eliminarPedidoRejilla(tabla);
+	}
+
+	public float getPrecioAnteriorSegunFecha(String fecha, String nombreArt) {
+		String[] fechaPartida = fecha.split("-");
+	    GregorianCalendar fechaGre = new GregorianCalendar(Integer.valueOf(fechaPartida[0]),Integer.valueOf(fechaPartida[1]),Integer.valueOf(fechaPartida[2]));
+		Articulo item = (Articulo) new AlmacenIndice<>(Utiles.pathArticulos).leer(nombreArt);
+		return accionesArticulo.comprobarPrecio(item, fechaGre);
+	}
+	public Datos getDatos() {
+		return datos;
+	}
+	public boolean crearCliente( String razonSocial, String dni, String direccion, String telefono) {
+		Cliente cliente = new Cliente(dni, razonSocial, direccion, telefono);
+		return datos.grabar(cliente);
+	}
+	public boolean eliminarCliente(String dni) {
+		return new AlmacenIndice<>(Utiles.pathClientes).borrar((K) dni );
+	}
+
 	
 }
