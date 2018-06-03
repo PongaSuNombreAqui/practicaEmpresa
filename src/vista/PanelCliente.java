@@ -142,6 +142,7 @@ public class PanelCliente extends JPanel {
 		btnAgregar = new JButton("Agregar");
 		btnAgregar.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		GridBagConstraints gbc_btnAgregar = new GridBagConstraints();
+		gbc_btnAgregar.insets = new Insets(0, 0, 5, 0);
 		gbc_btnAgregar.gridwidth = 2;
 		gbc_btnAgregar.gridx = 0;
 		gbc_btnAgregar.gridy = 6;
