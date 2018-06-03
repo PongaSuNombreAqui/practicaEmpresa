@@ -19,7 +19,7 @@ import utiles.Utiles;
 public class AccionesCliente<K> {
 
 	
-	public void consultarRazonSocial(String nombre, JComboBox combo) {
+	public void buscarCliente(String nombre, JComboBox combo) {
 		TreeMap indiceMap = new AlmacenIndice<>(Utiles.pathClientes).obtenerMap();
 		if (!(indiceMap == null)) {
 			Set keySet = indiceMap.keySet();

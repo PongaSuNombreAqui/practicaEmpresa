@@ -16,13 +16,15 @@ import javax.swing.JComboBox;
 import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class PanelCliente extends JPanel {
 	private JTextField txtRazonSocial;
 	private JTextField txtDnicif;
 	private JTextField txtDireccion;
 	private JTextField txtTelefono;
-	private JTextField txtRazonSocialConsulta;
+	private JTextField txtClienteConsulta;
 	private JTextField txtDnicifResultado;
 	private JTextField txtRazonSocialResultado;
 	private JTextField txtDireccionResultado;
@@ -183,28 +185,29 @@ public class PanelCliente extends JPanel {
 		gbc_lblConsultarCliente.gridy = 0;
 		panelConsultarCliente.add(lblConsultarCliente, gbc_lblConsultarCliente);
 
-		JLabel lblRazonSocialConsulta = new JLabel("Raz\u00F3n Social:");
-		GridBagConstraints gbc_lblRazonSocialConsulta = new GridBagConstraints();
-		gbc_lblRazonSocialConsulta.insets = new Insets(0, 5, 5, 5);
-		gbc_lblRazonSocialConsulta.anchor = GridBagConstraints.EAST;
-		gbc_lblRazonSocialConsulta.gridx = 0;
-		gbc_lblRazonSocialConsulta.gridy = 1;
-		panelConsultarCliente.add(lblRazonSocialConsulta, gbc_lblRazonSocialConsulta);
+		JLabel lblClienteConsulta = new JLabel("Cliente:");
+		lblClienteConsulta.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		GridBagConstraints gbc_lblClienteConsulta = new GridBagConstraints();
+		gbc_lblClienteConsulta.insets = new Insets(0, 5, 5, 5);
+		gbc_lblClienteConsulta.anchor = GridBagConstraints.EAST;
+		gbc_lblClienteConsulta.gridx = 0;
+		gbc_lblClienteConsulta.gridy = 1;
+		panelConsultarCliente.add(lblClienteConsulta, gbc_lblClienteConsulta);
 
-		txtRazonSocialConsulta = new JTextField();
-		txtRazonSocialConsulta.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		GridBagConstraints gbc_txtRazonSocialConsulta = new GridBagConstraints();
-		gbc_txtRazonSocialConsulta.insets = new Insets(0, 0, 5, 5);
-		gbc_txtRazonSocialConsulta.fill = GridBagConstraints.HORIZONTAL;
-		gbc_txtRazonSocialConsulta.gridx = 1;
-		gbc_txtRazonSocialConsulta.gridy = 1;
-		panelConsultarCliente.add(txtRazonSocialConsulta, gbc_txtRazonSocialConsulta);
-		txtRazonSocialConsulta.setColumns(10);
+		txtClienteConsulta = new JTextField();
+		txtClienteConsulta.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		GridBagConstraints gbc_txtClienteConsulta = new GridBagConstraints();
+		gbc_txtClienteConsulta.insets = new Insets(0, 0, 5, 5);
+		gbc_txtClienteConsulta.fill = GridBagConstraints.HORIZONTAL;
+		gbc_txtClienteConsulta.gridx = 1;
+		gbc_txtClienteConsulta.gridy = 1;
+		panelConsultarCliente.add(txtClienteConsulta, gbc_txtClienteConsulta);
+		txtClienteConsulta.setColumns(10);
 
 		btnBuscar = new JButton("Buscar");
 		btnBuscar.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		GridBagConstraints gbc_btnBuscar = new GridBagConstraints();
-		gbc_btnBuscar.insets = new Insets(0, 0, 5, 0);
+		gbc_btnBuscar.insets = new Insets(0, 0, 5, 5);
 		gbc_btnBuscar.gridx = 2;
 		gbc_btnBuscar.gridy = 1;
 		panelConsultarCliente.add(btnBuscar, gbc_btnBuscar);
@@ -225,21 +228,13 @@ public class PanelCliente extends JPanel {
 		gbl_panelResultado.rowWeights = new double[] { 1.0, 1.0, 1.0, 1.0, 1.0, 0.0, Double.MIN_VALUE };
 		panelResultado.setLayout(gbl_panelResultado);
 
-		JLabel lblCliente = new JLabel("Cliente");
-		lblCliente.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		GridBagConstraints gbc_lblCliente = new GridBagConstraints();
-		gbc_lblCliente.insets = new Insets(0, 5, 5, 5);
-		gbc_lblCliente.anchor = GridBagConstraints.WEST;
-		gbc_lblCliente.gridx = 0;
-		gbc_lblCliente.gridy = 0;
-		panelResultado.add(lblCliente, gbc_lblCliente);
-
 		comboBox = new JComboBox();
 		comboBox.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		GridBagConstraints gbc_comboBox = new GridBagConstraints();
-		gbc_comboBox.insets = new Insets(0, 0, 5, 5);
+		gbc_comboBox.gridwidth = 2;
+		gbc_comboBox.insets = new Insets(0, 5, 5, 5);
 		gbc_comboBox.fill = GridBagConstraints.HORIZONTAL;
-		gbc_comboBox.gridx = 1;
+		gbc_comboBox.gridx = 0;
 		gbc_comboBox.gridy = 0;
 		panelResultado.add(comboBox, gbc_comboBox);
 
@@ -375,8 +370,8 @@ public class PanelCliente extends JPanel {
 		return txtTelefono;
 	}
 
-	public JTextField getTxtRazonSocialConsulta() {
-		return txtRazonSocialConsulta;
+	public JTextField getTxtClienteConsulta() {
+		return txtClienteConsulta;
 	}
 
 	public JTextField getTxtDnicifResultado() {
@@ -413,11 +408,6 @@ public class PanelCliente extends JPanel {
 
 	public JLabel getLblMensaje() {
 		return lblMensaje;
-	}
-
-	public static void consultarCliente(String dniCif) {
-		// TODO Apéndice de método generado automáticamente
-		
 	}
 
 }
