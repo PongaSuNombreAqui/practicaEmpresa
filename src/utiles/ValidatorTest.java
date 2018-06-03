@@ -28,6 +28,26 @@ public class ValidatorTest {
 		assertFalse(Validator.isNumber("2323232f"));
 		assertFalse(Validator.isNumber("2323232d"));
 	}
+	
+	@Test
+	public void testIsDniCif() {
+		assertTrue(Validator.isDniCif("12345678A"));
+		assertFalse(Validator.isDniCif("12345678I"));
+		assertFalse(Validator.isDniCif("12345678"));
+		assertFalse(Validator.isDniCif("123456789"));
+		assertFalse(Validator.isDniCif("1234567A"));
+		assertTrue(Validator.isDniCif("P1234567A"));
+		assertFalse(Validator.isDniCif("P12345678"));
+		assertTrue(Validator.isDniCif("A12345678"));
+		assertFalse(Validator.isDniCif("A1234567A"));
+		assertFalse(Validator.isDniCif("A1234567A"));
+		assertFalse(Validator.isDniCif("A1234567"));
+		assertFalse(Validator.isDniCif("A123456A"));
+		assertTrue(Validator.isDniCif("C12345678"));
+		assertTrue(Validator.isDniCif("C1234567A"));
+		assertFalse(Validator.isDniCif("C1234567-"));
+		assertFalse(Validator.isDniCif("C1234567@"));
+	}
 
 	@Test
 	public void testIsPhone() {
