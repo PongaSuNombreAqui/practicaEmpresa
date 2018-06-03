@@ -12,10 +12,17 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
+import control.Logica;
 import control.almacenes.AlmacenIndice;
 import control.almacenes.AlmacenRuta;
 
 public class AccionesPedido<K> {
+	
+	private Logica logica;
+
+	public AccionesPedido(Logica logica) {
+		this.logica = logica;
+	}
 
 	public boolean crear(Cliente cliente, DefaultTableModel modelo) {
 		int numero = getNumeroPosiblePedido();
@@ -24,7 +31,7 @@ public class AccionesPedido<K> {
 		for (Linea linea : lineas) {
 			pedido.insertarLinea(linea);
 		}
-		if (new AlmacenRuta(Utiles.pathPedidos).grabar(cliente.getDniCif(), pedido)) {
+		if ( logica.getDatos().grabar(pedido)) {
 			aumentarNumeroPedido(numero);
 			return true;
 		}
