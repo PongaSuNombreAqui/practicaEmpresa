@@ -52,16 +52,18 @@ public class AlmacenIndice<T, K> {
 		if (lastEntry != null) {
 			value = lastEntry.getValue() + 1;
 		}
+		System.out.println(value);
+		System.out.println(k);
 		if (indice.put(k, value) == null) {
 			if (new DAO<>().grabar(pathDatos.toString(), t, true)) {
 				retorno = true;
 				new DAO<>().grabar(pathIndice, indice);
-			} else {
-				new DAO<>().grabar(pathIndice, indice);
-			}
+			} 
+			System.out.println(indice);
 		}
 		return retorno;
 	}
+
 
 	/**
 	 * leer un objeto cliente desde el dni
@@ -78,6 +80,7 @@ public class AlmacenIndice<T, K> {
 		if (posicion != null) {
 			retorno = (T) new DAO<>().leer(pathDatos.toString(), posicion);
 		}
+		System.out.println(indice);
 		return retorno;
 	}
 	
