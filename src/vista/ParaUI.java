@@ -515,8 +515,8 @@ public class ParaUI extends UI {
 				if (pedidoProceso) {
 					if (panelTabla.getTabla().getRowCount() != 0 && !bloquearListener && fila != -1) {
 						bloquearListener = true;
-						logica.cambiarPrecioRejilla(panelTabla.getTabla());
 						modeloTabla.setValueAt((Integer.parseInt(modeloTabla.getValueAt(fila, 2).toString()) * Integer.parseInt(modeloTabla.getValueAt(fila, 3).toString())), fila, 4);
+//						logica.cambiarPrecioRejilla(modeloTabla);
 						bloquearListener = false;
 					}
 				}
