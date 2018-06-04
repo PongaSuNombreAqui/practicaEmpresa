@@ -105,7 +105,7 @@ public class ParaUI extends UI {
 			public void actionPerformed(ActionEvent e) {
 				if (panelArticulo.getNombreConsultado().getText().isEmpty()) {
 					panelArticulo.getMensajeConsulta().setForeground(Color.RED);
-					panelArticulo.getMensajeConsulta().setText("Error: Parametro vacío!!");
+					panelArticulo.getMensajeConsulta().setText("Error: Parametro vacÃ­o!!");
 					Pausa(2);
 				} else {
 					if (true == logica.comprobarExistencia(panelArticulo.getNombreConsultado().getText())) {
@@ -134,7 +134,7 @@ public class ParaUI extends UI {
 						|| panelArticulo.getCrearPrecio().getText().isEmpty()
 						|| panelArticulo.getCrearDescripcion().getText().isEmpty()) {
 					panelArticulo.getMensajeCrear().setForeground(Color.RED);
-					panelArticulo.getMensajeCrear().setText("Error: Parametro vacío!!");
+					panelArticulo.getMensajeCrear().setText("Error: Parametro vacÃ­o!!");
 					Pausa(2);
 				} else {
 					if (false == comprobarPuntos(panelArticulo.getCrearPrecio().getText())) {
@@ -284,18 +284,33 @@ public class ParaUI extends UI {
 					logica.consultarCliente(dniCif, panelCliente.getTxtDnicifResultado(),
 							panelCliente.getTxtRazonSocialResultado(), panelCliente.getTxtDireccionResultado(),
 							panelCliente.getTxtTelefonoResultado());
+					panelCliente.getBtnEliminarCliente().setEnabled(true);
+				} else {
+					panelCliente.getBtnEliminarCliente().setEnabled(false);
 				}
 			}
 		});
+		
 		panelCliente.getBtnEliminarCliente().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				panelCliente.getLblMensaje().setText("NO IMPLEMENTADO");
-				if (logica.eliminarCliente(panelCliente.getTxtDnicifResultado().getText())) {
-					panelCliente.getLblMensaje().setText("Borrado");
-				} else {
-					panelCliente.getLblMensaje().setText("Fallo al borrar");
+				int indice = panelCliente.getComboBox().getSelectedIndex();
+				if (indice >= 0) {
+					if (logica.eliminarCliente(panelCliente.getTxtDnicifResultado().getText())) {
+						// No se como evitar un NullPointerException sin hacer esto
+						if (panelCliente.getComboBox().getItemCount() != 1) {
+							panelCliente.getComboBox().removeItemAt(indice);
+						} else {
+							panelCliente.getTxtDnicifResultado().setText(null);
+							panelCliente.getTxtRazonSocialResultado().setText(null);
+							panelCliente.getTxtDireccionResultado().setText(null);
+							panelCliente.getTxtTelefonoResultado().setText(null);
+							panelCliente.getComboBox().removeAllItems();
+						}
+						panelCliente.getLblMensaje().setText("Borrado");
+					} else {
+						panelCliente.getLblMensaje().setText("Fallo al borrar");
+					}
 				}
-				;
 			}
 		});
 
@@ -315,6 +330,12 @@ public class ParaUI extends UI {
 				}
 			}
 		});
+		
+	panelCliente.getTxtClienteConsulta().addKeyListener(new KeyAdapter() {
+			public void keyReleased(KeyEvent e) {
+				btnBuscarCliente();
+		}
+	});
 
 		panelCliente.getTxtDnicif().addMouseListener(new MouseAdapter() {
 			@Override

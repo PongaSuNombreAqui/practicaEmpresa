@@ -1,23 +1,9 @@
 package vista;
 
-import java.awt.Component;
-
-import javax.swing.JPanel;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-import javax.swing.JButton;
-import java.awt.Font;
+import javax.swing.*;
+import java.awt.*;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.EtchedBorder;
-import javax.swing.JComboBox;
-import java.awt.Color;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 public class PanelCliente extends JPanel {
 	private JTextField txtRazonSocial;
@@ -156,6 +142,7 @@ public class PanelCliente extends JPanel {
 		btnAgregar = new JButton("Agregar");
 		btnAgregar.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		GridBagConstraints gbc_btnAgregar = new GridBagConstraints();
+		gbc_btnAgregar.insets = new Insets(0, 0, 5, 0);
 		gbc_btnAgregar.gridwidth = 2;
 		gbc_btnAgregar.gridx = 0;
 		gbc_btnAgregar.gridy = 6;
@@ -171,9 +158,9 @@ public class PanelCliente extends JPanel {
 		add(panelConsultarCliente, gbc_panelConsultarCliente);
 		GridBagLayout gbl_panelConsultarCliente = new GridBagLayout();
 		gbl_panelConsultarCliente.columnWidths = new int[] { 0, 0, 0, 0 };
-		gbl_panelConsultarCliente.rowHeights = new int[] { 0, 0, 0, 0, 0 };
+		gbl_panelConsultarCliente.rowHeights = new int[] { 0, 0, 0, 0 };
 		gbl_panelConsultarCliente.columnWeights = new double[] { 0.0, 1.0, 0.0, Double.MIN_VALUE };
-		gbl_panelConsultarCliente.rowWeights = new double[] { 0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE };
+		gbl_panelConsultarCliente.rowWeights = new double[] { 0.0, 0.0, 1.0, Double.MIN_VALUE };
 		panelConsultarCliente.setLayout(gbl_panelConsultarCliente);
 
 		JLabel lblConsultarCliente = new JLabel("Consultar cliente");
@@ -320,6 +307,7 @@ public class PanelCliente extends JPanel {
 		txtTelefonoResultado.setColumns(10);
 
 		btnEliminarCliente = new JButton("Eliminar cliente");
+		btnEliminarCliente.setEnabled(false);
 		btnEliminarCliente.setForeground(Color.RED);
 		btnEliminarCliente.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		GridBagConstraints gbc_btnEliminarCliente = new GridBagConstraints();
@@ -344,7 +332,7 @@ public class PanelCliente extends JPanel {
 		gbl_panelMensaje.rowWeights = new double[] { 1.0, 1.0, Double.MIN_VALUE };
 		panelMensaje.setLayout(gbl_panelMensaje);
 
-		lblMensaje = new JLabel("Mensaje");
+		lblMensaje = new JLabel(" ");
 		lblMensaje.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		GridBagConstraints gbc_lblMensaje = new GridBagConstraints();
 		gbc_lblMensaje.insets = new Insets(0, 5, 5, 5);
