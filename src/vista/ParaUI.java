@@ -509,26 +509,18 @@ public class ParaUI extends UI {
 		modeloTabla.addTableModelListener(new TableModelListener() {
 			@Override
 			public void tableChanged(TableModelEvent e) {
-				//TODO
 				int fila = panelTabla.getTabla().getSelectedRow();
 				System.out.println(fila);
 				if (pedidoProceso) {
 					if (panelTabla.getTabla().getRowCount() != 0 && !bloquearListener && fila != -1) {
 						bloquearListener = true;
-						modeloTabla.setValueAt((Integer.parseInt(modeloTabla.getValueAt(fila, 2).toString()) * Integer.parseInt(modeloTabla.getValueAt(fila, 3).toString())), fila, 4);
-//						logica.cambiarPrecioRejilla(modeloTabla);
+						modeloTabla.setValueAt(
+								(Float.parseFloat(modeloTabla.getValueAt(fila, 2).toString()) *
+								Integer.parseInt(modeloTabla.getValueAt(fila, 3).toString())),
+								fila, 4);
 						bloquearListener = false;
 					}
 				}
-						
-				
-//				if (pedidoProceso) {
-//					if (panelTabla.getTabla().getRowCount() != 0 && !bloquearListener) {
-//						bloquearListener = true;
-//						logica.cambiarPrecioRejilla(panelTabla.getTabla());
-//						bloquearListener = false;
-//					}
-//				}
 			}
 		});
 	}
