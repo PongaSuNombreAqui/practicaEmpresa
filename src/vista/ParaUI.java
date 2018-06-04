@@ -10,6 +10,8 @@ import java.awt.event.MouseEvent;
 import java.io.File;
 
 import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
 import javax.swing.SwingWorker;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
@@ -68,41 +70,109 @@ public class ParaUI extends UI {
 	 */
 	private void ponerListenerArticulo() {
 
+		panelArticulo.getCrearPrecio().addKeyListener(new KeyAdapter() {
+			public void keyTyped(KeyEvent e) {
+				if ((e.getKeyChar() < '0' && e.getKeyChar() != '.' || e.getKeyChar() > '9') && e.getKeyChar() != '.') {
+					e.consume();
+				}
+			}
+		});
+
+		panelArticulo.getCrearID().addKeyListener(new KeyAdapter() {
+			public void keyTyped(KeyEvent e) {
+				if ((e.getKeyChar() < '0' || e.getKeyChar() > '9')) {
+					e.consume();
+				}
+			}
+		});
+
+		panelArticulo.getCrearNombre().addKeyListener(new KeyAdapter() {
+			public void keyTyped(KeyEvent e) {
+				if ((e.getKeyChar() < 'a' || e.getKeyChar() > 'z') && (e.getKeyChar() < 'A' || e.getKeyChar() > 'Z')) {
+					e.consume();
+				}
+			}
+		});
+		panelArticulo.getNombreConsultado().addKeyListener(new KeyAdapter() {
+			public void keyTyped(KeyEvent e) {
+				if ((e.getKeyChar() < 'a' || e.getKeyChar() > 'z') && (e.getKeyChar() < 'A' || e.getKeyChar() > 'Z')) {
+					e.consume();
+				}
+			}
+		});
+
 		panelArticulo.getBtnBuscar().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (true == logica.comprobarExistencia(panelArticulo.getNombreConsultado().getText())) {
-					panelArticulo.aniadir(panelEditarArticulo);
-					panelArticulo.revalidate();
-					logica.consultar(panelArticulo.getNombreConsultado().getText(), panelArticulo.getDetallesNombre(),
-							panelArticulo.getDetallesID(), panelArticulo.getDetallesPrecio(),
-							panelArticulo.getDetallesDescripcion());
-				} else {
+				if (panelArticulo.getNombreConsultado().getText().isEmpty()) {
 					panelArticulo.getMensajeConsulta().setForeground(Color.RED);
-					panelArticulo.getMensajeConsulta().setText("Error: El articulo no existe!!");
-					panelArticulo.getNombreConsultado().setText("");
-					panelArticulo.getDetallesNombre().setText("");
-					panelArticulo.getDetallesID().setText("");
-					panelArticulo.getDetallesPrecio().setText("");;
-					panelArticulo.getDetallesDescripcion().setText("");
+					panelArticulo.getMensajeConsulta().setText("Error: Parametro vacío!!");
 					Pausa(2);
+				} else {
+					if (true == logica.comprobarExistencia(panelArticulo.getNombreConsultado().getText())) {
+						panelArticulo.aniadir(panelEditarArticulo);
+						panelArticulo.revalidate();
+						logica.consultar(panelArticulo.getNombreConsultado().getText(),
+								panelArticulo.getDetallesNombre(), panelArticulo.getDetallesID(),
+								panelArticulo.getDetallesPrecio(), panelArticulo.getDetallesDescripcion());
+					} else {
+						panelArticulo.getMensajeConsulta().setForeground(Color.RED);
+						panelArticulo.getMensajeConsulta().setText("Error: El articulo no existe!!");
+						panelArticulo.getNombreConsultado().setText("");
+						panelArticulo.getDetallesNombre().setText("");
+						panelArticulo.getDetallesID().setText("");
+						panelArticulo.getDetallesPrecio().setText("");
+						panelArticulo.getDetallesDescripcion().setText("");
+						Pausa(2);
+					}
 				}
 			}
 		});
 
 		panelArticulo.getBtnCrear().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (logica.crearArticulo(panelArticulo.getCrearNombre().getText(),
-						Float.valueOf(panelArticulo.getCrearPrecio().getText()),
-						Integer.valueOf(panelArticulo.getCrearID().getText()),
-						panelArticulo.getCrearDescripcion().getText())) {
-					logica.insertarArticulosEnCombo(panelPedido.getComboArticulos());
-					panelArticulo.getMensajeCrear().setForeground(Color.GREEN);
-					panelArticulo.getMensajeCrear().setText("El articulo ha sido creado.");
-				} else {
+				if (panelArticulo.getCrearNombre().getText().isEmpty() || panelArticulo.getCrearID().getText().isEmpty()
+						|| panelArticulo.getCrearPrecio().getText().isEmpty()
+						|| panelArticulo.getCrearDescripcion().getText().isEmpty()) {
 					panelArticulo.getMensajeCrear().setForeground(Color.RED);
-					panelArticulo.getMensajeCrear().setText("Error: El articulo ya existe!!");
+					panelArticulo.getMensajeCrear().setText("Error: Parametro vacío!!");
+					Pausa(2);
+				} else {
+					if (false == comprobarPuntos(panelArticulo.getCrearPrecio().getText())) {
+						if (logica.crearArticulo(panelArticulo.getCrearNombre().getText(),
+								Float.valueOf(panelArticulo.getCrearPrecio().getText()),
+								Integer.valueOf(panelArticulo.getCrearID().getText()),
+								panelArticulo.getCrearDescripcion().getText())) {
+							logica.insertarArticulosEnCombo(panelPedido.getComboArticulos());
+							panelArticulo.getMensajeCrear().setForeground(Color.GREEN);
+							panelArticulo.getMensajeCrear().setText("El articulo ha sido creado.");
+							panelArticulo.getCrearNombre().setText("");
+							panelArticulo.getCrearID().setText("");
+							panelArticulo.getCrearPrecio().setText("");
+							panelArticulo.getCrearDescripcion().setText("");
+						} else {
+							panelArticulo.getMensajeCrear().setForeground(Color.RED);
+							panelArticulo.getMensajeCrear().setText("Error: El articulo ya existe!!");
+						}
+						Pausa(2);
+					} else {
+						panelArticulo.getMensajeCrear().setForeground(Color.RED);
+						panelArticulo.getMensajeCrear().setText("Error: Precio esta mal escrito!!");
+						panelArticulo.getCrearPrecio().setText("");
+						Pausa(2);
+					}
 				}
-				Pausa(2);
+			}
+
+			private boolean comprobarPuntos(String text) {
+				for (int i = 0, contador = 0; i < text.length(); i++) {
+					if (text.charAt(i) == '.') {
+						contador++;
+						if (contador > 1) {
+							return true;
+						}
+					}
+				}
+				return false;
 			}
 		});
 
@@ -112,32 +182,34 @@ public class ParaUI extends UI {
 					logica.editar(panelArticulo.getDetallesNombre().getText(),
 							Float.valueOf(panelEditarArticulo.getNuevoPrecio().getText()));
 					panelArticulo.getDetallesPrecio().setText(panelEditarArticulo.getNuevoPrecio().getText());
-				}else{
+					panelEditarArticulo.getNuevoPrecio().setText("");
+				} else {
 					panelArticulo.getMensajeConsulta().setForeground(Color.RED);
 					panelArticulo.getMensajeConsulta().setText("Error: Vacio!!");
 					Pausa(2);
 				}
 			}
-		});		
+		});
+
 		panelEditarArticulo.getBtnBuscar().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(!panelEditarArticulo.getTxtFecha().getText().isEmpty()){
+
+				if (!panelEditarArticulo.getTxtFecha().getText().isEmpty()) {
 					if (!panelArticulo.getDetallesNombre().getText().isEmpty()) {
 						String fecha = panelEditarArticulo.getTxtFecha().getText();
-						float precioAnteriorSegunFecha = logica.getPrecioAnteriorSegunFecha(fecha,panelArticulo.getDetallesNombre().getText());
+						float precioAnteriorSegunFecha = logica.getPrecioAnteriorSegunFecha(fecha,
+								panelArticulo.getDetallesNombre().getText());
 						panelEditarArticulo.getLblPrecio().setText(String.valueOf(precioAnteriorSegunFecha));
-					}else{
+					} else {
 						panelArticulo.getMensajeConsulta().setForeground(Color.RED);
 						panelArticulo.getMensajeConsulta().setText("Error: Vacio!!");
 						Pausa(2);
 					}
-				}else{
+				} else {
 					panelEditarArticulo.getLblPrecio().setText("Error: Vacio!!");
 				}
-				
 			}
 		});
-
 	}
 
 	/**
@@ -161,8 +233,8 @@ public class ParaUI extends UI {
 								panelCliente.getTxtDireccion().setText(null);
 								panelCliente.getTxtTelefono().setText(null);
 							} else {
-								panelCliente.getLblMensaje()
-										.setText("Error en la operacion. Revise los campos de texto e intentelo de nuevo.");
+								panelCliente.getLblMensaje().setText(
+										"Error en la operacion. Revise los campos de texto e intentelo de nuevo.");
 							}
 						} else {
 							panelCliente.getLblMensaje().setText("El telefono introducido no es correcto");
@@ -198,15 +270,12 @@ public class ParaUI extends UI {
 				}
 			}
 		});
-		
+
 		panelCliente.getTxtClienteConsulta().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				btnBuscarCliente();
 			}
 		});
-
-
-
 
 		panelCliente.getComboBox().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -215,28 +284,30 @@ public class ParaUI extends UI {
 					logica.consultarCliente(dniCif, panelCliente.getTxtDnicifResultado(),
 							panelCliente.getTxtRazonSocialResultado(), panelCliente.getTxtDireccionResultado(),
 							panelCliente.getTxtTelefonoResultado());
-				} 
+				}
 			}
 		});
 		panelCliente.getBtnEliminarCliente().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				panelCliente.getLblMensaje().setText("NO IMPLEMENTADO");
-				if(logica.eliminarCliente(panelCliente.getTxtDnicifResultado().getText())){
+				if (logica.eliminarCliente(panelCliente.getTxtDnicifResultado().getText())) {
 					panelCliente.getLblMensaje().setText("Borrado");
-				}else{
+				} else {
 					panelCliente.getLblMensaje().setText("Fallo al borrar");
-				};
+				}
+				;
 			}
 		});
-		
+
 		panelCliente.getTxtTelefono().addKeyListener(new KeyAdapter() {
 			public void keyTyped(KeyEvent e) {
-				if ((e.getKeyChar() < '0' || e.getKeyChar() > '9') || panelCliente.getTxtTelefono().getText().length() == 9) {
+				if ((e.getKeyChar() < '0' || e.getKeyChar() > '9')
+						|| panelCliente.getTxtTelefono().getText().length() == 9) {
 					e.consume();
 				}
 			}
 		});
-		
+
 		panelCliente.getTxtDnicif().addKeyListener(new KeyAdapter() {
 			public void keyTyped(KeyEvent e) {
 				if (panelCliente.getTxtDnicif().getText().length() == 9) {
@@ -244,7 +315,7 @@ public class ParaUI extends UI {
 				}
 			}
 		});
-		
+
 		panelCliente.getTxtDnicif().addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -393,7 +464,8 @@ public class ParaUI extends UI {
 		panelPedido.getBtnVer().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (!comprobarPedidoProceso()) {
-					if (panelPedido.getComboPedidos().getItemCount() != 0 && panelPedido.getComboClientes().getItemCount() != 0) {
+					if (panelPedido.getComboPedidos().getItemCount() != 0
+							&& panelPedido.getComboClientes().getItemCount() != 0) {
 						bloquearListener = true;
 						panelPedido.getBtnVer().setEnabled(false);
 						panelPedido.getComboPedidos().setEnabled(false);
@@ -419,7 +491,7 @@ public class ParaUI extends UI {
 						logica.cambiarPrecioRejilla(panelTabla.getTabla());
 						bloquearListener = false;
 					}
-				} 
+				}
 			}
 		});
 	}
@@ -481,11 +553,10 @@ public class ParaUI extends UI {
 	}
 
 	/**
-	 * comprueba que hay un pedido en proceso o no e inserta un mensaje en el
-	 * panel pedido
+	 * comprueba que hay un pedido en proceso o no e inserta un mensaje en el panel
+	 * pedido
 	 * 
-	 * @return true si hay un pedido en proceso, false si no hay pedido en
-	 *         proceso
+	 * @return true si hay un pedido en proceso, false si no hay pedido en proceso
 	 */
 	private boolean comprobarPedidoProceso() {
 		if (pedidoProceso) {
