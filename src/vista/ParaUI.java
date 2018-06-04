@@ -9,9 +9,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
 import javax.swing.SwingWorker;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
@@ -232,6 +229,10 @@ public class ParaUI extends UI {
 								panelCliente.getTxtRazonSocial().setText(null);
 								panelCliente.getTxtDireccion().setText(null);
 								panelCliente.getTxtTelefono().setText(null);
+								if (panelPedido.getComboClientes().getItemCount() > 0) {
+									panelPedido.getComboClientes().removeAllItems();
+								}
+								logica.insertarClientesEnCombo(panelPedido.getComboClientes());
 							} else {
 								panelCliente.getLblMensaje().setText(
 										"Error en la operacion. Revise los campos de texto e intentelo de nuevo.");
@@ -331,11 +332,11 @@ public class ParaUI extends UI {
 			}
 		});
 		
-	panelCliente.getTxtClienteConsulta().addKeyListener(new KeyAdapter() {
+		panelCliente.getTxtClienteConsulta().addKeyListener(new KeyAdapter() {
 			public void keyReleased(KeyEvent e) {
 				btnBuscarCliente();
-		}
-	});
+			}
+		});
 
 		panelCliente.getTxtDnicif().addMouseListener(new MouseAdapter() {
 			@Override
@@ -472,12 +473,14 @@ public class ParaUI extends UI {
 		panelPedido.getComboClientes().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (!comprobarPedidoProceso()) {
-					panelPedido.getComboPedidos().removeAllItems();
-					panelPedido.getComboPedidos().setEnabled(true);
-					logica.insertarPedidosEnCombo(panelPedido.getComboPedidos(),
-							(String) panelPedido.getComboClientes().getSelectedItem(), panelPedido.getTxtMensaje());
-					panelPedido.getBtnVer().setEnabled(true);
-					panelPedido.revalidate();
+					if (panelPedido.getComboClientes().getItemCount() > 0) {
+						panelPedido.getComboPedidos().removeAllItems();
+						panelPedido.getComboPedidos().setEnabled(true);
+						logica.insertarPedidosEnCombo(panelPedido.getComboPedidos(),
+								(String) panelPedido.getComboClientes().getSelectedItem(), panelPedido.getTxtMensaje());
+						panelPedido.getBtnVer().setEnabled(true);
+						panelPedido.revalidate();
+					}
 				}
 			}
 		});
@@ -506,13 +509,26 @@ public class ParaUI extends UI {
 		modeloTabla.addTableModelListener(new TableModelListener() {
 			@Override
 			public void tableChanged(TableModelEvent e) {
+				//TODO
+				int fila = panelTabla.getTabla().getSelectedRow();
+				System.out.println(fila);
 				if (pedidoProceso) {
-					if (panelTabla.getTabla().getRowCount() != 0 && !bloquearListener) {
+					if (panelTabla.getTabla().getRowCount() != 0 && !bloquearListener && fila != -1) {
 						bloquearListener = true;
 						logica.cambiarPrecioRejilla(panelTabla.getTabla());
+						modeloTabla.setValueAt((Integer.parseInt(modeloTabla.getValueAt(fila, 2).toString()) * Integer.parseInt(modeloTabla.getValueAt(fila, 3).toString())), fila, 4);
 						bloquearListener = false;
 					}
 				}
+						
+				
+//				if (pedidoProceso) {
+//					if (panelTabla.getTabla().getRowCount() != 0 && !bloquearListener) {
+//						bloquearListener = true;
+//						logica.cambiarPrecioRejilla(panelTabla.getTabla());
+//						bloquearListener = false;
+//					}
+//				}
 			}
 		});
 	}
