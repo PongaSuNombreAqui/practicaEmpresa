@@ -196,24 +196,18 @@ public class Logica<K> {
 	 * @param modeloTabla modelo de la tabla a vaciar
 	 */
 	public void eliminarPedidoRejilla(DefaultTableModel modeloTabla) {
-		int rows = modeloTabla.getRowCount();
-		for (int i = rows - 1; i >= 0; i--) {
-			modeloTabla.removeRow(i);
-		}
+		accionesPedido.eliminarPedidoRejilla(modeloTabla);
+
 	}
 	
 	/**
 	 * Cambia el precio total del articulo en tabla cuando se ajusta la cantidad
 	 * @param tabla				Tabla en la que se actualizara el pedido
 	 */
-	public void cambiarPrecioRejilla(JTable tabla) {
-		accionesPedido.cambiarPrecioRejilla(tabla);
+	public void cambiarPrecioRejilla(DefaultTableModel modeloTabla) {
+		accionesPedido.cambiarPrecioRejilla(modeloTabla);
 	}
 
-
-	public void eliminarPedidoRejilla(JTable tabla) {
-		accionesPedido.eliminarPedidoRejilla(tabla);
-	}
 
 	public float getPrecioAnteriorSegunFecha(String fecha, String nombreArt) {
 		String[] fechaPartida = fecha.split("-");

@@ -118,4 +118,82 @@ public class DAO<T> {
 		}
 		return flujoR;
 	}
+////
+	public boolean borrarElemento(String pathDatos, Integer posicion) {
+		int i = 0;
+		boolean retorno=true;
+		T t = leerT(pathDatos, i);
+		while (t != null) {
+			if (i != posicion) {
+				grabar("copia", t, true);
+			}
+			i++;
+			t = leerT(pathDatos, 0);
+		}
+		File original=new File(pathDatos);
+		File copia=new File("copia");
+		if(original.delete()&&copia.renameTo(original)){
+			retorno=false;
+		}
+		return retorno;
+	}
+	
+	public T leerT(String path) {
+		return leerT(path, 0);
+	}
+
+	public T leerT(String path, int posicion) {
+		assert path != null && posicion >= 0;
+		T t = null;
+		FileInputStream flujoR = abrirT(path);
+		if (flujoR != null) {
+			try {
+				ObjectInputStream adaptador = new ObjectInputStream(flujoR);
+				for (int i = 0; i <= posicion; i++) {
+					t = (T) adaptador.readObject();
+				}
+			} catch (IOException | ClassNotFoundException e) {
+				e.printStackTrace();
+				t = null;
+			}
+			cerrarFlujo(flujoR);
+		}
+		return t;
+	}
+	
+	private FileInputStream abrirT(String path) {
+		FileInputStream flujoR = null;
+		File file = new File(path);
+		try {
+			if (file.exists()) {
+				flujoR = new FileInputStream(path);
+			}
+		} catch (FileNotFoundException e) {
+		}
+		return flujoR;
+	}
+
+	private FileOutputStream abrirT(String path, boolean adicion) {
+		// no hay assert porque ya habria saltado en el public
+		FileOutputStream flujoW = null;
+		File file = new File(path);
+		try {
+			flujoW = new FileOutputStream(file, adicion);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		return flujoW;
+
+	}
+	private boolean cerrarFlujo(Closeable closeable) {
+		boolean retorno = true;
+		try {
+			closeable.close();
+		} catch (IOException e) {
+			retorno = false;
+		}
+		return retorno;
+	}
 }
+
+

@@ -26,9 +26,9 @@ public class AlmacenClienteTest<K> {
 		clientes.add(cliente1);
 		Cliente cliente2 = new Cliente("dni2", "dos", "asd", "123");
 		clientes.add(cliente2);
-		Cliente cliente3 = new Cliente("dni3", "tres", "asd", "123");
+		Cliente cliente3 = new Cliente("dni4", "tres", "asd", "123");
 		clientes.add(cliente3);
-		Cliente cliente4 = new Cliente("dni4", "cuatro", "asd", "123");
+		Cliente cliente4 = new Cliente("dni3", "cuatro", "asd", "123");
 		clientes.add(cliente4);
 		Cliente cliente5 = new Cliente("dni5", "dos", "asd", "123");
 		clientes.add(cliente5);
@@ -50,8 +50,8 @@ public class AlmacenClienteTest<K> {
 			new AlmacenIndice<>("./dataTest/clientes/").grabar(cliente, cliente.getDniCif());
 		}
 		// se pueden sobreescribir archivos
-		assertFalse(
-				new AlmacenIndice<>("./dataTest/clientes/").grabar(new Cliente("dni3", "tres", "asd", "123"), "dni3"));
+//		assertFalse(
+//				new AlmacenIndice<>("./dataTest/clientes/").grabar(new Cliente("dni3", "tres", "asd", "123"), "dni3"));
 	}
 
 	@Test

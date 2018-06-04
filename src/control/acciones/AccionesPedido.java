@@ -99,20 +99,18 @@ public class AccionesPedido<K> {
 		}
 	}
 	
-	public void cambiarPrecioRejilla(JTable tabla) {
-		DefaultTableModel modelo = (DefaultTableModel) tabla.getModel();
+	public void cambiarPrecioRejilla(DefaultTableModel modelo) {
 		ArrayList<Linea> lineas = extraerPedidoRejilla(modelo);
-		eliminarPedidoRejilla(tabla);
+		eliminarPedidoRejilla(modelo);
 		for (int i = lineas.size() - 1; i >= 0; i--) {
 			modelo.addRow(lineas.get(i).toVector());
 		}
 	}
 
-	public void eliminarPedidoRejilla(JTable tabla) {
-		DefaultTableModel modelo = (DefaultTableModel) tabla.getModel();
-		int rows = modelo.getRowCount();
+	public void eliminarPedidoRejilla(DefaultTableModel modeloTabla) {
+		int rows = modeloTabla.getRowCount();
 		for (int i = rows - 1; i >= 0; i--) {
-			modelo.removeRow(i);
+			modeloTabla.removeRow(i);
 		}
 	}
 

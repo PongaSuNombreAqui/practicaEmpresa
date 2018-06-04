@@ -47,13 +47,19 @@ public class AlmacenIndice<T, K> {
 		this.pathDatos.append("clientes.data");
 		assert k != null && t != null;
 		boolean retorno = false;
+		
+//		int lastEntry = indice.size();
+//		Integer value = lastEntry++;
+		
+		Integer value=0;
 		Entry<K, Integer> lastEntry = indice.lastEntry();
-		Integer value = 0;
 		if (lastEntry != null) {
 			value = lastEntry.getValue() + 1;
 		}
-		System.out.println(value);
-		System.out.println(k);
+		while(indice.containsValue(value)){
+			value++;
+		}
+		
 		if (indice.put(k, value) == null) {
 			if (new DAO<>().grabar(pathDatos.toString(), t, true)) {
 				retorno = true;
@@ -80,17 +86,37 @@ public class AlmacenIndice<T, K> {
 		if (posicion != null) {
 			retorno = (T) new DAO<>().leer(pathDatos.toString(), posicion);
 		}
-		System.out.println(indice);
 		return retorno;
 	}
 	
 	
-	public boolean borrar(K k) {
-		this.pathDatos.append("clientes.data");
-		indice = (TreeMap<K, Integer>) new DAO<T>().leer(pathIndice.toString());
-		indice.remove(k);
-		return new DAO<>().grabar(pathIndice, indice);
+//	public boolean borrar(K k) {
+//		Object retorno = null;
+//		this.pathDatos.append("clientes.data");
+//		indice = (TreeMap<K, Integer>) new DAO<T>().leer(pathIndice.toString());
+//		Integer posicion=indice.remove(k);
+//		if(posicion!=null){
+//			retorno = new DAO<>().borrarElemento(pathDatos.toString(),posicion);
+//		}
+//		return new DAO<>().grabar(pathIndice, indice);
+//	}
+	public boolean borrar(K k){
+		indice = (TreeMap<K, Integer>) new DAO().leer(pathIndice);
+		boolean retorno=false;
+		if(indice.containsKey(k)){
+			System.out.println(indice);
+			Integer posicion=indice.remove(k);
+			if(posicion!=null){
+				retorno=new DAO<>().borrarElemento(pathDatos.toString(),posicion);
+				if(!retorno){
+					indice = (TreeMap<K, Integer>) new DAO().leer(pathIndice);
+				}
+			}
+		}
+		return retorno;
 	}
+
+
 	/**
 	 * grabar un objeto articulo en el fichero
 	 * 
