@@ -152,7 +152,6 @@ public class ParaUI extends UI {
 						}
 						Pausa(3);
 					} else {
-						panelArticulo.getTextMensajeSistema().setForeground(Color.RED);
 						setMensaje("Error: Precio esta mal escrito!!", Color.RED,
 								panelArticulo.getTextMensajeSistema());
 						panelArticulo.getCrearPrecio().setText("");
