@@ -382,12 +382,26 @@ public class ParaUI extends UI {
 			public void actionPerformed(ActionEvent e) {
 				if (comprobarPedidoProceso()) {
 					if (panelPedido.getComboArticulos().getItemCount() != 0) {
-						bloquearListener = true;
+						bloquearListener = false;
 						String nombreArticulo = panelPedido.getComboArticulos().getSelectedItem().toString();
-						logica.aniadirArticuloATabla(nombreArticulo, modeloTabla);
-						panelPedido.revalidate();
-						setMensaje("Insertado en el pedido el articulo " + nombreArticulo);
-						panelPedido.getTxtMensaje().setBackground(Color.GREEN);
+						System.out.println(nombreArticulo);
+						int encontrado = -1;
+						int rows = modeloTabla.getRowCount();
+						for (int i = rows - 1; i >= 0; i--) {
+							if (modeloTabla.getValueAt(i, 1).toString().equals(nombreArticulo)) {
+								encontrado = i;
+							}
+						}
+						if (encontrado == -1) {
+							logica.aniadirArticuloATabla(nombreArticulo, modeloTabla);
+							panelPedido.revalidate();
+							setMensaje("Insertado en el pedido el articulo " + nombreArticulo);
+							panelPedido.getTxtMensaje().setBackground(Color.GREEN);
+						} else {
+							modeloTabla.setValueAt(
+									(Integer.parseInt(modeloTabla.getValueAt(encontrado, 3).toString()) + 1),
+									encontrado, 3);
+						}
 						bloquearListener = false;
 					} else {
 						setMensaje("No hay articulos");
@@ -514,10 +528,11 @@ public class ParaUI extends UI {
 				if (pedidoProceso) {
 					if (panelTabla.getTabla().getRowCount() != 0 && !bloquearListener && fila != -1) {
 						bloquearListener = true;
-						modeloTabla.setValueAt(
-								(Float.parseFloat(modeloTabla.getValueAt(fila, 2).toString()) *
-								Integer.parseInt(modeloTabla.getValueAt(fila, 3).toString())),
-								fila, 4);
+						modeloTabla
+								.setValueAt(
+										(Float.parseFloat(modeloTabla.getValueAt(fila, 2).toString())
+												* Integer.parseInt(modeloTabla.getValueAt(fila, 3).toString())),
+										fila, 4);
 						bloquearListener = false;
 					}
 				}
