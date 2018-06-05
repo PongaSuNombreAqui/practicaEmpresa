@@ -106,7 +106,6 @@ public class ParaUI extends UI {
 			public void actionPerformed(ActionEvent e) {
 				if (panelArticulo.getNombreConsultado().getText().isEmpty()) {
 					setMensaje("Error: Parametro vacio!!", Color.RED, panelArticulo.getTextMensajeSistema());
-					Pausa(3);
 				} else {
 					if (true == logica.comprobarExistencia(panelArticulo.getNombreConsultado().getText())) {
 						panelArticulo.aniadir(panelEditarArticulo);
@@ -121,7 +120,6 @@ public class ParaUI extends UI {
 						panelArticulo.getDetallesID().setText("");
 						panelArticulo.getDetallesPrecio().setText("");
 						panelArticulo.getDetallesDescripcion().setText("");
-						Pausa(3);
 					}
 				}
 			}
@@ -133,7 +131,6 @@ public class ParaUI extends UI {
 						|| panelArticulo.getCrearPrecio().getText().isEmpty()
 						|| panelArticulo.getCrearDescripcion().getText().isEmpty()) {
 					setMensaje("Error: Parametro vacio!!", Color.RED, panelArticulo.getTextMensajeSistema());
-					Pausa(3);
 				} else {
 					if (false == comprobarPuntos(panelArticulo.getCrearPrecio().getText())) {
 						if (logica.crearArticulo(panelArticulo.getCrearNombre().getText(),
@@ -151,12 +148,10 @@ public class ParaUI extends UI {
 							setMensaje("Error: El articulo ya existe!!", Color.RED,
 									panelArticulo.getTextMensajeSistema());
 						}
-						Pausa(3);
 					} else {
 						setMensaje("Error: Precio esta mal escrito!!", Color.RED,
 								panelArticulo.getTextMensajeSistema());
 						panelArticulo.getCrearPrecio().setText("");
-						Pausa(3);
 					}
 				}
 			}
@@ -183,7 +178,6 @@ public class ParaUI extends UI {
 					panelEditarArticulo.getNuevoPrecio().setText("");
 				} else {
 					setMensaje("Error: Vacio!!", Color.RED, panelArticulo.getTextMensajeSistema());
-					Pausa(3);
 				}
 			}
 		});
@@ -199,12 +193,10 @@ public class ParaUI extends UI {
 						panelEditarArticulo.getLblPrecio().setText(String.valueOf(precioAnteriorSegunFecha));
 					} else {
 						setMensaje("Error: Vacio!!", Color.RED, panelArticulo.getTextMensajeSistema());
-						Pausa(3);
 					}
 				} else {
 					panelEditarArticulo.getLblPrecio().setText("Error: Vacio!!");
 				}
-				Pausa(3);
 			}
 		});
 	}
@@ -223,26 +215,28 @@ public class ParaUI extends UI {
 					if (Validator.isDniCif(dniCif)) {
 						if (Validator.isPhone(telefono)) {
 							if (logica.agregarCliente(dniCif, razonSocial, direccion, telefono)) {
-								panelCliente.getLblMensaje()
-										.setText("Cliente " + razonSocial + " ha sido agregado correctamente");
+								setMensaje("Cliente " + razonSocial + " ha sido agregado correctamente", Color.GREEN,
+										panelCliente.getLblMensaje());
 								panelCliente.getTxtDnicif().setText(null);
 								panelCliente.getTxtRazonSocial().setText(null);
 								panelCliente.getTxtDireccion().setText(null);
 								panelCliente.getTxtTelefono().setText(null);
 							} else {
-								panelCliente.getLblMensaje().setText(
-										"Error en la operacion. Revise los campos de texto e intentelo de nuevo.");
+								setMensaje("Error en la operacion. Revise los campos de texto e intentelo de nuevo.",
+										Color.RED, panelCliente.getLblMensaje());
 							}
 						} else {
-							panelCliente.getLblMensaje().setText("El telefono introducido no es correcto");
+							setMensaje("El telefono introducido no es correcto", Color.RED,
+									panelCliente.getLblMensaje());
 							panelCliente.getTxtTelefono().setBackground(Color.YELLOW);
 						}
 					} else {
-						panelCliente.getLblMensaje().setText("El DNI o CIF introducido no es correcto");
+						setMensaje("El DNI o CIF introducido no es correcto", Color.RED, panelCliente.getLblMensaje());
 						panelCliente.getTxtDnicif().setBackground(Color.YELLOW);
 					}
 				} else {
-					panelCliente.getLblMensaje().setText("Debe rellenar los campos de texto para continuar");
+					setMensaje("Debe rellenar los campos de texto para continuar", Color.RED,
+							panelCliente.getLblMensaje());
 					if (dniCif.isEmpty()) {
 						panelCliente.getTxtDnicif().setBackground(Color.YELLOW);
 					}
@@ -256,7 +250,6 @@ public class ParaUI extends UI {
 						panelCliente.getTxtTelefono().setBackground(Color.YELLOW);
 					}
 				}
-				Pausa(3);
 			}
 		});
 
@@ -309,7 +302,6 @@ public class ParaUI extends UI {
 						panelCliente.getLblMensaje().setText("Fallo al borrar");
 					}
 				}
-				Pausa(3);
 			}
 		});
 
@@ -391,7 +383,6 @@ public class ParaUI extends UI {
 						setMensaje("No hay articulos", Color.RED, panelPedido.getTextMensaje());
 					}
 				}
-				Pausa(3);
 			}
 		});
 
@@ -400,10 +391,9 @@ public class ParaUI extends UI {
 				if (comprobarPedidoProceso()) {
 					pedidoProceso = false;
 					logica.eliminarPedidoRejilla(modeloTabla);
-					setMensaje("El pedido ha sido cancelado", Color.RED, panelPedido.getTextMensaje());
+					setMensaje("El pedido ha sido cancelado", Color.ORANGE, panelPedido.getTextMensaje());
 					panelPedido.getTextMensaje().setBackground(Color.ORANGE);
 				}
-				Pausa(3);
 			}
 		});
 
@@ -413,14 +403,13 @@ public class ParaUI extends UI {
 					pedidoProceso = true;
 					String numeroPedido = String.valueOf(logica.getNumeroPosiblePedido());
 					panelPedido.getTxtNumeroPedido().setText(numeroPedido);
-					setMensaje("Nuevo pedido numero " + numeroPedido + " en proceso", Color.RED,
+					setMensaje("Nuevo pedido numero " + numeroPedido + " en proceso", Color.GREEN,
 							panelPedido.getTextMensaje());
 					logica.insertarArticulosEnCombo(panelPedido.getComboArticulos());
 					logica.insertarClientesEnCombo(panelPedido.getComboClientesCrear());
 					logica.eliminarPedidoRejilla(modeloTabla);
 					bloquearListener = false;
 				}
-				Pausa(3);
 			}
 
 		});
@@ -445,9 +434,7 @@ public class ParaUI extends UI {
 					} else {
 						setMensaje("No hay clientes", Color.RED, panelPedido.getTextMensaje());
 					}
-
 				}
-				Pausa(3);
 			}
 		});
 		panelPedido.getBtnDelete().addActionListener(new ActionListener() {
@@ -461,7 +448,6 @@ public class ParaUI extends UI {
 						setMensaje("No se ha seleccionado linea de pedido", Color.RED, panelPedido.getTextMensaje());
 					}
 				}
-				Pausa(3);
 			}
 		});
 		panelPedido.getComboClientesCrear().addActionListener(
@@ -500,14 +486,12 @@ public class ParaUI extends UI {
 						int numeroPedido = Integer.valueOf(logica.getItemFromCombo(panelPedido.getComboPedidos()));
 						logica.eliminarPedidoRejilla(modeloTabla);
 						logica.consultar(panelTabla.getTabla(), numeroPedido, dniNif);
-						setMensaje("Mostrando el pedido " + numeroPedido + " del cliente con dni: " + dniNif, Color.RED,
-								panelPedido.getTextMensaje());
-						panelPedido.getTextMensaje().setBackground(Color.GREEN);
+						setMensaje("Mostrando el pedido " + numeroPedido + " del cliente con dni: " + dniNif,
+								Color.GREEN, panelPedido.getTextMensaje());
 					} else {
 						setMensaje("No se ha seleccionado pedido", Color.RED, panelPedido.getTextMensaje());
 					}
 				}
-				Pausa(3);
 			}
 		});
 		modeloTabla.addTableModelListener(new TableModelListener() {
@@ -598,7 +582,6 @@ public class ParaUI extends UI {
 			setMensaje("Accion no disponible si no esta creando un pedido", Color.RED, panelPedido.getTextMensaje());
 		}
 		panelPedido.getTextMensaje().setBackground(Color.RED);
-		Pausa(3);
 		return pedidoProceso;
 	}
 
@@ -614,6 +597,7 @@ public class ParaUI extends UI {
 		jlabel.setBackground(color);
 		jlabel.setText(mensaje);
 		jlabel.setOpaque(true);
+		Pausa(3);
 	}
 
 	private void btnBuscarCliente() {
@@ -633,6 +617,5 @@ public class ParaUI extends UI {
 		} else {
 			setMensaje("Debe rellenar el campo de cliente", Color.RED, panelCliente.getLblMensaje());
 		}
-		Pausa(3);
 	}
 }
