@@ -220,7 +220,7 @@ public class ParaUI extends UI {
 								}
 								logica.insertarClientesEnCombo(panelPedido.getComboClientes());
 							} else {
-								setMensaje("Error en la operacion. Revise los campos de texto e intentelo de nuevo.",
+								setMensaje("Error en la operacion: Revise los campos de texto e intentelo de nuevo",
 										Color.RED, panelCliente.getLblMensaje());
 							}
 						} else {
@@ -389,6 +389,7 @@ public class ParaUI extends UI {
 						setMensaje("Insertado en el pedido el articulo " + nombreArticulo, Color.GREEN,
 								panelPedido.getTextMensaje());
 					} else {
+						panelTabla.getTabla().changeSelection(encontrado, 3, false, false);
 						modeloTabla.setValueAt((Integer.parseInt(modeloTabla.getValueAt(encontrado, 3).toString()) + 1),
 								encontrado, 3);
 					}
@@ -515,11 +516,18 @@ public class ParaUI extends UI {
 			public void tableChanged(TableModelEvent e) {
 				int fila = panelTabla.getTabla().getSelectedRow();
 				System.out.println(fila);
+				// Cambia precioTotal
+				panelPedido.getLblTotalPrecio().setText("0");
+				float total = 0;
+				for (int i = 0; i < panelTabla.getTabla().getRowCount(); i++) {
+					total = Float.parseFloat(modeloTabla.getValueAt(i, 4).toString()) + total;
+				}
+				panelPedido.getLblTotalPrecio().setText("" + total);
+				// FIN
 				if (pedidoProceso) {
 					if (panelTabla.getTabla().getRowCount() != 0 && !bloquearListener && fila != -1) {
 						bloquearListener = true;
-						modeloTabla
-								.setValueAt(
+						modeloTabla.setValueAt(
 										(Float.parseFloat(modeloTabla.getValueAt(fila, 2).toString())
 												* Integer.parseInt(modeloTabla.getValueAt(fila, 3).toString())),
 										fila, 4);
@@ -631,10 +639,8 @@ public class ParaUI extends UI {
 			}
 			logica.buscarCliente(nombre, panelCliente.getComboBox());
 			if (panelCliente.getComboBox().getItemCount() == 0) {
-				panelCliente.getTxtDnicifResultado().setText(null);
-				panelCliente.getTxtRazonSocialResultado().setText(null);
-				panelCliente.getTxtDireccionResultado().setText(null);
-				panelCliente.getTxtTelefonoResultado().setText(null);
+				borrarTxt(panelCliente.getTxtDnicifResultado(), panelCliente.getTxtRazonSocialResultado(),
+						panelCliente.getTxtDireccionResultado(), panelCliente.getTxtTelefonoResultado());
 				setMensaje("No hay coincidencias", Color.RED, panelCliente.getLblMensaje());
 			}
 		} else {
@@ -642,12 +648,24 @@ public class ParaUI extends UI {
 		}
 	}
 
+	/**
+	 * Borra el campo de texto de los JTextField
+	 * @param jTextField	El JTextField a borrar
+	 */
 	private void borrarTxt(JTextField... jTextField) {
 		for (int i = 0; i < jTextField.length; i++) {
 			jTextField[i].setText(null);
 		}
 	}
 
+	/**
+	 * Comprueba que los campos de texto de los JTextField están vacios. Si
+	 * estan vacios, se cambiara el color de fondo
+	 * 
+	 * @param jTextField	El JTextField a comprobar
+	 * @return FALSE si ninguno de ellos esta vacio 
+	 * 			TRUE si uno o varios de ellos estan vacios
+	 */
 	private boolean comprobarCamposTxt(JTextField... jTextField) {
 		boolean vacio = false;
 		for (int i = 0; i < jTextField.length; i++) {
