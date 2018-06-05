@@ -1,5 +1,6 @@
 package control;
 
+import java.time.ZoneId;
 import java.util.GregorianCalendar;
 import java.util.TreeMap;
 
@@ -211,7 +212,8 @@ public class Logica<K> {
 
 	public float getPrecioAnteriorSegunFecha(String fecha, String nombreArt) {
 		String[] fechaPartida = fecha.split("-");
-	    GregorianCalendar fechaGre = new GregorianCalendar(Integer.valueOf(fechaPartida[0]),Integer.valueOf(fechaPartida[1]),Integer.valueOf(fechaPartida[2]));
+		System.out.println(fechaPartida[1]);
+	    GregorianCalendar fechaGre = new GregorianCalendar(Integer.valueOf(fechaPartida[0]),Integer.valueOf(fechaPartida[1])-1,Integer.valueOf(fechaPartida[2]));
 		Articulo item = (Articulo) new AlmacenIndice<>(Utiles.pathArticulos).leer(nombreArt);
 		return accionesArticulo.comprobarPrecio(item, fechaGre);
 	}

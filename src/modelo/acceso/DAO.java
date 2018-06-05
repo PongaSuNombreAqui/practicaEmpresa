@@ -128,11 +128,11 @@ public class DAO<T> {
 				grabar("copia", t, true);
 			}
 			i++;
-			t = leerT(pathDatos, 0);
+			t = leerT(pathDatos, i);
 		}
 		File original=new File(pathDatos);
 		File copia=new File("copia");
-		if(original.delete()&&copia.renameTo(original)){
+		if(!original.delete()||!copia.renameTo(original)){
 			retorno=false;
 		}
 		return retorno;
