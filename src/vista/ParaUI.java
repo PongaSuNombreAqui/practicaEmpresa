@@ -35,6 +35,7 @@ public class ParaUI extends UI {
 	private PanelArticulo panelArticulo;
 	private PanelMain panelMain;
 	private PanelEditarArticulo panelEditarArticulo;
+	private MouseListenerColor mouseListener;
 	private boolean pedidoProceso;
 	private DefaultTableModel modeloTabla;
 	private boolean bloquearListener = false;
@@ -364,7 +365,7 @@ public class ParaUI extends UI {
 		panelCliente.getTxtClienteConsulta().addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				panelCliente.getTxtClienteConsulta().setBackground(Color.WHITE);
+				panelCliente.getTxtTelefono().setBackground(Color.WHITE);
 			}
 		});
 	}
@@ -595,7 +596,7 @@ public class ParaUI extends UI {
 	 * @param red
 	 */
 	private void setMensaje(String mensaje, Color color, JLabel jlabel) {
-		jlabel.setForeground(color);
+		jlabel.setBackground(color);
 		jlabel.setText(mensaje);
 	}
 
