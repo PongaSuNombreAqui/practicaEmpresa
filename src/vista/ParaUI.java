@@ -264,6 +264,10 @@ public class ParaUI extends UI {
 
 		panelCliente.getBtnEliminarCliente().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				VentanaErmegenteBorrarCliente ventanaEliminar = new VentanaErmegenteBorrarCliente();
+				// En el caso que confirme la accion
+				ventanaEliminar.getBtnConfirmar().addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
 				int indice = panelCliente.getComboBox().getSelectedIndex();
 				if (indice >= 0) {
 					if (logica.eliminarCliente(panelCliente.getTxtDnicifResultado().getText())) {
@@ -275,11 +279,16 @@ public class ParaUI extends UI {
 									panelCliente.getTxtDireccionResultado(), panelCliente.getTxtTelefonoResultado());
 							panelCliente.getComboBox().removeAllItems();
 						}
-						panelCliente.getLblMensaje().setText("Borrado");
-					} else {
-						panelCliente.getLblMensaje().setText("Fallo al borrar");
+						ventanaEliminar.dispose();
 					}
-				}
+				});
+
+				// En el caso de que eliga la opcion de cancelar
+				ventanaEliminar.getBtnCancelar().addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						ventanaEliminar.dispose();
+					}
+				});
 			}
 		});
 
