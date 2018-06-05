@@ -174,4 +174,18 @@ public class AlmacenIndice<T, K> {
 		}
 		return null;
 	}
+	
+//	private void recargaIndice() {
+//		indice=new TreeMap<>();
+//		int posicion=0;
+//		T t=(T) dao.leer(pathDatos, posicion);
+//		while (t!=null){
+//			Indexable<K> elemento=(Indexable<K>) t;
+//			K k=elemento.getKey();
+//			indice.put(k, posicion);
+//			posicion++;
+//			t=(T) dao.leer(pathDatos, posicion);
+//		}
+//		
+//	}
 }

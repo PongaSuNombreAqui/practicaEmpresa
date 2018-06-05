@@ -97,8 +97,7 @@ public class ParaUI extends UI {
 		panelArticulo.getBtnBuscar().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (panelArticulo.getNombreConsultado().getText().isEmpty()) {
-					panelArticulo.getMensajeConsulta().setForeground(Color.RED);
-					panelArticulo.getMensajeConsulta().setText("Error: Parametro vacío!!");
+					setMensaje("Error: Parametro vacio!!", Color.RED, panelArticulo.getTextMensajeSistema());
 					Pausa(2);
 				} else {
 					if (true == logica.comprobarExistencia(panelArticulo.getNombreConsultado().getText())) {
@@ -108,8 +107,7 @@ public class ParaUI extends UI {
 								panelArticulo.getDetallesNombre(), panelArticulo.getDetallesID(),
 								panelArticulo.getDetallesPrecio(), panelArticulo.getDetallesDescripcion());
 					} else {
-						panelArticulo.getMensajeConsulta().setForeground(Color.RED);
-						panelArticulo.getMensajeConsulta().setText("Error: El articulo no existe!!");
+						setMensaje("Error: El articulo no existe!!", Color.RED, panelArticulo.getTextMensajeSistema());
 						panelArticulo.getNombreConsultado().setText("");
 						panelArticulo.getDetallesNombre().setText("");
 						panelArticulo.getDetallesID().setText("");
@@ -126,8 +124,7 @@ public class ParaUI extends UI {
 				if (panelArticulo.getCrearNombre().getText().isEmpty() || panelArticulo.getCrearID().getText().isEmpty()
 						|| panelArticulo.getCrearPrecio().getText().isEmpty()
 						|| panelArticulo.getCrearDescripcion().getText().isEmpty()) {
-					panelArticulo.getMensajeCrear().setForeground(Color.RED);
-					panelArticulo.getMensajeCrear().setText("Error: Parametro vacío!!");
+					setMensaje("Error: Parametro vacio!!", Color.RED, panelArticulo.getTextMensajeSistema());
 					Pausa(2);
 				} else {
 					if (false == comprobarPuntos(panelArticulo.getCrearPrecio().getText())) {
@@ -136,20 +133,21 @@ public class ParaUI extends UI {
 								Integer.valueOf(panelArticulo.getCrearID().getText()),
 								panelArticulo.getCrearDescripcion().getText())) {
 							logica.insertarArticulosEnCombo(panelPedido.getComboArticulos());
-							panelArticulo.getMensajeCrear().setForeground(Color.GREEN);
-							panelArticulo.getMensajeCrear().setText("El articulo ha sido creado.");
+							setMensaje("El articulo ha sido creado.", Color.GREEN,
+									panelArticulo.getTextMensajeSistema());
 							panelArticulo.getCrearNombre().setText("");
 							panelArticulo.getCrearID().setText("");
 							panelArticulo.getCrearPrecio().setText("");
 							panelArticulo.getCrearDescripcion().setText("");
 						} else {
-							panelArticulo.getMensajeCrear().setForeground(Color.RED);
-							panelArticulo.getMensajeCrear().setText("Error: El articulo ya existe!!");
+							setMensaje("Error: El articulo ya existe!!", Color.RED,
+									panelArticulo.getTextMensajeSistema());
 						}
 						Pausa(2);
 					} else {
-						panelArticulo.getMensajeCrear().setForeground(Color.RED);
-						panelArticulo.getMensajeCrear().setText("Error: Precio esta mal escrito!!");
+						panelArticulo.getTextMensajeSistema().setForeground(Color.RED);
+						setMensaje("Error: Precio esta mal escrito!!", Color.RED,
+								panelArticulo.getTextMensajeSistema());
 						panelArticulo.getCrearPrecio().setText("");
 						Pausa(2);
 					}
@@ -177,8 +175,7 @@ public class ParaUI extends UI {
 					panelArticulo.getDetallesPrecio().setText(panelEditarArticulo.getNuevoPrecio().getText());
 					panelEditarArticulo.getNuevoPrecio().setText("");
 				} else {
-					panelArticulo.getMensajeConsulta().setForeground(Color.RED);
-					panelArticulo.getMensajeConsulta().setText("Error: Vacio!!");
+					setMensaje("Error: Vacio!!", Color.RED, panelArticulo.getTextMensajeSistema());
 					Pausa(2);
 				}
 			}
@@ -194,8 +191,7 @@ public class ParaUI extends UI {
 								panelArticulo.getDetallesNombre().getText());
 						panelEditarArticulo.getLblPrecio().setText(String.valueOf(precioAnteriorSegunFecha));
 					} else {
-						panelArticulo.getMensajeConsulta().setForeground(Color.RED);
-						panelArticulo.getMensajeConsulta().setText("Error: Vacio!!");
+						setMensaje("Error: Vacio!!", Color.RED, panelArticulo.getTextMensajeSistema());
 						Pausa(2);
 					}
 				} else {
@@ -269,7 +265,7 @@ public class ParaUI extends UI {
 				}
 			}
 		});
-		
+
 		panelCliente.getBtnEliminarCliente().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int indice = panelCliente.getComboBox().getSelectedIndex();
@@ -307,7 +303,7 @@ public class ParaUI extends UI {
 				}
 			}
 		});
-		
+
 		panelCliente.getTxtClienteConsulta().addKeyListener(new KeyAdapter() {
 			public void keyReleased(KeyEvent e) {
 				btnBuscarCliente();
@@ -371,8 +367,8 @@ public class ParaUI extends UI {
 						if (encontrado == -1) {
 							logica.aniadirArticuloATabla(nombreArticulo, modeloTabla);
 							panelPedido.revalidate();
-							setMensaje("Insertado en el pedido el articulo " + nombreArticulo);
-							panelPedido.getTxtMensaje().setBackground(Color.GREEN);
+							setMensaje("Insertado en el pedido el articulo " + nombreArticulo, Color.GREEN,
+									panelPedido.getTextMensaje());
 						} else {
 							modeloTabla.setValueAt(
 									(Integer.parseInt(modeloTabla.getValueAt(encontrado, 3).toString()) + 1),
@@ -380,8 +376,7 @@ public class ParaUI extends UI {
 						}
 						bloquearListener = false;
 					} else {
-						setMensaje("No hay articulos");
-						panelPedido.getTxtMensaje().setBackground(Color.RED);
+						setMensaje("No hay articulos", Color.RED, panelPedido.getTextMensaje());
 					}
 				}
 			}
@@ -391,8 +386,8 @@ public class ParaUI extends UI {
 				if (comprobarPedidoProceso()) {
 					pedidoProceso = false;
 					logica.eliminarPedidoRejilla(modeloTabla);
-					setMensaje("El pedido ha sido cancelado");
-					panelPedido.getTxtMensaje().setBackground(Color.ORANGE);
+					setMensaje("El pedido ha sido cancelado", Color.RED, panelPedido.getTextMensaje());
+					panelPedido.getTextMensaje().setBackground(Color.ORANGE);
 				}
 			}
 		});
@@ -402,7 +397,8 @@ public class ParaUI extends UI {
 					pedidoProceso = true;
 					String numeroPedido = String.valueOf(logica.getNumeroPosiblePedido());
 					panelPedido.getTxtNumeroPedido().setText(numeroPedido);
-					setMensaje("Nuevo pedido numero " + numeroPedido + " en proceso");
+					setMensaje("Nuevo pedido numero " + numeroPedido + " en proceso", Color.RED,
+							panelPedido.getTextMensaje());
 					logica.insertarArticulosEnCombo(panelPedido.getComboArticulos());
 					logica.insertarClientesEnCombo(panelPedido.getComboClientesCrear());
 					logica.eliminarPedidoRejilla(modeloTabla);
@@ -419,19 +415,18 @@ public class ParaUI extends UI {
 							String dniNif = logica.getItemFromCombo(panelPedido.getComboClientesCrear());
 							if (logica.crear(dniNif, modeloTabla)) {
 								pedidoProceso = false;
-								setMensaje("Pedido completado satisfactoriamente");
+								setMensaje("Pedido completado satisfactoriamente", Color.RED,
+										panelPedido.getTextMensaje());
 								logica.eliminarPedidoRejilla(modeloTabla);
 							} else {
-								setMensaje("Fallo al encargar el pedido");
-								panelPedido.getTxtMensaje().setBackground(Color.RED);
+								setMensaje("Fallo al encargar el pedido", Color.RED, panelPedido.getTextMensaje());
 							}
 						} else {
-							setMensaje("Nada que encargar");
-							panelPedido.getTxtMensaje().setBackground(Color.RED);
+							setMensaje("Nada que encargar", Color.RED, panelPedido.getTextMensaje());
+							panelPedido.getTextMensaje().setBackground(Color.RED);
 						}
 					} else {
-						setMensaje("No hay clientes");
-						panelPedido.getTxtMensaje().setBackground(Color.RED);
+						setMensaje("No hay clientes", Color.RED, panelPedido.getTextMensaje());
 					}
 
 				}
@@ -443,22 +438,23 @@ public class ParaUI extends UI {
 					if (!panelTabla.getTabla().getSelectionModel().isSelectionEmpty()) {
 						int seleccionada = panelTabla.getTabla().getSelectedRow();
 						modeloTabla.removeRow(seleccionada);
-						setMensaje("Linea borrada satisfactoriamente");
-						panelPedido.getTxtMensaje().setBackground(Color.GREEN);
+						setMensaje("Linea borrada satisfactoriamente", Color.GREEN, panelPedido.getTextMensaje());
 					} else {
-						setMensaje("No se ha seleccionado linea de pedido");
-						panelPedido.getTxtMensaje().setBackground(Color.RED);
+						setMensaje("No se ha seleccionado linea de pedido", Color.RED, panelPedido.getTextMensaje());
 					}
 				}
 			}
 		});
-		panelPedido.getComboClientesCrear().addActionListener((e) -> setMensaje("Cliente para el pedido seleccionado"));
+		panelPedido.getComboClientesCrear().addActionListener(
+				(e) -> setMensaje("Cliente para el pedido seleccionado", Color.RED, panelPedido.getTextMensaje()));
 
 		panelPedido.getComboArticulos()
-				.addActionListener((e) -> setMensaje("Articulo seleccionado, pulse add para introducirlo al pedido"));
+				.addActionListener((e) -> setMensaje("Articulo seleccionado, pulse add para introducirlo al pedido",
+						Color.RED, panelPedido.getTextMensaje()));
 
 		panelPedido.getComboPedidos()
-				.addActionListener((e) -> setMensaje("Pedido seleccionado, pulse ver para ver detalles"));
+				.addActionListener((e) -> setMensaje("Pedido seleccionado, pulse ver para ver detalles", Color.RED,
+						panelPedido.getTextMensaje()));
 
 		panelPedido.getComboClientes().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -467,7 +463,7 @@ public class ParaUI extends UI {
 						panelPedido.getComboPedidos().removeAllItems();
 						panelPedido.getComboPedidos().setEnabled(true);
 						logica.insertarPedidosEnCombo(panelPedido.getComboPedidos(),
-								(String) panelPedido.getComboClientes().getSelectedItem(), panelPedido.getTxtMensaje());
+								(String) panelPedido.getComboClientes().getSelectedItem(), panelPedido.getTextMensaje());
 						panelPedido.getBtnVer().setEnabled(true);
 						panelPedido.revalidate();
 					}
@@ -487,11 +483,11 @@ public class ParaUI extends UI {
 						int numeroPedido = Integer.valueOf(logica.getItemFromCombo(panelPedido.getComboPedidos()));
 						logica.eliminarPedidoRejilla(modeloTabla);
 						logica.consultar(panelTabla.getTabla(), numeroPedido, dniNif);
-						setMensaje("Mostrando el pedido " + numeroPedido + " del cliente con dni: " + dniNif);
-						panelPedido.getTxtMensaje().setBackground(Color.GREEN);
+						setMensaje("Mostrando el pedido " + numeroPedido + " del cliente con dni: " + dniNif, Color.RED,
+								panelPedido.getTextMensaje());
+						panelPedido.getTextMensaje().setBackground(Color.GREEN);
 					} else {
-						panelPedido.getTxtMensaje().setBackground(Color.RED);
-						setMensaje("No se ha seleccionado pedido");
+						setMensaje("No se ha seleccionado pedido", Color.RED, panelPedido.getTextMensaje());
 					}
 				}
 			}
@@ -564,8 +560,8 @@ public class ParaUI extends UI {
 				} catch (InterruptedException e1) {
 					e1.printStackTrace();
 				}
-				panelArticulo.getMensajeConsulta().setText("");
-				panelArticulo.getMensajeCrear().setText("");
+				panelArticulo.getTextMensajeSistema().setText("");
+				;
 				return null;
 			}
 		};
@@ -580,11 +576,12 @@ public class ParaUI extends UI {
 	 */
 	private boolean comprobarPedidoProceso() {
 		if (pedidoProceso) {
-			setMensaje("Se esta creando un pedido ahora mismo, cancelelo o completelo");
+			setMensaje("Se esta creando un pedido ahora mismo, cancelelo o completelo", Color.RED,
+					panelPedido.getTextMensaje());
 		} else {
-			setMensaje("Accion no disponible si no esta creando un pedido");
+			setMensaje("Accion no disponible si no esta creando un pedido", Color.RED, panelPedido.getTextMensaje());
 		}
-		panelPedido.getTxtMensaje().setBackground(Color.RED);
+		panelPedido.getTextMensaje().setBackground(Color.RED);
 		return pedidoProceso;
 	}
 
@@ -594,10 +591,11 @@ public class ParaUI extends UI {
 	 * 
 	 * @param mensaje
 	 *            cadena de texto a poner como mensaje
+	 * @param red
 	 */
-	private void setMensaje(String mensaje) {
-		panelPedido.getTxtMensaje().setText(mensaje);
-		panelPedido.getTxtMensaje().setBackground(Color.GREEN);
+	private void setMensaje(String mensaje, Color color, JLabel jlabel) {
+		jlabel.setForeground(color);
+		jlabel.setText(mensaje);
 	}
 
 	private void btnBuscarCliente() {

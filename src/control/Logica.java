@@ -1,5 +1,6 @@
 package control;
 
+import java.time.ZoneId;
 import java.util.GregorianCalendar;
 import java.util.TreeMap;
 
@@ -178,7 +179,7 @@ public class Logica<K> {
 	 * @param cadena	string con el que identificar al cliente
 	 * @param txtField	txtField de mensaje
 	 */
-	public void insertarPedidosEnCombo(JComboBox<Object> combo, String cadena, JTextField txtField) {
+	public void insertarPedidosEnCombo(JComboBox<Object> combo, String cadena, JLabel txtField) {
 		cadena = cadena.substring(cadena.lastIndexOf(Utiles.separador) + 1);
 		accionesCliente.insertarPedidosEnCombo(combo, cadena, txtField);
 	}
@@ -211,7 +212,8 @@ public class Logica<K> {
 
 	public float getPrecioAnteriorSegunFecha(String fecha, String nombreArt) {
 		String[] fechaPartida = fecha.split("-");
-	    GregorianCalendar fechaGre = new GregorianCalendar(Integer.valueOf(fechaPartida[0]),Integer.valueOf(fechaPartida[1]),Integer.valueOf(fechaPartida[2]));
+		System.out.println(fechaPartida[1]);
+	    GregorianCalendar fechaGre = new GregorianCalendar(Integer.valueOf(fechaPartida[0]),Integer.valueOf(fechaPartida[1])-1,Integer.valueOf(fechaPartida[2]));
 		Articulo item = (Articulo) new AlmacenIndice<>(Utiles.pathArticulos).leer(nombreArt);
 		return accionesArticulo.comprobarPrecio(item, fechaGre);
 	}

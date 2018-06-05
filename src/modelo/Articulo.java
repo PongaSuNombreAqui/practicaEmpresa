@@ -36,6 +36,7 @@ public class Articulo implements Serializable {
 		while (iterator.hasNext() && !encontrado) {
 			Precio next = iterator.next();
 			if (next.isInToPeriod(instant)) {
+				System.out.println(true);
 				encontrado = true;
 				precio = next.getPrecio();
 			}
