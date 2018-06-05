@@ -659,7 +659,7 @@ public class ParaUI extends UI {
 	}
 
 	/**
-	 * Comprueba que los campos de texto de los JTextField están vacios. Si
+	 * Comprueba que los campos de texto de los JTextField estan vacios. Si
 	 * estan vacios, se cambiara el color de fondo
 	 * 
 	 * @param jTextField	El JTextField a comprobar
