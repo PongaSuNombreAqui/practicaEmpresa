@@ -284,24 +284,39 @@ public class ParaUI extends UI {
 
 		panelCliente.getBtnEliminarCliente().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int indice = panelCliente.getComboBox().getSelectedIndex();
-				if (indice >= 0) {
-					if (logica.eliminarCliente(panelCliente.getTxtDnicifResultado().getText())) {
-						// No se como evitar un NullPointerException sin hacer esto
-						if (panelCliente.getComboBox().getItemCount() != 1) {
-							panelCliente.getComboBox().removeItemAt(indice);
-						} else {
-							panelCliente.getTxtDnicifResultado().setText(null);
-							panelCliente.getTxtRazonSocialResultado().setText(null);
-							panelCliente.getTxtDireccionResultado().setText(null);
-							panelCliente.getTxtTelefonoResultado().setText(null);
-							panelCliente.getComboBox().removeAllItems();
+				VentanaErmegenteBorrarCliente ventanaEliminar = new VentanaErmegenteBorrarCliente();
+				// En el caso que confirme la accion
+				ventanaEliminar.getBtnConfirmar().addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+
+						int indice = panelCliente.getComboBox().getSelectedIndex();
+						if (indice >= 0) {
+							if (logica.eliminarCliente(panelCliente.getTxtDnicifResultado().getText())) {
+								// No se como evitar un NullPointerException sin hacer esto
+								if (panelCliente.getComboBox().getItemCount() != 1) {
+									panelCliente.getComboBox().removeItemAt(indice);
+								} else {
+									panelCliente.getTxtDnicifResultado().setText(null);
+									panelCliente.getTxtRazonSocialResultado().setText(null);
+									panelCliente.getTxtDireccionResultado().setText(null);
+									panelCliente.getTxtTelefonoResultado().setText(null);
+									panelCliente.getComboBox().removeAllItems();
+								}
+								panelCliente.getLblMensaje().setText("Borrado");
+							} else {
+								panelCliente.getLblMensaje().setText("Fallo al borrar");
+							}
 						}
-						panelCliente.getLblMensaje().setText("Borrado");
-					} else {
-						panelCliente.getLblMensaje().setText("Fallo al borrar");
+						ventanaEliminar.dispose();
 					}
-				}
+				});
+
+				// En el caso de que eliga la opcion de cancelar
+				ventanaEliminar.getBtnCancelar().addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						ventanaEliminar.dispose();
+					}
+				});
 			}
 		});
 
