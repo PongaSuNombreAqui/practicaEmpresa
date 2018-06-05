@@ -355,7 +355,7 @@ public class ParaUI extends UI {
 	private void ponerListenersPedido() {
 		panelPedido.getBtnAdd().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (comprobarPedidoProceso()) {
+//				if (comprobarPedidoProceso()) {
 					if (panelPedido.getComboArticulos().getItemCount() != 0) {
 						bloquearListener = false;
 						String nombreArticulo = panelPedido.getComboArticulos().getSelectedItem().toString();
@@ -381,7 +381,7 @@ public class ParaUI extends UI {
 					} else {
 						setMensaje("No hay articulos", Color.RED, panelPedido.getTextMensaje());
 					}
-				}
+//				}
 				Pausa(3);
 			}
 		});
