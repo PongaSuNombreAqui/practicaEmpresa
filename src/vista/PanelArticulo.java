@@ -33,8 +33,7 @@ public class PanelArticulo extends JPanel {
 	private int contador = 1;
 	private JTextField crearDescripcion;
 	private JPanel ventana;
-	private JLabel mensajeCrear;
-	private JLabel mensajeConsulta;
+	private JLabel textMensajeSistema;
 
 	public PanelArticulo() {
 		setVisible(true);
@@ -161,16 +160,17 @@ public class PanelArticulo extends JPanel {
 		gbc_btnCrear.gridy = 5;
 		panel_1.add(btnCrear, gbc_btnCrear);
 
-		mensajeCrear = new JLabel("");
-		mensajeCrear.setForeground(Color.BLACK);
-		mensajeCrear.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		mensajeCrear.setHorizontalAlignment(SwingConstants.CENTER);
-		GridBagConstraints gbc_mensajeCrear = new GridBagConstraints();
-		gbc_mensajeCrear.fill = GridBagConstraints.BOTH;
-		gbc_mensajeCrear.insets = new Insets(10, 0, 10, 0);
-		gbc_mensajeCrear.gridx = 1;
-		gbc_mensajeCrear.gridy = 6;
-		panel_1.add(mensajeCrear, gbc_mensajeCrear);
+		textMensajeSistema = new JLabel("");
+		textMensajeSistema.setForeground(Color.BLACK);
+		textMensajeSistema.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		textMensajeSistema.setHorizontalAlignment(SwingConstants.CENTER);
+		GridBagConstraints gbc_textMensajeSistema = new GridBagConstraints();
+		gbc_textMensajeSistema.gridwidth = 3;
+		gbc_textMensajeSistema.fill = GridBagConstraints.BOTH;
+		gbc_textMensajeSistema.insets = new Insets(10, 0, 10, 0);
+		gbc_textMensajeSistema.gridx = 0;
+		gbc_textMensajeSistema.gridy = 6;
+		panel_1.add(textMensajeSistema, gbc_textMensajeSistema);
 
 		JPanel panel = new JPanel();
 		panel.setMaximumSize(new Dimension(400, 500));
@@ -225,16 +225,6 @@ public class PanelArticulo extends JPanel {
 		gbc_btnBuscar.gridx = 1;
 		gbc_btnBuscar.gridy = 2;
 		panel.add(btnBuscar, gbc_btnBuscar);
-
-		mensajeConsulta = new JLabel("");
-		mensajeConsulta.setHorizontalAlignment(SwingConstants.CENTER);
-		mensajeConsulta.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		GridBagConstraints gbc_mensajeConsulta = new GridBagConstraints();
-		gbc_mensajeConsulta.fill = GridBagConstraints.BOTH;
-		gbc_mensajeConsulta.insets = new Insets(0, 0, 5, 5);
-		gbc_mensajeConsulta.gridx = 1;
-		gbc_mensajeConsulta.gridy = 3;
-		panel.add(mensajeConsulta, gbc_mensajeConsulta);
 
 		JLabel lblDetallesartculo = new JLabel("Detalles Art\u00EDculo");
 		lblDetallesartculo.setBorder(new MatteBorder(0, 0, 2, 0, (Color) new Color(0, 0, 0)));
@@ -390,12 +380,8 @@ public class PanelArticulo extends JPanel {
 		return ventana;
 	}
 
-	public JLabel getMensajeCrear() {
-		return mensajeCrear;
-	}
-
-	public JLabel getMensajeConsulta() {
-		return mensajeConsulta;
+	public JLabel getTextMensajeSistema() {
+		return textMensajeSistema;
 	}
 
 }

@@ -23,6 +23,7 @@ import javax.swing.border.MatteBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
 import javax.swing.SwingConstants;
+
 /**
  * 
  * @author fp-hermoso
@@ -33,7 +34,6 @@ public class PanelPedido extends JPanel {
 	private JButton btnCancelar;
 	private JComboBox comboArticulos;
 	private JPanel panelTabla;
-	private JTextField txtMensaje;
 	private JButton btnNuevoPedido;
 	private JButton btnEncargar;
 	private JTextField txtNumeroPedido;
@@ -42,6 +42,7 @@ public class PanelPedido extends JPanel {
 	private JComboBox comboPedidos;
 	private JComboBox comboClientes;
 	private JComboBox comboClientesCrear;
+	private JLabel textMensaje;
 
 	public PanelPedido() {
 		setForeground(Color.GRAY);
@@ -159,16 +160,16 @@ public class PanelPedido extends JPanel {
 		gbc_btnCancelar.gridx = 3;
 		gbc_btnCancelar.gridy = 4;
 		panelConsultarPedido.add(btnCancelar, gbc_btnCancelar);
-				
-						comboArticulos = new JComboBox();
-						comboArticulos.setToolTipText("seleccion de articulos posibles");
-						GridBagConstraints gbc_comboArticulos = new GridBagConstraints();
-						gbc_comboArticulos.insets = new Insets(0, 0, 0, 5);
-						gbc_comboArticulos.gridwidth = 3;
-						gbc_comboArticulos.fill = GridBagConstraints.BOTH;
-						gbc_comboArticulos.gridx = 1;
-						gbc_comboArticulos.gridy = 5;
-						panelConsultarPedido.add(comboArticulos, gbc_comboArticulos);
+
+		comboArticulos = new JComboBox();
+		comboArticulos.setToolTipText("seleccion de articulos posibles");
+		GridBagConstraints gbc_comboArticulos = new GridBagConstraints();
+		gbc_comboArticulos.insets = new Insets(0, 0, 0, 5);
+		gbc_comboArticulos.gridwidth = 3;
+		gbc_comboArticulos.fill = GridBagConstraints.BOTH;
+		gbc_comboArticulos.gridx = 1;
+		gbc_comboArticulos.gridy = 5;
+		panelConsultarPedido.add(comboArticulos, gbc_comboArticulos);
 
 		JPanel panelCrearPedido = new JPanel();
 		panelCrearPedido.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
@@ -242,15 +243,14 @@ public class PanelPedido extends JPanel {
 		gbc_btnVer.gridy = 5;
 		panelCrearPedido.add(btnVer, gbc_btnVer);
 
-		txtMensaje = new JTextField();
-		txtMensaje.setEditable(false);
-		GridBagConstraints gbc_txtMensaje = new GridBagConstraints();
-		gbc_txtMensaje.gridwidth = 4;
-		gbc_txtMensaje.fill = GridBagConstraints.HORIZONTAL;
-		gbc_txtMensaje.gridx = 0;
-		gbc_txtMensaje.gridy = 6;
-		panelCrearPedido.add(txtMensaje, gbc_txtMensaje);
-		txtMensaje.setColumns(10);
+		textMensaje = new JLabel("");
+		textMensaje.setHorizontalAlignment(SwingConstants.CENTER);
+		GridBagConstraints gbc_textMensaje = new GridBagConstraints();
+		gbc_textMensaje.gridwidth = 4;
+		gbc_textMensaje.insets = new Insets(0, 0, 0, 5);
+		gbc_textMensaje.gridx = 0;
+		gbc_textMensaje.gridy = 6;
+		panelCrearPedido.add(textMensaje, gbc_textMensaje);
 
 	}
 
@@ -278,8 +278,8 @@ public class PanelPedido extends JPanel {
 		return comboClientesCrear;
 	}
 
-	public JTextField getTxtMensaje() {
-		return txtMensaje;
+	public JLabel getTextMensaje() {
+		return textMensaje;
 	}
 
 	public JButton getBtnNuevoPedido() {
