@@ -1,15 +1,11 @@
 package vista;
 
 import java.awt.Color;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 import java.io.File;
+import java.util.Iterator;
 
-import javax.swing.SwingWorker;
+import javax.swing.*;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
@@ -215,20 +211,14 @@ public class ParaUI extends UI {
 	private void ponerListenerCliente() {
 		panelCliente.getBtnAgregar().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String dniCif = panelCliente.getTxtDnicif().getText();
-				String razonSocial = panelCliente.getTxtRazonSocial().getText();
-				String direccion = panelCliente.getTxtDireccion().getText();
-				String telefono = panelCliente.getTxtTelefono().getText();
-				if (!dniCif.isEmpty() && !razonSocial.isEmpty() && !direccion.isEmpty() && !telefono.isEmpty()) {
-					if (Validator.isDniCif(dniCif)) {
-						if (Validator.isPhone(telefono)) {
-							if (logica.agregarCliente(dniCif, razonSocial, direccion, telefono)) {
+				if (!comprobarCamposTxt(panelCliente.getTxtDnicif(), panelCliente.getTxtRazonSocial(), panelCliente.getTxtDireccion(), panelCliente.getTxtTelefono())) {
+					if (Validator.isDniCif(panelCliente.getTxtDnicif().getText())) {
+						if (Validator.isPhone(panelCliente.getTxtTelefono().getText())) {
+							if (logica.agregarCliente(panelCliente.getTxtDnicif().getText(), panelCliente.getTxtRazonSocial().getText(), panelCliente.getTxtDireccion().getText(), panelCliente.getTxtTelefono().getText())) {
 								panelCliente.getLblMensaje()
-										.setText("Cliente " + razonSocial + " ha sido agregado correctamente");
-								panelCliente.getTxtDnicif().setText(null);
-								panelCliente.getTxtRazonSocial().setText(null);
-								panelCliente.getTxtDireccion().setText(null);
-								panelCliente.getTxtTelefono().setText(null);
+										.setText("Cliente " + panelCliente.getTxtRazonSocial().getText() + " ha sido agregado correctamente");
+								borrarTxt(panelCliente.getTxtDnicif(), panelCliente.getTxtRazonSocial(),
+										panelCliente.getTxtDireccion(), panelCliente.getTxtTelefono());
 								if (panelPedido.getComboClientes().getItemCount() > 0) {
 									panelPedido.getComboClientes().removeAllItems();
 								}
@@ -247,18 +237,6 @@ public class ParaUI extends UI {
 					}
 				} else {
 					panelCliente.getLblMensaje().setText("Debe rellenar los campos de texto para continuar");
-					if (dniCif.isEmpty()) {
-						panelCliente.getTxtDnicif().setBackground(Color.YELLOW);
-					}
-					if (razonSocial.isEmpty()) {
-						panelCliente.getTxtRazonSocial().setBackground(Color.YELLOW);
-					}
-					if (direccion.isEmpty()) {
-						panelCliente.getTxtDireccion().setBackground(Color.YELLOW);
-					}
-					if (telefono.isEmpty()) {
-						panelCliente.getTxtTelefono().setBackground(Color.YELLOW);
-					}
 				}
 			}
 		});
@@ -301,10 +279,8 @@ public class ParaUI extends UI {
 						if (panelCliente.getComboBox().getItemCount() != 1) {
 							panelCliente.getComboBox().removeItemAt(indice);
 						} else {
-							panelCliente.getTxtDnicifResultado().setText(null);
-							panelCliente.getTxtRazonSocialResultado().setText(null);
-							panelCliente.getTxtDireccionResultado().setText(null);
-							panelCliente.getTxtTelefonoResultado().setText(null);
+							borrarTxt(panelCliente.getTxtDnicifResultado(), panelCliente.getTxtRazonSocialResultado(),
+									panelCliente.getTxtDireccionResultado(), panelCliente.getTxtTelefonoResultado());
 							panelCliente.getComboBox().removeAllItems();
 						}
 						panelCliente.getLblMensaje().setText("Borrado");
@@ -642,4 +618,22 @@ public class ParaUI extends UI {
 			panelCliente.getLblMensaje().setText("Debe rellenar el campo de cliente");
 		}
 	}
+	
+	private void borrarTxt(JTextField... jTextField) {
+		for (int i = 0; i < jTextField.length; i++) {
+			jTextField[i].setText(null);
+		}
+	}
+	
+	private boolean comprobarCamposTxt(JTextField... jTextField) {
+		boolean vacio = false;
+		for (int i = 0; i < jTextField.length; i++) {
+			if (jTextField[i].getText().trim().isEmpty()) {
+				vacio = true;
+				jTextField[i].setBackground(Color.YELLOW);
+			}
+		}
+		return vacio;
+	}
+	
 }
