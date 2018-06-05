@@ -178,7 +178,7 @@ public class Logica<K> {
 	 * @param cadena	string con el que identificar al cliente
 	 * @param txtField	txtField de mensaje
 	 */
-	public void insertarPedidosEnCombo(JComboBox<Object> combo, String cadena, JTextField txtField) {
+	public void insertarPedidosEnCombo(JComboBox<Object> combo, String cadena, JLabel txtField) {
 		cadena = cadena.substring(cadena.lastIndexOf(Utiles.separador) + 1);
 		accionesCliente.insertarPedidosEnCombo(combo, cadena, txtField);
 	}

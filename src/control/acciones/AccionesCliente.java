@@ -5,6 +5,7 @@ import java.util.Set;
 import java.util.TreeMap;
 
 import javax.swing.JComboBox;
+import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 import control.almacenes.AlmacenIndice;
@@ -46,7 +47,7 @@ public class AccionesCliente<K> {
 	}
 
 
-	public void insertarPedidosEnCombo(JComboBox combo, String cadena, JTextField txtMensaje) {
+	public void insertarPedidosEnCombo(JComboBox combo, String cadena, JLabel txtMensaje) {
 		if (Utiles.comprobarExiste("./data/pedidos/" + cadena)) {
 			File[] pedidos = new File("./data/pedidos/" + cadena).listFiles();
 			for (int i = 0; i < pedidos.length; i++) {
