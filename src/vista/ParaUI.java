@@ -205,7 +205,7 @@ public class ParaUI extends UI {
 					if (Validator.isDniCif(panelCliente.getTxtDnicif().getText())) {
 						if (Validator.isPhone(panelCliente.getTxtTelefono().getText())) {
 							if (logica.agregarCliente(panelCliente.getTxtDnicif().getText(), panelCliente.getTxtRazonSocial().getText(), panelCliente.getTxtDireccion().getText(), panelCliente.getTxtTelefono().getText())) {
-									setMensaje("Cliente " + razonSocial + " ha sido agregado correctamente", Color.GREEN,
+									setMensaje("Cliente " +  panelCliente.getTxtRazonSocial().getText() + " ha sido agregado correctamente", Color.GREEN,
 										panelCliente.getLblMensaje());
 								borrarTxt(panelCliente.getTxtDnicif(), panelCliente.getTxtRazonSocial(),
 										panelCliente.getTxtDireccion(), panelCliente.getTxtTelefono());
