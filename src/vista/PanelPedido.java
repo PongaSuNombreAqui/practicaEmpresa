@@ -183,7 +183,8 @@ public class PanelPedido extends JPanel {
 		add(panelCrearPedido, gbc_panelCrearPedido);
 		GridBagLayout gbl_panelCrearPedido = new GridBagLayout();
 		gbl_panelCrearPedido.columnWidths = new int[] { 37, 87, 91, 0, 0 };
-		gbl_panelCrearPedido.rowHeights = new int[] { 0, 0, 0, 0, 0, 0, 0, 0 };
+
+		gbl_panelCrearPedido.rowHeights = new int[] { 0, 0, 0, 0, 0, 0, 16, 0 };
 		gbl_panelCrearPedido.columnWeights = new double[] { 1.0, 1.0, 1.0, 0.0, Double.MIN_VALUE };
 		gbl_panelCrearPedido.rowWeights = new double[] { 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, Double.MIN_VALUE };
 		panelCrearPedido.setLayout(gbl_panelCrearPedido);
@@ -250,7 +251,7 @@ public class PanelPedido extends JPanel {
 		GridBagConstraints gbc_textMensaje = new GridBagConstraints();
 		gbc_textMensaje.fill = GridBagConstraints.BOTH;
 		gbc_textMensaje.gridwidth = 4;
-		gbc_textMensaje.insets = new Insets(10, 0, 10, 0);
+		gbc_textMensaje.insets = new Insets(0, 0, 0, 0);
 		gbc_textMensaje.gridx = 0;
 		gbc_textMensaje.gridy = 6;
 		panelCrearPedido.add(textMensaje, gbc_textMensaje);
