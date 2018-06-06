@@ -115,11 +115,11 @@ public class ParaUI extends UI {
 								panelArticulo.getDetallesPrecio(), panelArticulo.getDetallesDescripcion());
 					} else {
 						setMensaje("Error: El articulo no existe!!", Color.RED, panelArticulo.getTextMensajeSistema());
-						panelArticulo.getNombreConsultado().setText("");
-						panelArticulo.getDetallesNombre().setText("");
-						panelArticulo.getDetallesID().setText("");
-						panelArticulo.getDetallesPrecio().setText("");
-						panelArticulo.getDetallesDescripcion().setText("");
+
+						borrarLabel(panelArticulo.getDetallesNombre(), panelArticulo.getDetallesID(),
+								panelArticulo.getDetallesPrecio(), panelArticulo.getDetallesDescripcion());
+						borrarTxt(panelArticulo.getNombreConsultado());
+
 					}
 				}
 			}
@@ -140,10 +140,8 @@ public class ParaUI extends UI {
 							logica.insertarArticulosEnCombo(panelPedido.getComboArticulos());
 							setMensaje("El articulo ha sido creado.", Color.GREEN,
 									panelArticulo.getTextMensajeSistema());
-							panelArticulo.getCrearNombre().setText("");
-							panelArticulo.getCrearID().setText("");
-							panelArticulo.getCrearPrecio().setText("");
-							panelArticulo.getCrearDescripcion().setText("");
+							borrarTxt(panelArticulo.getCrearNombre(), panelArticulo.getCrearID(),
+									panelArticulo.getCrearPrecio(), panelArticulo.getCrearDescripcion());
 						} else {
 							setMensaje("Error: El articulo ya existe!!", Color.RED,
 									panelArticulo.getTextMensajeSistema());
@@ -159,18 +157,22 @@ public class ParaUI extends UI {
 
 		panelEditarArticulo.getBtnEditar().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (false == panelEditarArticulo.getNuevoPrecio().getText().isEmpty()) {
-					if (false == comprobarPuntos(panelEditarArticulo.getNuevoPrecio().getText())) {
-						logica.editar(panelArticulo.getDetallesNombre().getText(),
-								Float.valueOf(panelEditarArticulo.getNuevoPrecio().getText()));
-						panelArticulo.getDetallesPrecio().setText(panelEditarArticulo.getNuevoPrecio().getText());
-						panelEditarArticulo.getNuevoPrecio().setText("");
+				if (panelArticulo.getDetallesNombre().getText()!=null) {
+					if (false == panelEditarArticulo.getNuevoPrecio().getText().isEmpty()) {
+						if (false == comprobarPuntos(panelEditarArticulo.getNuevoPrecio().getText())) {
+							logica.editar(panelArticulo.getDetallesNombre().getText(),
+									Float.valueOf(panelEditarArticulo.getNuevoPrecio().getText()));
+							panelArticulo.getDetallesPrecio().setText(panelEditarArticulo.getNuevoPrecio().getText());
+							panelEditarArticulo.getNuevoPrecio().setText("");
+						} else {
+							setMensaje("Error: El nuevo precio esta mal escrito!!", Color.RED,
+									panelArticulo.getTextMensajeSistema());
+						}
 					} else {
-						setMensaje("Error: El nuevo precio esta mal escrito!!", Color.RED,
-								panelArticulo.getTextMensajeSistema());
+						setMensaje("Error: Vacio!!", Color.RED, panelArticulo.getTextMensajeSistema());
 					}
 				} else {
-					setMensaje("Error: Vacio!!", Color.RED, panelArticulo.getTextMensajeSistema());
+					setMensaje("Error: Debes consultar un articulo", Color.RED, panelArticulo.getTextMensajeSistema());
 				}
 			}
 		});
@@ -633,6 +635,12 @@ public class ParaUI extends UI {
 	}
 
 	private void borrarTxt(JTextField... jTextField) {
+		for (int i = 0; i < jTextField.length; i++) {
+			jTextField[i].setText(null);
+		}
+	}
+
+	private void borrarLabel(JLabel... jTextField) {
 		for (int i = 0; i < jTextField.length; i++) {
 			jTextField[i].setText(null);
 		}
