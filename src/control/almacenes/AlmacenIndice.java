@@ -103,6 +103,7 @@ public class AlmacenIndice<T, K> {
 //	}
 
 	public boolean borrar(K k){
+		this.pathDatos.append("clientes.data");
 		indice = (TreeMap<K, Integer>) new DAO().leer(pathIndice);
 		boolean retorno=false;
 		if(indice.containsKey(k)){
@@ -154,6 +155,7 @@ public class AlmacenIndice<T, K> {
 	 * @return el objeto articulo
 	 */
 	public T leer(String nombre) {
+		this.pathDatos.append("clientes.data");
 		T retorno = null;
 		if (Utiles.comprobarExiste(pathIndice)) {
 			indice = (TreeMap<K, Integer>) new DAO().leer(pathIndice);
@@ -181,9 +183,10 @@ public class AlmacenIndice<T, K> {
 	}
 	
 	private void recargaIndice() {
+		this.pathDatos.append("clientes.data");
 		indice=new TreeMap<>();
 		int posicion=0;
-		T t=(T) new DAO<>().leer(pathDatos.toString(), posicion);
+		T t= (T) new DAO<>().leer(pathDatos.toString(), posicion);
 		while (t!=null){
 			Indexable<K> elemento=(Indexable<K>) t;
 			K k=elemento.getKey();
