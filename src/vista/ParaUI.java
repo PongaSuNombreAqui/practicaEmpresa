@@ -172,7 +172,7 @@ public class ParaUI extends UI {
 						setMensaje("Error: Vacio!!", Color.RED, panelArticulo.getTextMensajeSistema());
 					}
 				} else {
-					setMensaje("Error: Debes consultar un articulo", Color.RED, panelArticulo.getTextMensajeSistema());
+					setMensaje("Error: Debes consultar un articulo!!", Color.RED, panelArticulo.getTextMensajeSistema());
 				}
 			}
 		});
