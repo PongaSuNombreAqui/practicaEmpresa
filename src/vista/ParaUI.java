@@ -63,6 +63,13 @@ public class ParaUI extends UI {
 	 * listeners que usa el panel de articulos
 	 */
 	private void ponerListenerArticulo() {
+		panelEditarArticulo.getNuevoPrecio().addKeyListener(new KeyAdapter() {
+			public void keyTyped(KeyEvent e) {
+				if ((e.getKeyChar() < '0' && e.getKeyChar() != '.' || e.getKeyChar() > '9') && e.getKeyChar() != '.') {
+					e.consume();
+				}
+			}
+		});
 
 		panelArticulo.getCrearPrecio().addKeyListener(new KeyAdapter() {
 			public void keyTyped(KeyEvent e) {
@@ -108,11 +115,11 @@ public class ParaUI extends UI {
 								panelArticulo.getDetallesPrecio(), panelArticulo.getDetallesDescripcion());
 					} else {
 						setMensaje("Error: El articulo no existe!!", Color.RED, panelArticulo.getTextMensajeSistema());
-						panelArticulo.getNombreConsultado().setText("");
-						panelArticulo.getDetallesNombre().setText("");
-						panelArticulo.getDetallesID().setText("");
-						panelArticulo.getDetallesPrecio().setText("");
-						panelArticulo.getDetallesDescripcion().setText("");
+
+						borrarLabel(panelArticulo.getDetallesNombre(), panelArticulo.getDetallesID(),
+								panelArticulo.getDetallesPrecio(), panelArticulo.getDetallesDescripcion());
+						borrarTxt(panelArticulo.getNombreConsultado());
+
 					}
 				}
 			}
@@ -133,10 +140,8 @@ public class ParaUI extends UI {
 							logica.insertarArticulosEnCombo(panelPedido.getComboArticulos());
 							setMensaje("El articulo ha sido creado.", Color.GREEN,
 									panelArticulo.getTextMensajeSistema());
-							panelArticulo.getCrearNombre().setText("");
-							panelArticulo.getCrearID().setText("");
-							panelArticulo.getCrearPrecio().setText("");
-							panelArticulo.getCrearDescripcion().setText("");
+							borrarTxt(panelArticulo.getCrearNombre(), panelArticulo.getCrearID(),
+									panelArticulo.getCrearPrecio(), panelArticulo.getCrearDescripcion());
 						} else {
 							setMensaje("Error: El articulo ya existe!!", Color.RED,
 									panelArticulo.getTextMensajeSistema());
@@ -148,29 +153,26 @@ public class ParaUI extends UI {
 					}
 				}
 			}
-
-			private boolean comprobarPuntos(String text) {
-				for (int i = 0, contador = 0; i < text.length(); i++) {
-					if (text.charAt(i) == '.') {
-						contador++;
-						if (contador > 1) {
-							return true;
-						}
-					}
-				}
-				return false;
-			}
 		});
 
 		panelEditarArticulo.getBtnEditar().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (!panelArticulo.getDetallesNombre().getText().isEmpty()) {
-					logica.editar(panelArticulo.getDetallesNombre().getText(),
-							Float.valueOf(panelEditarArticulo.getNuevoPrecio().getText()));
-					panelArticulo.getDetallesPrecio().setText(panelEditarArticulo.getNuevoPrecio().getText());
-					panelEditarArticulo.getNuevoPrecio().setText("");
+				if (panelArticulo.getDetallesNombre().getText()!=null) {
+					if (false == panelEditarArticulo.getNuevoPrecio().getText().isEmpty()) {
+						if (false == comprobarPuntos(panelEditarArticulo.getNuevoPrecio().getText())) {
+							logica.editar(panelArticulo.getDetallesNombre().getText(),
+									Float.valueOf(panelEditarArticulo.getNuevoPrecio().getText()));
+							panelArticulo.getDetallesPrecio().setText(panelEditarArticulo.getNuevoPrecio().getText());
+							panelEditarArticulo.getNuevoPrecio().setText("");
+						} else {
+							setMensaje("Error: El nuevo precio esta mal escrito!!", Color.RED,
+									panelArticulo.getTextMensajeSistema());
+						}
+					} else {
+						setMensaje("Error: Vacio!!", Color.RED, panelArticulo.getTextMensajeSistema());
+					}
 				} else {
-					setMensaje("Error: Vacio!!", Color.RED, panelArticulo.getTextMensajeSistema());
+					setMensaje("Error: Debes consultar un articulo!!", Color.RED, panelArticulo.getTextMensajeSistema());
 				}
 			}
 		});
@@ -200,7 +202,6 @@ public class ParaUI extends UI {
 	private void ponerListenerCliente() {
 		panelCliente.getBtnAgregar().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
 				if (!comprobarCamposTxt(panelCliente.getTxtDnicif(), panelCliente.getTxtRazonSocial(),
 						panelCliente.getTxtDireccion(), panelCliente.getTxtTelefono())) {
 					if (Validator.isDniCif(panelCliente.getTxtDnicif().getText())) {
@@ -270,8 +271,7 @@ public class ParaUI extends UI {
 
 		panelCliente.getBtnEliminarCliente().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
-				int resultado = JOptionPane.showConfirmDialog(null, "¿Seguro que deseas eliminar este cliente?", "",
+				int resultado = JOptionPane.showConfirmDialog(null, "Â¿Seguro que deseas eliminar este cliente?", "",
 						JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE, null);
 				if (resultado == JOptionPane.YES_OPTION) {
 					int indice = panelCliente.getComboBox().getSelectedIndex();
@@ -645,6 +645,12 @@ public class ParaUI extends UI {
 		}
 	}
 
+	private void borrarLabel(JLabel... jTextField) {
+		for (int i = 0; i < jTextField.length; i++) {
+			jTextField[i].setText(null);
+		}
+	}
+
 	/**
 	 * Comprueba que los campos de texto de los JTextField estan vacios. Si
 	 * estan vacios, se cambiara el color de fondo
@@ -664,4 +670,15 @@ public class ParaUI extends UI {
 		return vacio;
 	}
 
+	private boolean comprobarPuntos(String text) {
+		for (int i = 0, contador = 0; i < text.length(); i++) {
+			if (text.charAt(i) == '.') {
+				contador++;
+				if (contador > 1) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
 }
