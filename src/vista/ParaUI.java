@@ -256,7 +256,7 @@ public class ParaUI extends UI {
 
 		panelCliente.getComboBox().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (panelCliente.getComboBox().getItemCount() > 0) {
+				if (panelCliente.getComboBox().getItemCount() > 0 && panelCliente.getComboBox().getSelectedIndex() != -1) {
 					String dniCif = logica.getItemFromCombo(panelCliente.getComboBox());
 					logica.consultarCliente(dniCif, panelCliente.getTxtDnicifResultado(),
 							panelCliente.getTxtRazonSocialResultado(), panelCliente.getTxtDireccionResultado(),
@@ -277,16 +277,12 @@ public class ParaUI extends UI {
 					int indice = panelCliente.getComboBox().getSelectedIndex();
 					if (indice >= 0) {
 						if (logica.eliminarCliente(panelCliente.getTxtDnicifResultado().getText())) {
-							// No se como evitar un NullPointerException sin
-							// hacer esto
-							if (panelCliente.getComboBox().getItemCount() != 1) {
-								panelCliente.getComboBox().removeItemAt(indice);
-							} else {
+							if (panelCliente.getComboBox().getItemCount() > 0) {
 								borrarTxt(panelCliente.getTxtDnicifResultado(),
 										panelCliente.getTxtRazonSocialResultado(),
 										panelCliente.getTxtDireccionResultado(),
 										panelCliente.getTxtTelefonoResultado());
-								panelCliente.getComboBox().removeAllItems();
+								panelCliente.getComboBox().removeItemAt(indice);
 							}
 							panelCliente.getLblMensaje().setText("Borrado");
 						} else {
