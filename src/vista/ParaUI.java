@@ -201,12 +201,18 @@ public class ParaUI extends UI {
 		panelCliente.getBtnAgregar().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				if (!comprobarCamposTxt(panelCliente.getTxtDnicif(), panelCliente.getTxtRazonSocial(), panelCliente.getTxtDireccion(), panelCliente.getTxtTelefono())) {
+				if (!comprobarCamposTxt(panelCliente.getTxtDnicif(), panelCliente.getTxtRazonSocial(),
+						panelCliente.getTxtDireccion(), panelCliente.getTxtTelefono())) {
 					if (Validator.isDniCif(panelCliente.getTxtDnicif().getText())) {
 						if (Validator.isPhone(panelCliente.getTxtTelefono().getText())) {
-							if (logica.agregarCliente(panelCliente.getTxtDnicif().getText(), panelCliente.getTxtRazonSocial().getText(), panelCliente.getTxtDireccion().getText(), panelCliente.getTxtTelefono().getText())) {
-									setMensaje("Cliente " +  panelCliente.getTxtRazonSocial().getText() + " ha sido agregado correctamente", Color.GREEN,
-										panelCliente.getLblMensaje());
+							if (logica.agregarCliente(panelCliente.getTxtDnicif().getText(),
+									panelCliente.getTxtRazonSocial().getText(),
+									panelCliente.getTxtDireccion().getText(),
+									panelCliente.getTxtTelefono().getText())) {
+								setMensaje(
+										"Cliente " + panelCliente.getTxtRazonSocial().getText()
+												+ " ha sido agregado correctamente",
+										Color.GREEN, panelCliente.getLblMensaje());
 								borrarTxt(panelCliente.getTxtDnicif(), panelCliente.getTxtRazonSocial(),
 										panelCliente.getTxtDireccion(), panelCliente.getTxtTelefono());
 								if (panelPedido.getComboClientes().getItemCount() > 0) {
@@ -264,22 +270,39 @@ public class ParaUI extends UI {
 
 		panelCliente.getBtnEliminarCliente().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int indice = panelCliente.getComboBox().getSelectedIndex();
-				if (indice >= 0) {
-					if (logica.eliminarCliente(panelCliente.getTxtDnicifResultado().getText())) {
-						// No se como evitar un NullPointerException sin hacer esto
-						if (panelCliente.getComboBox().getItemCount() != 1) {
-							panelCliente.getComboBox().removeItemAt(indice);
-						} else {
-							borrarTxt(panelCliente.getTxtDnicifResultado(), panelCliente.getTxtRazonSocialResultado(),
-									panelCliente.getTxtDireccionResultado(), panelCliente.getTxtTelefonoResultado());
-							panelCliente.getComboBox().removeAllItems();
+				VentanaErmegenteBorrarCliente ventanaEliminar = new VentanaErmegenteBorrarCliente();
+				// En el caso que confirme la accion
+				ventanaEliminar.getBtnConfirmar().addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						int indice = panelCliente.getComboBox().getSelectedIndex();
+						if (indice >= 0) {
+							if (logica.eliminarCliente(panelCliente.getTxtDnicifResultado().getText())) {
+								// No se como evitar un NullPointerException sin
+								// hacer esto
+								if (panelCliente.getComboBox().getItemCount() != 1) {
+									panelCliente.getComboBox().removeItemAt(indice);
+								} else {
+									borrarTxt(panelCliente.getTxtDnicifResultado(),
+											panelCliente.getTxtRazonSocialResultado(),
+											panelCliente.getTxtDireccionResultado(),
+											panelCliente.getTxtTelefonoResultado());
+									panelCliente.getComboBox().removeAllItems();
+								}
+								panelCliente.getLblMensaje().setText("Borrado");
+							} else {
+								panelCliente.getLblMensaje().setText("Fallo al borrar");
+								ventanaEliminar.dispose();
+							}
 						}
-						panelCliente.getLblMensaje().setText("Borrado");
-					} else {
-						panelCliente.getLblMensaje().setText("Fallo al borrar");
 					}
-				}
+				});
+
+				// En el caso de que eliga la opcion de cancelar
+				ventanaEliminar.getBtnCancelar().addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						ventanaEliminar.dispose();
+					}
+				});
 			}
 		});
 
@@ -348,32 +371,31 @@ public class ParaUI extends UI {
 	private void ponerListenersPedido() {
 		panelPedido.getBtnAdd().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-//				if (comprobarPedidoProceso()) {
-					if (panelPedido.getComboArticulos().getItemCount() != 0) {
-						bloquearListener = false;
-						String nombreArticulo = panelPedido.getComboArticulos().getSelectedItem().toString();
-						System.out.println(nombreArticulo);
-						int encontrado = -1;
-						int rows = modeloTabla.getRowCount();
-						for (int i = rows - 1; i >= 0; i--) {
-							if (modeloTabla.getValueAt(i, 1).toString().equals(nombreArticulo)) {
-								encontrado = i;
-							}
+				// if (comprobarPedidoProceso()) {
+				if (panelPedido.getComboArticulos().getItemCount() != 0) {
+					bloquearListener = false;
+					String nombreArticulo = panelPedido.getComboArticulos().getSelectedItem().toString();
+					System.out.println(nombreArticulo);
+					int encontrado = -1;
+					int rows = modeloTabla.getRowCount();
+					for (int i = rows - 1; i >= 0; i--) {
+						if (modeloTabla.getValueAt(i, 1).toString().equals(nombreArticulo)) {
+							encontrado = i;
 						}
-						if (encontrado == -1) {
-							logica.aniadirArticuloATabla(nombreArticulo, modeloTabla);
-							panelPedido.revalidate();
-							setMensaje("Insertado en el pedido el articulo " + nombreArticulo, Color.GREEN,
-									panelPedido.getTextMensaje());
-						} else {
-							modeloTabla.setValueAt(
-									(Integer.parseInt(modeloTabla.getValueAt(encontrado, 3).toString()) + 1),
-									encontrado, 3);
-						}
-						bloquearListener = false;
-					} else {
-						setMensaje("No hay articulos", Color.RED, panelPedido.getTextMensaje());
 					}
+					if (encontrado == -1) {
+						logica.aniadirArticuloATabla(nombreArticulo, modeloTabla);
+						panelPedido.revalidate();
+						setMensaje("Insertado en el pedido el articulo " + nombreArticulo, Color.GREEN,
+								panelPedido.getTextMensaje());
+					} else {
+						modeloTabla.setValueAt((Integer.parseInt(modeloTabla.getValueAt(encontrado, 3).toString()) + 1),
+								encontrado, 3);
+					}
+					bloquearListener = false;
+				} else {
+					setMensaje("No hay articulos", Color.RED, panelPedido.getTextMensaje());
+				}
 			}
 		});
 
@@ -459,7 +481,8 @@ public class ParaUI extends UI {
 						panelPedido.getComboPedidos().removeAllItems();
 						panelPedido.getComboPedidos().setEnabled(true);
 						logica.insertarPedidosEnCombo(panelPedido.getComboPedidos(),
-								(String) panelPedido.getComboClientes().getSelectedItem(), panelPedido.getTextMensaje());
+								(String) panelPedido.getComboClientes().getSelectedItem(),
+								panelPedido.getTextMensaje());
 						panelPedido.getBtnVer().setEnabled(true);
 						panelPedido.revalidate();
 					}
@@ -568,10 +591,11 @@ public class ParaUI extends UI {
 	}
 
 	/**
-	 * comprueba que hay un pedido en proceso o no e inserta un mensaje en el panel
-	 * pedido
+	 * comprueba que hay un pedido en proceso o no e inserta un mensaje en el
+	 * panel pedido
 	 * 
-	 * @return true si hay un pedido en proceso, false si no hay pedido en proceso
+	 * @return true si hay un pedido en proceso, false si no hay pedido en
+	 *         proceso
 	 */
 	private boolean comprobarPedidoProceso() {
 		if (pedidoProceso) {
@@ -617,13 +641,13 @@ public class ParaUI extends UI {
 			setMensaje("Debe rellenar el campo de cliente", Color.RED, panelCliente.getLblMensaje());
 		}
 	}
-	
+
 	private void borrarTxt(JTextField... jTextField) {
 		for (int i = 0; i < jTextField.length; i++) {
 			jTextField[i].setText(null);
 		}
 	}
-	
+
 	private boolean comprobarCamposTxt(JTextField... jTextField) {
 		boolean vacio = false;
 		for (int i = 0; i < jTextField.length; i++) {
@@ -634,5 +658,5 @@ public class ParaUI extends UI {
 		}
 		return vacio;
 	}
-	
+
 }

@@ -248,8 +248,9 @@ public class PanelPedido extends JPanel {
 		textMensaje = new JLabel("");
 		textMensaje.setHorizontalAlignment(SwingConstants.CENTER);
 		GridBagConstraints gbc_textMensaje = new GridBagConstraints();
+		gbc_textMensaje.fill = GridBagConstraints.BOTH;
 		gbc_textMensaje.gridwidth = 4;
-		gbc_textMensaje.insets = new Insets(0, 0, 0, 5);
+		gbc_textMensaje.insets = new Insets(10, 0, 10, 0);
 		gbc_textMensaje.gridx = 0;
 		gbc_textMensaje.gridy = 6;
 		panelCrearPedido.add(textMensaje, gbc_textMensaje);
