@@ -270,39 +270,32 @@ public class ParaUI extends UI {
 
 		panelCliente.getBtnEliminarCliente().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				VentanaErmegenteBorrarCliente ventanaEliminar = new VentanaErmegenteBorrarCliente();
-				// En el caso que confirme la accion
-				ventanaEliminar.getBtnConfirmar().addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						int indice = panelCliente.getComboBox().getSelectedIndex();
-						if (indice >= 0) {
-							if (logica.eliminarCliente(panelCliente.getTxtDnicifResultado().getText())) {
-								// No se como evitar un NullPointerException sin
-								// hacer esto
-								if (panelCliente.getComboBox().getItemCount() != 1) {
-									panelCliente.getComboBox().removeItemAt(indice);
-								} else {
-									borrarTxt(panelCliente.getTxtDnicifResultado(),
-											panelCliente.getTxtRazonSocialResultado(),
-											panelCliente.getTxtDireccionResultado(),
-											panelCliente.getTxtTelefonoResultado());
-									panelCliente.getComboBox().removeAllItems();
-								}
-								panelCliente.getLblMensaje().setText("Borrado");
+
+				int resultado = JOptionPane.showConfirmDialog(null, "¿Seguro que deseas eliminar este cliente?", "",
+						JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE, null);
+				if (resultado == JOptionPane.YES_OPTION) {
+					int indice = panelCliente.getComboBox().getSelectedIndex();
+					if (indice >= 0) {
+						if (logica.eliminarCliente(panelCliente.getTxtDnicifResultado().getText())) {
+							// No se como evitar un NullPointerException sin
+							// hacer esto
+							if (panelCliente.getComboBox().getItemCount() != 1) {
+								panelCliente.getComboBox().removeItemAt(indice);
 							} else {
-								panelCliente.getLblMensaje().setText("Fallo al borrar");
-								ventanaEliminar.dispose();
+								borrarTxt(panelCliente.getTxtDnicifResultado(),
+										panelCliente.getTxtRazonSocialResultado(),
+										panelCliente.getTxtDireccionResultado(),
+										panelCliente.getTxtTelefonoResultado());
+								panelCliente.getComboBox().removeAllItems();
 							}
+							panelCliente.getLblMensaje().setText("Borrado");
+						} else {
+							panelCliente.getLblMensaje().setText("Fallo al borrar");
 						}
 					}
-				});
+				} else {
 
-				// En el caso de que eliga la opcion de cancelar
-				ventanaEliminar.getBtnCancelar().addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						ventanaEliminar.dispose();
-					}
-				});
+				}
 			}
 		});
 
@@ -599,11 +592,10 @@ public class ParaUI extends UI {
 	}
 
 	/**
-	 * comprueba que hay un pedido en proceso o no e inserta un mensaje en el
-	 * panel pedido
+	 * comprueba que hay un pedido en proceso o no e inserta un mensaje en el panel
+	 * pedido
 	 * 
-	 * @return true si hay un pedido en proceso, false si no hay pedido en
-	 *         proceso
+	 * @return true si hay un pedido en proceso, false si no hay pedido en proceso
 	 */
 	private boolean comprobarPedidoProceso() {
 		if (pedidoProceso) {

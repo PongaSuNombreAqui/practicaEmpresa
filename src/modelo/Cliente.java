@@ -2,7 +2,7 @@ package modelo;
 
 import java.io.Serializable;
 
-public class Cliente implements Serializable {
+public class Cliente implements Serializable , Indexable<String> {
 	private String dniCif;
 	private String razonSocial;
 	private String direccion;
@@ -58,5 +58,10 @@ public class Cliente implements Serializable {
 	@Override
 	public String toString() {
 		return razonSocial;
+	}
+
+	@Override
+	public String getKey() {
+		return this.dniCif;
 	}
 }

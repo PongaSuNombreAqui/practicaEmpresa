@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.TreeMap;
 import java.util.Map.Entry;
 
+import modelo.Indexable;
 import modelo.acceso.DAO;
 import utiles.Utiles;
 /**
@@ -100,17 +101,21 @@ public class AlmacenIndice<T, K> {
 //		}
 //		return new DAO<>().grabar(pathIndice, indice);
 //	}
+
 	public boolean borrar(K k){
 		indice = (TreeMap<K, Integer>) new DAO().leer(pathIndice);
 		boolean retorno=false;
 		if(indice.containsKey(k)){
-			System.out.println(indice);
 			Integer posicion=indice.remove(k);
 			if(posicion!=null){
 				retorno=new DAO<>().borrarElemento(pathDatos.toString(),posicion);
 				if(!retorno){
 					indice = (TreeMap<K, Integer>) new DAO().leer(pathIndice);
+				}else{
+					recargaIndice();
+					new DAO<>().grabar(pathIndice, indice);
 				}
+				
 			}
 		}
 		return retorno;
@@ -175,17 +180,17 @@ public class AlmacenIndice<T, K> {
 		return null;
 	}
 	
-//	private void recargaIndice() {
-//		indice=new TreeMap<>();
-//		int posicion=0;
-//		T t=(T) dao.leer(pathDatos, posicion);
-//		while (t!=null){
-//			Indexable<K> elemento=(Indexable<K>) t;
-//			K k=elemento.getKey();
-//			indice.put(k, posicion);
-//			posicion++;
-//			t=(T) dao.leer(pathDatos, posicion);
-//		}
-//		
-//	}
+	private void recargaIndice() {
+		indice=new TreeMap<>();
+		int posicion=0;
+		T t=(T) new DAO<>().leer(pathDatos.toString(), posicion);
+		while (t!=null){
+			Indexable<K> elemento=(Indexable<K>) t;
+			K k=elemento.getKey();
+			indice.put(k, posicion);
+			posicion++;
+			t=(T) new DAO<>().leer(pathDatos.toString(), posicion);
+		}
+		
+	}
 }
