@@ -271,7 +271,7 @@ public class ParaUI extends UI {
 		panelCliente.getBtnEliminarCliente().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				int resultado = JOptionPane.showConfirmDialog(null, "¿Seguro que deaseas eliminar este cliente?", "",
+				int resultado = JOptionPane.showConfirmDialog(null, "¿Seguro que deseas eliminar este cliente?", "",
 						JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE, null);
 				if (resultado == JOptionPane.YES_OPTION) {
 					int indice = panelCliente.getComboBox().getSelectedIndex();
