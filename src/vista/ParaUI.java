@@ -290,7 +290,7 @@ public class ParaUI extends UI {
 						}
 					}
 				} else {
-
+					setMensaje("Operacion cancelada", Color.ORANGE, panelCliente.getLblMensaje());
 				}
 			}
 		});
@@ -395,7 +395,6 @@ public class ParaUI extends UI {
 					pedidoProceso = false;
 					logica.eliminarPedidoRejilla(modeloTabla);
 					setMensaje("El pedido ha sido cancelado", Color.ORANGE, panelPedido.getTextMensaje());
-					panelPedido.getTextMensaje().setBackground(Color.ORANGE);
 				}
 			}
 		});
@@ -454,14 +453,14 @@ public class ParaUI extends UI {
 			}
 		});
 		panelPedido.getComboClientesCrear().addActionListener(
-				(e) -> setMensaje("Cliente para el pedido seleccionado", Color.RED, panelPedido.getTextMensaje()));
+				(e) -> setMensaje("Cliente para el pedido seleccionado", Color.GREEN, panelPedido.getTextMensaje()));
 
 		panelPedido.getComboArticulos()
 				.addActionListener((e) -> setMensaje("Articulo seleccionado, pulse add para introducirlo al pedido",
-						Color.RED, panelPedido.getTextMensaje()));
+						Color.GREEN, panelPedido.getTextMensaje()));
 
 		panelPedido.getComboPedidos()
-				.addActionListener((e) -> setMensaje("Pedido seleccionado, pulse ver para ver detalles", Color.RED,
+				.addActionListener((e) -> setMensaje("Pedido seleccionado, pulse ver para ver detalles", Color.GREEN,
 						panelPedido.getTextMensaje()));
 
 		panelPedido.getComboClientes().addActionListener(new ActionListener() {
@@ -600,7 +599,6 @@ public class ParaUI extends UI {
 		} else {
 			setMensaje("Accion no disponible si no esta creando un pedido", Color.RED, panelPedido.getTextMensaje());
 		}
-		panelPedido.getTextMensaje().setBackground(Color.RED);
 		return pedidoProceso;
 	}
 
