@@ -444,6 +444,7 @@ public class ParaUI extends UI {
 				if (comprobarPedidoProceso()) {
 					if (!panelTabla.getTabla().getSelectionModel().isSelectionEmpty()) {
 						int seleccionada = panelTabla.getTabla().getSelectedRow();
+						panelTabla.getTabla().clearSelection();
 						modeloTabla.removeRow(seleccionada);
 						setMensaje("Linea borrada satisfactoriamente", Color.GREEN, panelPedido.getTextMensaje());
 					} else {
@@ -503,7 +504,7 @@ public class ParaUI extends UI {
 			@Override
 			public void tableChanged(TableModelEvent e) {
 				int fila = panelTabla.getTabla().getSelectedRow();
-				System.out.println(fila);
+				System.out.println("Fila: " + fila);
 				// Cambia precioTotal
 				panelPedido.getLblTotalPrecio().setText("0");
 				float total = 0;
