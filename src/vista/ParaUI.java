@@ -213,7 +213,7 @@ public class ParaUI extends UI {
 								}
 								logica.insertarClientesEnCombo(panelPedido.getComboClientes());
 							} else {
-								setMensaje("Error en la operacion. Revise los campos de texto e intentelo de nuevo.",
+								setMensaje("Error en la operacion: Revise los campos de texto e intentelo de nuevo",
 										Color.RED, panelCliente.getLblMensaje());
 							}
 						} else {
@@ -249,7 +249,7 @@ public class ParaUI extends UI {
 
 		panelCliente.getComboBox().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (panelCliente.getComboBox().getItemCount() > 0) {
+				if (panelCliente.getComboBox().getItemCount() > 0 && panelCliente.getComboBox().getSelectedIndex() != -1) {
 					String dniCif = logica.getItemFromCombo(panelCliente.getComboBox());
 					logica.consultarCliente(dniCif, panelCliente.getTxtDnicifResultado(),
 							panelCliente.getTxtRazonSocialResultado(), panelCliente.getTxtDireccionResultado(),
@@ -263,22 +263,18 @@ public class ParaUI extends UI {
 
 		panelCliente.getBtnEliminarCliente().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int resultado = JOptionPane.showConfirmDialog(null, "¿Seguro que deseas eliminar este cliente?", "",
+				int resultado = JOptionPane.showConfirmDialog(null, "Â¿Seguro que deseas eliminar este cliente?", "",
 						JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE, null);
 				if (resultado == JOptionPane.YES_OPTION) {
 					int indice = panelCliente.getComboBox().getSelectedIndex();
 					if (indice >= 0) {
 						if (logica.eliminarCliente(panelCliente.getTxtDnicifResultado().getText())) {
-							// No se como evitar un NullPointerException sin
-							// hacer esto
-							if (panelCliente.getComboBox().getItemCount() != 1) {
-								panelCliente.getComboBox().removeItemAt(indice);
-							} else {
+							if (panelCliente.getComboBox().getItemCount() > 0) {
 								borrarTxt(panelCliente.getTxtDnicifResultado(),
 										panelCliente.getTxtRazonSocialResultado(),
 										panelCliente.getTxtDireccionResultado(),
 										panelCliente.getTxtTelefonoResultado());
-								panelCliente.getComboBox().removeAllItems();
+								panelCliente.getComboBox().removeItemAt(indice);
 							}
 							panelCliente.getLblMensaje().setText("Borrado");
 						} else {
@@ -286,7 +282,7 @@ public class ParaUI extends UI {
 						}
 					}
 				} else {
-
+					setMensaje("Operacion cancelada", Color.ORANGE, panelCliente.getLblMensaje());
 				}
 			}
 		});
@@ -374,6 +370,7 @@ public class ParaUI extends UI {
 						setMensaje("Insertado en el pedido el articulo " + nombreArticulo, Color.GREEN,
 								panelPedido.getTextMensaje());
 					} else {
+						panelTabla.getTabla().changeSelection(encontrado, 3, false, false);
 						modeloTabla.setValueAt((Integer.parseInt(modeloTabla.getValueAt(encontrado, 3).toString()) + 1),
 								encontrado, 3);
 					}
@@ -390,7 +387,6 @@ public class ParaUI extends UI {
 					pedidoProceso = false;
 					logica.eliminarPedidoRejilla(modeloTabla);
 					setMensaje("El pedido ha sido cancelado", Color.ORANGE, panelPedido.getTextMensaje());
-					panelPedido.getTextMensaje().setBackground(Color.ORANGE);
 				}
 			}
 		});
@@ -440,6 +436,7 @@ public class ParaUI extends UI {
 				if (comprobarPedidoProceso()) {
 					if (!panelTabla.getTabla().getSelectionModel().isSelectionEmpty()) {
 						int seleccionada = panelTabla.getTabla().getSelectedRow();
+						panelTabla.getTabla().clearSelection();
 						modeloTabla.removeRow(seleccionada);
 						setMensaje("Linea borrada satisfactoriamente", Color.GREEN, panelPedido.getTextMensaje());
 					} else {
@@ -449,14 +446,14 @@ public class ParaUI extends UI {
 			}
 		});
 		panelPedido.getComboClientesCrear().addActionListener(
-				(e) -> setMensaje("Cliente para el pedido seleccionado", Color.ORANGE, panelPedido.getTextMensaje()));
+				(e) -> setMensaje("Cliente para el pedido seleccionado", Color.GREEN, panelPedido.getTextMensaje()));
 
 		panelPedido.getComboArticulos()
 				.addActionListener((e) -> setMensaje("Articulo seleccionado, pulse add para introducirlo al pedido",
-						Color.ORANGE, panelPedido.getTextMensaje()));
+						Color.GREEN, panelPedido.getTextMensaje()));
 
 		panelPedido.getComboPedidos()
-				.addActionListener((e) -> setMensaje("Pedido seleccionado, pulse ver para ver detalles", Color.ORANGE,
+				.addActionListener((e) -> setMensaje("Pedido seleccionado, pulse ver para ver detalles", Color.GREEN,
 						panelPedido.getTextMensaje()));
 
 		panelPedido.getComboClientes().addActionListener(new ActionListener() {
@@ -499,12 +496,19 @@ public class ParaUI extends UI {
 			@Override
 			public void tableChanged(TableModelEvent e) {
 				int fila = panelTabla.getTabla().getSelectedRow();
-				System.out.println(fila);
+				System.out.println("Fila: " + fila);
+				// Cambia precioTotal
+				panelPedido.getLblTotalPrecio().setText("0");
+				float total = 0;
+				for (int i = 0; i < panelTabla.getTabla().getRowCount(); i++) {
+					total = Float.parseFloat(modeloTabla.getValueAt(i, 4).toString()) + total;
+				}
+				panelPedido.getLblTotalPrecio().setText("" + total);
+				// FIN
 				if (pedidoProceso) {
 					if (panelTabla.getTabla().getRowCount() != 0 && !bloquearListener && fila != -1) {
 						bloquearListener = true;
-						modeloTabla
-								.setValueAt(
+						modeloTabla.setValueAt(
 										(Float.parseFloat(modeloTabla.getValueAt(fila, 2).toString())
 												* Integer.parseInt(modeloTabla.getValueAt(fila, 3).toString())),
 										fila, 4);
@@ -588,7 +592,6 @@ public class ParaUI extends UI {
 		} else {
 			setMensaje("Accion no disponible si no esta creando un pedido", Color.RED, panelPedido.getTextMensaje());
 		}
-		panelPedido.getTextMensaje().setBackground(Color.RED);
 		return pedidoProceso;
 	}
 
@@ -615,10 +618,8 @@ public class ParaUI extends UI {
 			}
 			logica.buscarCliente(nombre, panelCliente.getComboBox());
 			if (panelCliente.getComboBox().getItemCount() == 0) {
-				panelCliente.getTxtDnicifResultado().setText(null);
-				panelCliente.getTxtRazonSocialResultado().setText(null);
-				panelCliente.getTxtDireccionResultado().setText(null);
-				panelCliente.getTxtTelefonoResultado().setText(null);
+				borrarTxt(panelCliente.getTxtDnicifResultado(), panelCliente.getTxtRazonSocialResultado(),
+						panelCliente.getTxtDireccionResultado(), panelCliente.getTxtTelefonoResultado());
 				setMensaje("No hay coincidencias", Color.RED, panelCliente.getLblMensaje());
 			}
 		} else {
@@ -626,6 +627,10 @@ public class ParaUI extends UI {
 		}
 	}
 
+	/**
+	 * Borra el campo de texto de los JTextField
+	 * @param jTextField	El JTextField a borrar
+	 */
 	private void borrarTxt(JTextField... jTextField) {
 		for (int i = 0; i < jTextField.length; i++) {
 			jTextField[i].setText(null);
@@ -638,6 +643,14 @@ public class ParaUI extends UI {
 		}
 	}
 
+	/**
+	 * Comprueba que los campos de texto de los JTextField estan vacios. Si
+	 * estan vacios, se cambiara el color de fondo
+	 * 
+	 * @param jTextField	El JTextField a comprobar
+	 * @return FALSE si ninguno de ellos esta vacio 
+	 * 			TRUE si uno o varios de ellos estan vacios
+	 */
 	private boolean comprobarCamposTxt(JTextField... jTextField) {
 		boolean vacio = false;
 		for (int i = 0; i < jTextField.length; i++) {

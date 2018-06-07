@@ -100,11 +100,12 @@ public class AccionesPedido<K> {
 	}
 	
 	public void cambiarPrecioRejilla(DefaultTableModel modelo) {
-		ArrayList<Linea> lineas = extraerPedidoRejilla(modelo);
-		eliminarPedidoRejilla(modelo);
-		for (int i = lineas.size() - 1; i >= 0; i--) {
-			modelo.addRow(lineas.get(i).toVector());
-		}
+		// TODO Actualizar
+//		ArrayList<Linea> lineas = extraerPedidoRejilla(modelo);
+//		eliminarPedidoRejilla(modelo);
+//		for (int i = lineas.size() - 1; i >= 0; i--) {
+//			modelo.addRow(lineas.get(i).toVector());
+//		}
 	}
 
 	public void eliminarPedidoRejilla(DefaultTableModel modeloTabla) {

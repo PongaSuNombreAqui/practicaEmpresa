@@ -24,7 +24,7 @@ public class PanelCliente extends JPanel {
 	public PanelCliente() {
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[] { 0, 0, 0 };
-		gridBagLayout.rowHeights = new int[] { 0, 11, 0 };
+		gridBagLayout.rowHeights = new int[] { 0, 17, 0 };
 		gridBagLayout.columnWeights = new double[] { 1.0, 1.0, Double.MIN_VALUE };
 		gridBagLayout.rowWeights = new double[] { 1.0, 0.0, Double.MIN_VALUE };
 		setLayout(gridBagLayout);
@@ -316,30 +316,16 @@ public class PanelCliente extends JPanel {
 		gbc_btnEliminarCliente.gridx = 0;
 		gbc_btnEliminarCliente.gridy = 5;
 		panelResultado.add(btnEliminarCliente, gbc_btnEliminarCliente);
-
-		JPanel panelMensaje = new JPanel();
-		GridBagConstraints gbc_panelMensaje = new GridBagConstraints();
-		gbc_panelMensaje.gridwidth = 2;
-		gbc_panelMensaje.insets = new Insets(0, 0, 0, 5);
-		gbc_panelMensaje.fill = GridBagConstraints.BOTH;
-		gbc_panelMensaje.gridx = 0;
-		gbc_panelMensaje.gridy = 1;
-		add(panelMensaje, gbc_panelMensaje);
-		GridBagLayout gbl_panelMensaje = new GridBagLayout();
-		gbl_panelMensaje.columnWidths = new int[] { 54, 0 };
-		gbl_panelMensaje.rowHeights = new int[] { 17, 0, 0 };
-		gbl_panelMensaje.columnWeights = new double[] { 1.0, Double.MIN_VALUE };
-		gbl_panelMensaje.rowWeights = new double[] { 1.0, 1.0, Double.MIN_VALUE };
-		panelMensaje.setLayout(gbl_panelMensaje);
-
-		lblMensaje = new JLabel(" ");
+		
+		lblMensaje = new JLabel("");
 		lblMensaje.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		GridBagConstraints gbc_lblMensaje = new GridBagConstraints();
-		gbc_lblMensaje.insets = new Insets(0, 5, 5, 5);
+		gbc_lblMensaje.insets = new Insets(0, 5, 0, 5);
 		gbc_lblMensaje.anchor = GridBagConstraints.WEST;
+		gbc_lblMensaje.gridwidth = 2;
 		gbc_lblMensaje.gridx = 0;
-		gbc_lblMensaje.gridy = 0;
-		panelMensaje.add(lblMensaje, gbc_lblMensaje);
+		gbc_lblMensaje.gridy = 1;
+		add(lblMensaje, gbc_lblMensaje);
 	}
 
 	public JTextField getTxtRazonSocial() {
