@@ -63,6 +63,11 @@ public class ParaUI extends UI {
 	 * listeners que usa el panel de articulos
 	 */
 	private void ponerListenerArticulo() {
+		
+		logica.insertarArticulosEnCombo(panelArticulo.getComboPanelArticulo());
+		panelArticulo.revalidate();
+		panelGeneralArticulo.revalidate();
+		
 		panelEditarArticulo.getNuevoPrecio().addKeyListener(new KeyAdapter() {
 			public void keyTyped(KeyEvent e) {
 				if ((e.getKeyChar() < '0' && e.getKeyChar() != '.' || e.getKeyChar() > '9') && e.getKeyChar() != '.') {
@@ -95,8 +100,6 @@ public class ParaUI extends UI {
 			}
 		});
 		
-		logica.insertarArticulosEnCombo(panelArticulo.getComboPanelArticulo());
-		panelArticulo.revalidate();
 		panelArticulo.getComboPanelArticulo().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				String articuloSeleccionado =(String) panelArticulo.getComboPanelArticulo().getSelectedItem();
@@ -129,7 +132,7 @@ public class ParaUI extends UI {
 								Float.valueOf(panelArticulo.getCrearPrecio().getText()),
 								Integer.valueOf(panelArticulo.getCrearID().getText()),
 								panelArticulo.getCrearDescripcion().getText())) {
-//							logica.insertarArticulosEnCombo(panelArticulo.getComboPanelArticulo());
+							logica.insertarArticulosEnCombo(panelArticulo.getComboPanelArticulo());
 							logica.insertarArticulosEnCombo(panelPedido.getComboArticulos());
 							setMensaje("El articulo ha sido creado.", Color.GREEN,
 									panelArticulo.getTextMensajeSistema());
@@ -144,8 +147,6 @@ public class ParaUI extends UI {
 								panelArticulo.getTextMensajeSistema());
 					}
 				}
-				logica.insertarArticulosEnCombo(panelArticulo.getComboPanelArticulo());
-				panelArticulo.getComboPanelArticulo().revalidate();
 			}
 		});
 
