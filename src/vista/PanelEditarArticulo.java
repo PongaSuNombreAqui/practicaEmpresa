@@ -68,11 +68,16 @@ public class PanelEditarArticulo extends JPanel {
 		gbc_btnBuscar.gridy = 2;
 		add(btnBuscar, gbc_btnBuscar);
 
-		lblPrecio = new JLabel("New label");
+		lblPrecio = new JLabel("");
+		lblPrecio.setBackground(Color.WHITE);
+		lblPrecio.setOpaque(true);
+		lblPrecio.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
+		lblPrecio.setHorizontalAlignment(SwingConstants.CENTER);
 		GridBagConstraints gbc_lblPrecio = new GridBagConstraints();
-		gbc_lblPrecio.gridwidth = 4;
+		gbc_lblPrecio.fill = GridBagConstraints.BOTH;
+		gbc_lblPrecio.gridwidth = 2;
 		gbc_lblPrecio.insets = new Insets(0, 0, 5, 0);
-		gbc_lblPrecio.gridx = 0;
+		gbc_lblPrecio.gridx = 1;
 		gbc_lblPrecio.gridy = 3;
 		add(lblPrecio, gbc_lblPrecio);
 

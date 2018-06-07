@@ -16,6 +16,7 @@ import javax.swing.JButton;
 import javax.swing.border.MatteBorder;
 import java.awt.Color;
 import java.awt.Dimension;
+import javax.swing.JComboBox;
 
 public class PanelArticulo extends JPanel {
 
@@ -23,7 +24,6 @@ public class PanelArticulo extends JPanel {
 	private JTextField crearNombre;
 	private JTextField crearID;
 	private JTextField crearPrecio;
-	private JTextField nombreConsultado;
 	private JButton btnBuscar;
 	private JButton btnCrear;
 	private JLabel detallesNombre;
@@ -34,6 +34,7 @@ public class PanelArticulo extends JPanel {
 	private JTextField crearDescripcion;
 	private JPanel ventana;
 	private JLabel textMensajeSistema;
+	private JComboBox comboPanelArticulo;
 
 	public PanelArticulo() {
 		setVisible(true);
@@ -202,19 +203,15 @@ public class PanelArticulo extends JPanel {
 		gbc_label_1.gridy = 1;
 		panel.add(label_1, gbc_label_1);
 
-		nombreConsultado = new JTextField();
-		nombreConsultado.setHorizontalAlignment(SwingConstants.CENTER);
-		nombreConsultado.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		nombreConsultado.setColumns(10);
-		nombreConsultado.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
-		GridBagConstraints gbc_textField_31 = new GridBagConstraints();
-		gbc_textField_31.insets = new Insets(0, 0, 5, 5);
-		gbc_textField_31.fill = GridBagConstraints.BOTH;
-		gbc_textField_31.gridx = 1;
-		gbc_textField_31.gridy = 1;
-		panel.add(nombreConsultado, gbc_textField_31);
+		comboPanelArticulo = new JComboBox();
+		GridBagConstraints gbc_comboPanelArticulo = new GridBagConstraints();
+		gbc_comboPanelArticulo.insets = new Insets(0, 0, 5, 5);
+		gbc_comboPanelArticulo.fill = GridBagConstraints.BOTH;
+		gbc_comboPanelArticulo.gridx = 1;
+		gbc_comboPanelArticulo.gridy = 1;
+		panel.add(comboPanelArticulo, gbc_comboPanelArticulo);
 
-		btnBuscar = new JButton("Buscar");
+		btnBuscar = new JButton("Editar");
 		btnBuscar.setBackground(Color.LIGHT_GRAY);
 
 		btnBuscar.setFont(new Font("Tahoma", Font.PLAIN, 15));
@@ -246,6 +243,8 @@ public class PanelArticulo extends JPanel {
 		panel.add(label_2, gbc_label_2);
 
 		detallesNombre = new JLabel("");
+		detallesNombre.setOpaque(true);
+		detallesNombre.setBackground(Color.WHITE);
 		detallesNombre.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
 		detallesNombre.setHorizontalAlignment(SwingConstants.CENTER);
 		detallesNombre.setFont(new Font("Tahoma", Font.PLAIN, 15));
@@ -266,6 +265,8 @@ public class PanelArticulo extends JPanel {
 		panel.add(label_3, gbc_label_3);
 
 		detallesID = new JLabel("");
+		detallesID.setOpaque(true);
+		detallesID.setBackground(Color.WHITE);
 		detallesID.setHorizontalAlignment(SwingConstants.CENTER);
 		detallesID.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		detallesID.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
@@ -286,6 +287,8 @@ public class PanelArticulo extends JPanel {
 		panel.add(label_4, gbc_label_4);
 
 		detallesPrecio = new JLabel("");
+		detallesPrecio.setOpaque(true);
+		detallesPrecio.setBackground(Color.WHITE);
 		detallesPrecio.setHorizontalAlignment(SwingConstants.CENTER);
 		detallesPrecio.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		detallesPrecio.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
@@ -305,6 +308,9 @@ public class PanelArticulo extends JPanel {
 		panel.add(lblDescripcion, gbc_lblDescripcion);
 
 		detallesDescripcion = new JLabel("");
+		detallesDescripcion.setHorizontalAlignment(SwingConstants.CENTER);
+		detallesDescripcion.setOpaque(true);
+		detallesDescripcion.setBackground(Color.WHITE);
 		detallesDescripcion.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
 		detallesDescripcion.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		GridBagConstraints gbc_detallesDescripcion = new GridBagConstraints();
@@ -330,14 +336,6 @@ public class PanelArticulo extends JPanel {
 
 	public JButton getBtnBuscar() {
 		return btnBuscar;
-	}
-
-	public JTextField getTextField_3() {
-		return nombreConsultado;
-	}
-
-	public JTextField getNombreConsultado() {
-		return nombreConsultado;
 	}
 
 	public JLabel getDetallesNombre() {
@@ -382,6 +380,10 @@ public class PanelArticulo extends JPanel {
 
 	public JLabel getTextMensajeSistema() {
 		return textMensajeSistema;
+	}
+
+	public JComboBox getComboPanelArticulo() {
+		return comboPanelArticulo;
 	}
 
 }
