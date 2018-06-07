@@ -63,11 +63,9 @@ public class ParaUI extends UI {
 	 * listeners que usa el panel de articulos
 	 */
 	private void ponerListenerArticulo() {
-		
+
 		logica.insertarArticulosEnCombo(panelArticulo.getComboPanelArticulo());
-		panelArticulo.revalidate();
-		panelGeneralArticulo.revalidate();
-		
+
 		panelEditarArticulo.getNuevoPrecio().addKeyListener(new KeyAdapter() {
 			public void keyTyped(KeyEvent e) {
 				if ((e.getKeyChar() < '0' && e.getKeyChar() != '.' || e.getKeyChar() > '9') && e.getKeyChar() != '.') {
@@ -99,14 +97,14 @@ public class ParaUI extends UI {
 				}
 			}
 		});
-		
+
 		panelArticulo.getComboPanelArticulo().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				String articuloSeleccionado =(String) panelArticulo.getComboPanelArticulo().getSelectedItem();
-				if (articuloSeleccionado!=null) {
-					logica.consultar(articuloSeleccionado,
-							panelArticulo.getDetallesNombre(), panelArticulo.getDetallesID(),
-							panelArticulo.getDetallesPrecio(), panelArticulo.getDetallesDescripcion());
+				String articuloSeleccionado = (String) panelArticulo.getComboPanelArticulo().getSelectedItem();
+				if (articuloSeleccionado != null) {
+					logica.consultar(articuloSeleccionado, panelArticulo.getDetallesNombre(),
+							panelArticulo.getDetallesID(), panelArticulo.getDetallesPrecio(),
+							panelArticulo.getDetallesDescripcion());
 				}
 			}
 		});
@@ -117,9 +115,7 @@ public class ParaUI extends UI {
 				panelArticulo.revalidate();
 			}
 		});
-		
-	
-		
+
 		panelArticulo.getBtnCrear().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (panelArticulo.getCrearNombre().getText().isEmpty() || panelArticulo.getCrearID().getText().isEmpty()
@@ -290,7 +286,7 @@ public class ParaUI extends UI {
 						}
 					}
 				} else {
-					
+
 				}
 			}
 		});
