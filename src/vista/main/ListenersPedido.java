@@ -178,8 +178,7 @@ public class ListenersPedido {
 			@Override
 			public void tableChanged(TableModelEvent e) {
 				float precioTotal = logica.cambiarPrecioTotalPedido(panelTabla.getTabla());
-				// TODO eliminar comillas
-				panelPedido.getLblTotalPrecio().setText("" + precioTotal);
+				panelPedido.getLblTotalPrecio().setText("TOTAL: " + precioTotal);
 				if (pedidoProceso) {
 					int fila = panelTabla.getTabla().getSelectedRow();
 					if (panelTabla.getTabla().getRowCount() != 0 && !bloquearListener && fila != -1) {

@@ -23,14 +23,13 @@ public class PanelPedido extends JPanel {
 	private JComboBox comboClientes;
 	private JComboBox comboClientesCrear;
 	private JLabel textMensaje;
-	private JLabel lblTotal;
 	private JLabel lblTotalPrecio;
 
 	public PanelPedido() {
 		setForeground(Color.GRAY);
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[] { 371, 319, 0 };
-		gridBagLayout.rowHeights = new int[] { 80, 244, 12, 0 };
+		gridBagLayout.rowHeights = new int[] { 80, 244, 16, 0 };
 		gridBagLayout.columnWeights = new double[] { 1.0, 1.0, Double.MIN_VALUE };
 		gridBagLayout.rowWeights = new double[] { 1.0, 1.0, 0.0, Double.MIN_VALUE };
 		setLayout(gridBagLayout);
@@ -163,9 +162,9 @@ public class PanelPedido extends JPanel {
 		GridBagLayout gbl_panelCrearPedido = new GridBagLayout();
 		gbl_panelCrearPedido.columnWidths = new int[] { 37, 87, 91, 0, 0 };
 
-		gbl_panelCrearPedido.rowHeights = new int[] { 0, 0, 0, 0, 16, 0 };
+		gbl_panelCrearPedido.rowHeights = new int[] { 0, 0, 0, 0, 0 };
 		gbl_panelCrearPedido.columnWeights = new double[] { 1.0, 1.0, 1.0, 1.0, Double.MIN_VALUE };
-		gbl_panelCrearPedido.rowWeights = new double[] { 1.0, 1.0, 1.0, 1.0, 1.0, Double.MIN_VALUE };
+		gbl_panelCrearPedido.rowWeights = new double[] { 1.0, 1.0, 1.0, 1.0, Double.MIN_VALUE };
 		panelCrearPedido.setLayout(gbl_panelCrearPedido);
 
 		JLabel lblConsultarPedido = new JLabel("Consultar Pedido");
@@ -220,30 +219,23 @@ public class PanelPedido extends JPanel {
 		GridBagConstraints gbc_btnVer = new GridBagConstraints();
 		gbc_btnVer.gridwidth = 2;
 		gbc_btnVer.fill = GridBagConstraints.BOTH;
-		gbc_btnVer.insets = new Insets(0, 0, 5, 5);
+		gbc_btnVer.insets = new Insets(0, 0, 1, 5);
 		gbc_btnVer.gridx = 1;
 		gbc_btnVer.gridy = 3;
 		panelCrearPedido.add(btnVer, gbc_btnVer);
-
-		textMensaje = new JLabel("");
-		textMensaje.setHorizontalAlignment(SwingConstants.CENTER);
-		GridBagConstraints gbc_textMensaje = new GridBagConstraints();
-		gbc_textMensaje.fill = GridBagConstraints.BOTH;
-		gbc_textMensaje.gridwidth = 4;
-		gbc_textMensaje.gridx = 0;
-		gbc_textMensaje.gridy = 4;
-		panelCrearPedido.add(textMensaje, gbc_textMensaje);
-
-		lblTotal = new JLabel("TOTAL:");
-		GridBagConstraints gbc_lblTotal = new GridBagConstraints();
-		gbc_lblTotal.anchor = GridBagConstraints.EAST;
-		gbc_lblTotal.insets = new Insets(0, 0, 0, 5);
-		gbc_lblTotal.gridx = 0;
-		gbc_lblTotal.gridy = 2;
-		add(lblTotal, gbc_lblTotal);
 		
-		lblTotalPrecio = new JLabel("0.0");
+		textMensaje = new JLabel("");
+		GridBagConstraints gbc_textMensaje = new GridBagConstraints();
+		gbc_textMensaje.anchor = GridBagConstraints.WEST;
+		gbc_textMensaje.insets = new Insets(0, 5, 0, 5);
+		gbc_textMensaje.gridx = 0;
+		gbc_textMensaje.gridy = 2;
+		add(textMensaje, gbc_textMensaje);
+		textMensaje.setHorizontalAlignment(SwingConstants.CENTER);
+		
+		lblTotalPrecio = new JLabel("TOTAL: 0.0");
 		GridBagConstraints gbc_lblTotalPrecio = new GridBagConstraints();
+		gbc_lblTotalPrecio.insets = new Insets(0, 5, 0, 5);
 		gbc_lblTotalPrecio.anchor = GridBagConstraints.WEST;
 		gbc_lblTotalPrecio.gridx = 1;
 		gbc_lblTotalPrecio.gridy = 2;
@@ -295,7 +287,7 @@ public class PanelPedido extends JPanel {
 		panelTabla = new JPanel();
 		GridBagConstraints gbc_panelTabla = new GridBagConstraints();
 		gbc_panelTabla.gridwidth = 2;
-		gbc_panelTabla.insets = new Insets(0, 0, 0, 0);
+		gbc_panelTabla.insets = new Insets(0, 0, 3, 0);
 		gbc_panelTabla.fill = GridBagConstraints.BOTH;
 		gbc_panelTabla.gridx = 0;
 		gbc_panelTabla.gridy = 1;
