@@ -11,11 +11,14 @@ import org.junit.Test;
 
 import control.almacenes.AlmacenIndice;
 import modelo.Cliente;
+import utiles.Utiles;
+
 /**
  * 
  * @author fp-hermoso
  *
- * @param <K> key
+ * @param <K>
+ *            key
  */
 public class AlmacenClienteTest<K> {
 	ArrayList<Cliente> clientes = new ArrayList<>();
@@ -47,18 +50,21 @@ public class AlmacenClienteTest<K> {
 	@Test
 	public void testGrabar() {
 		for (Cliente cliente : clientes) {
-			new AlmacenIndice<>("./dataTest/clientes/").grabar(cliente, cliente.getDniCif());
+			new AlmacenIndice<>(Utiles.pathClientesIndice, Utiles.pathClientesDatos).grabar(cliente,
+					cliente.getDniCif());
 		}
 		// se pueden sobreescribir archivos
-//		assertFalse(
-//				new AlmacenIndice<>("./dataTest/clientes/").grabar(new Cliente("dni3", "tres", "asd", "123"), "dni3"));
+		// assertFalse(
+		// new AlmacenIndice<>("./dataTest/clientes/").grabar(new
+		// Cliente("dni3", "tres", "asd", "123"), "dni3"));
 	}
 
 	@Test
 	public void testleer() {
 		testGrabar();
 		for (Cliente cliente : clientes) {
-			assertTrue(cliente.equals(new AlmacenIndice<>("./dataTest/clientes/").leer((K) cliente.getDniCif())));
+			assertTrue(cliente.equals(new AlmacenIndice<>(Utiles.pathClientesIndice, Utiles.pathClientesDatos)
+					.obtener((K) cliente.getDniCif())));
 		}
 	}
 

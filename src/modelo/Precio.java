@@ -33,9 +33,10 @@ public class Precio implements Serializable {
 
 	private LocalDate toLocalDate(GregorianCalendar inicial) {
 		/*
-		 * Despite its name, java.util.Date represents an instant on the time-line, not
-		 * a "date". The actual data stored within the object is a long count of
-		 * milliseconds since 1970-01-01T00:00Z (midnight at the start of 1970 GMT/UTC).
+		 * Despite its name, java.util.Date represents an instant on the
+		 * time-line, not a "date". The actual data stored within the object is
+		 * a long count of milliseconds since 1970-01-01T00:00Z (midnight at the
+		 * start of 1970 GMT/UTC).
 		 */
 		return inicial.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 	}

@@ -6,6 +6,7 @@ import java.util.TreeSet;
 import modelo.Proveedor;
 import modelo.acceso.DAO;
 import utiles.Utiles;
+
 /**
  * 
  * @author fp-hermoso
@@ -13,7 +14,8 @@ import utiles.Utiles;
  */
 public class AlmacenProveedores {
 
-	private TreeSet<Proveedor> lista; // esto tendria que ser un set, pero no tira (?)
+	private TreeSet<Proveedor> lista; // esto tendria que ser un set, pero no
+										// tira (?)
 	private StringBuilder pathComun = new StringBuilder("./data/proveedores");
 
 	public AlmacenProveedores() {

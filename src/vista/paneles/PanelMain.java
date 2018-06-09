@@ -1,4 +1,4 @@
-package vista;
+package vista.paneles;
 
 import javax.swing.JPanel;
 import java.awt.Color;
@@ -7,6 +7,7 @@ import javax.swing.JLabel;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.Font;
+
 /**
  * 
  * @author fp-hermoso

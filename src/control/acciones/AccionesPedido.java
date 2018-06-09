@@ -17,7 +17,7 @@ import control.almacenes.AlmacenIndice;
 import control.almacenes.AlmacenRuta;
 
 public class AccionesPedido<K> {
-	
+
 	private Logica logica;
 
 	public AccionesPedido(Logica logica) {
@@ -31,7 +31,7 @@ public class AccionesPedido<K> {
 		for (Linea linea : lineas) {
 			pedido.insertarLinea(linea);
 		}
-		if ( logica.getDatos().grabar(pedido)) {
+		if (logica.getDatos().grabar(pedido)) {
 			aumentarNumeroPedido(numero);
 			return true;
 		}
@@ -51,7 +51,6 @@ public class AccionesPedido<K> {
 		return leer;
 	}
 
-
 	public void aniadirArticuloATabla(Articulo item, DefaultTableModel dm) {
 		dm.addRow(introducirRejilla(item));
 	}
@@ -64,8 +63,8 @@ public class AccionesPedido<K> {
 	}
 
 	/**
-	 * Introduce en un ArrayList del tipo que creeis los datos de un modelo de una
-	 * tabla
+	 * Introduce en un ArrayList del tipo que creeis los datos de un modelo de
+	 * una tabla
 	 * 
 	 * @param modelo
 	 * @return
@@ -76,7 +75,8 @@ public class AccionesPedido<K> {
 		for (int i = rows - 1; i >= 0; i--) {
 			String nombreArticulo = modelo.getValueAt(i, 1).toString();
 			int cantidad = Integer.parseInt(modelo.getValueAt(i, 3).toString());
-			Articulo item = (Articulo) new AlmacenIndice<>(Utiles.pathArticulos).leer(nombreArticulo);
+			Articulo item = (Articulo) new AlmacenIndice<>(Utiles.pathArticulosIndice, Utiles.pathArticulosDatos)
+					.leer(nombreArticulo);
 			retorno.add(new Linea(item, cantidad));
 		}
 		return retorno;
@@ -98,14 +98,14 @@ public class AccionesPedido<K> {
 			modelo.addRow(pedido.getLinea(i).toVector());
 		}
 	}
-	
+
 	public void cambiarPrecioRejilla(DefaultTableModel modelo) {
 		// TODO Actualizar
-//		ArrayList<Linea> lineas = extraerPedidoRejilla(modelo);
-//		eliminarPedidoRejilla(modelo);
-//		for (int i = lineas.size() - 1; i >= 0; i--) {
-//			modelo.addRow(lineas.get(i).toVector());
-//		}
+		// ArrayList<Linea> lineas = extraerPedidoRejilla(modelo);
+		// eliminarPedidoRejilla(modelo);
+		// for (int i = lineas.size() - 1; i >= 0; i--) {
+		// modelo.addRow(lineas.get(i).toVector());
+		// }
 	}
 
 	public void eliminarPedidoRejilla(DefaultTableModel modeloTabla) {
