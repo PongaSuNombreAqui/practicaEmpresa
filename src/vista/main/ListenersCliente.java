@@ -8,16 +8,10 @@ import java.awt.event.KeyEvent;
 
 import javax.swing.JOptionPane;
 
-import org.omg.Messaging.SyncScopeHelper;
-
 import control.Logica;
 import utiles.Validator;
-import vista.paneles.PanelArticulo;
 import vista.paneles.PanelCliente;
-import vista.paneles.PanelEditarArticulo;
-import vista.paneles.PanelMain;
 import vista.paneles.PanelPedido;
-import vista.paneles.PanelTabla;
 
 public class ListenersCliente {
 	private Logica logica;
@@ -138,7 +132,7 @@ public class ListenersCliente {
 
 		panelCliente.getTxtTelefono().addKeyListener(new KeyAdapter() {
 			public void keyTyped(KeyEvent e) {
-				if ((e.getKeyChar() < '0' || e.getKeyChar() > '9')
+				if (!Validator.isNumber(String.valueOf(e.getKeyChar()))
 						|| panelCliente.getTxtTelefono().getText().length() == 9) {
 					e.consume();
 				}
