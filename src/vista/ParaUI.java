@@ -3,7 +3,6 @@ package vista;
 import java.awt.Color;
 import java.awt.event.*;
 import java.io.File;
-import java.util.Iterator;
 
 import javax.swing.*;
 import javax.swing.event.TableModelEvent;
@@ -192,6 +191,7 @@ public class ParaUI extends UI {
 	 * listeners que usa el panel de clientes
 	 */
 	private void ponerListenerCliente() {
+		
 		panelCliente.getBtnAgregar().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (!comprobarCamposTxt(panelCliente.getTxtDnicif(), panelCliente.getTxtRazonSocial(),
@@ -231,19 +231,28 @@ public class ParaUI extends UI {
 				}
 			}
 		});
-
+		
 		panelCliente.getBtnBuscar().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				btnBuscarCliente();
 				if (panelCliente.getTxtClienteConsulta().getText().isEmpty()) {
+					setMensaje("Debe rellenar el campo de cliente", Color.RED, panelCliente.getLblMensaje());
 					panelCliente.getTxtClienteConsulta().setBackground(Color.YELLOW);
 				}
+			}
+		});
+		
+		panelCliente.getTxtClienteConsulta().addKeyListener(new KeyAdapter() {
+			public void keyReleased(KeyEvent e) {
+				btnBuscarCliente();
 			}
 		});
 
 		panelCliente.getTxtClienteConsulta().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				btnBuscarCliente();
+				if (panelCliente.getTxtClienteConsulta().getText().isEmpty()) {
+					setMensaje("Debe rellenar el campo de cliente", Color.RED, panelCliente.getLblMensaje());
+				}
 			}
 		});
 
@@ -263,7 +272,7 @@ public class ParaUI extends UI {
 
 		panelCliente.getBtnEliminarCliente().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int resultado = JOptionPane.showConfirmDialog(null, "¿Seguro que deseas eliminar este cliente?", "",
+				int resultado = JOptionPane.showConfirmDialog(null, "<html>&#191;Seguro que deseas eliminar este cliente?</html>", "",
 						JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE, null);
 				if (resultado == JOptionPane.YES_OPTION) {
 					int indice = panelCliente.getComboBox().getSelectedIndex();
@@ -301,12 +310,6 @@ public class ParaUI extends UI {
 				if (panelCliente.getTxtDnicif().getText().length() == 9) {
 					e.consume();
 				}
-			}
-		});
-
-		panelCliente.getTxtClienteConsulta().addKeyListener(new KeyAdapter() {
-			public void keyReleased(KeyEvent e) {
-				btnBuscarCliente();
 			}
 		});
 
@@ -623,7 +626,12 @@ public class ParaUI extends UI {
 				setMensaje("No hay coincidencias", Color.RED, panelCliente.getLblMensaje());
 			}
 		} else {
-			setMensaje("Debe rellenar el campo de cliente", Color.RED, panelCliente.getLblMensaje());
+			if (panelCliente.getComboBox().getItemCount() > 0) {
+				panelCliente.getComboBox().removeAllItems();
+			}
+			borrarTxt(panelCliente.getTxtDnicifResultado(), panelCliente.getTxtRazonSocialResultado(),
+					panelCliente.getTxtDireccionResultado(), panelCliente.getTxtTelefonoResultado());
+//			setMensaje("Debe rellenar el campo de cliente", Color.RED, panelCliente.getLblMensaje());
 		}
 	}
 
