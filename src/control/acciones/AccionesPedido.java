@@ -91,7 +91,6 @@ public class AccionesPedido<K> {
 	 * @param pedido
 	 * @param listaObjeto
 	 */
-
 	public void introducirPedidoRejilla(JTable tabla, Pedido pedido) {
 		DefaultTableModel modelo = (DefaultTableModel) tabla.getModel();
 		for (int i = pedido.getLineas().size(); i > 0; i--) {
@@ -99,13 +98,9 @@ public class AccionesPedido<K> {
 		}
 	}
 	
-	public void cambiarPrecioRejilla(DefaultTableModel modelo) {
-		// TODO Actualizar
-//		ArrayList<Linea> lineas = extraerPedidoRejilla(modelo);
-//		eliminarPedidoRejilla(modelo);
-//		for (int i = lineas.size() - 1; i >= 0; i--) {
-//			modelo.addRow(lineas.get(i).toVector());
-//		}
+	public void cambiarPrecioRejilla(DefaultTableModel modeloTabla, int fila) {
+		modeloTabla.setValueAt((Float.parseFloat(modeloTabla.getValueAt(fila, 2).toString())
+				* Integer.parseInt(modeloTabla.getValueAt(fila, 3).toString())), fila, 4);
 	}
 
 	public void eliminarPedidoRejilla(DefaultTableModel modeloTabla) {

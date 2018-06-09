@@ -191,7 +191,6 @@ public class ParaUI extends UI {
 	 * listeners que usa el panel de clientes
 	 */
 	private void ponerListenerCliente() {
-		
 		panelCliente.getBtnAgregar().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (!comprobarCamposTxt(panelCliente.getTxtDnicif(), panelCliente.getTxtRazonSocial(),
@@ -359,23 +358,16 @@ public class ParaUI extends UI {
 				if (panelPedido.getComboArticulos().getItemCount() != 0) {
 					bloquearListener = false;
 					String nombreArticulo = panelPedido.getComboArticulos().getSelectedItem().toString();
-					System.out.println(nombreArticulo);
-					int encontrado = -1;
-					int rows = modeloTabla.getRowCount();
-					for (int i = rows - 1; i >= 0; i--) {
-						if (modeloTabla.getValueAt(i, 1).toString().equals(nombreArticulo)) {
-							encontrado = i;
-						}
-					}
-					if (encontrado == -1) {
+					int linea = logica.comprobarArticuloPedido(modeloTabla, nombreArticulo);
+					if (linea == -1) {
 						logica.aniadirArticuloATabla(nombreArticulo, modeloTabla);
 						panelPedido.revalidate();
 						setMensaje("Insertado en el pedido el articulo " + nombreArticulo, Color.GREEN,
 								panelPedido.getTextMensaje());
 					} else {
-						panelTabla.getTabla().changeSelection(encontrado, 3, false, false);
-						modeloTabla.setValueAt((Integer.parseInt(modeloTabla.getValueAt(encontrado, 3).toString()) + 1),
-								encontrado, 3);
+						panelTabla.getTabla().changeSelection(linea, 3, false, false);
+						logica.cambiarCantidadArticuloTabla(modeloTabla, linea);
+						
 					}
 					bloquearListener = false;
 				} else {
@@ -498,23 +490,14 @@ public class ParaUI extends UI {
 		modeloTabla.addTableModelListener(new TableModelListener() {
 			@Override
 			public void tableChanged(TableModelEvent e) {
-				int fila = panelTabla.getTabla().getSelectedRow();
-				System.out.println("Fila: " + fila);
-				// Cambia precioTotal
-				panelPedido.getLblTotalPrecio().setText("0");
-				float total = 0;
-				for (int i = 0; i < panelTabla.getTabla().getRowCount(); i++) {
-					total = Float.parseFloat(modeloTabla.getValueAt(i, 4).toString()) + total;
-				}
-				panelPedido.getLblTotalPrecio().setText("" + total);
-				// FIN
+				float precioTotal = logica.cambiarPrecioTotalPedido(panelTabla.getTabla());
+				// TODO eliminar comillas
+				panelPedido.getLblTotalPrecio().setText("" + precioTotal);
 				if (pedidoProceso) {
+					int fila = panelTabla.getTabla().getSelectedRow();
 					if (panelTabla.getTabla().getRowCount() != 0 && !bloquearListener && fila != -1) {
 						bloquearListener = true;
-						modeloTabla.setValueAt(
-										(Float.parseFloat(modeloTabla.getValueAt(fila, 2).toString())
-												* Integer.parseInt(modeloTabla.getValueAt(fila, 3).toString())),
-										fila, 4);
+						logica.cambiarPrecioRejilla(modeloTabla, fila);
 						bloquearListener = false;
 					}
 				}

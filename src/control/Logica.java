@@ -271,12 +271,13 @@ public class Logica<K> {
 
 	/**
 	 * Cambia el precio total del articulo en tabla cuando se ajusta la cantidad
+	 * @param fila 
 	 * 
 	 * @param tabla
 	 *            Tabla en la que se actualizara el pedido
 	 */
-	public void cambiarPrecioRejilla(DefaultTableModel modeloTabla) {
-		accionesPedido.cambiarPrecioRejilla(modeloTabla);
+	public void cambiarPrecioRejilla(DefaultTableModel modeloTabla, int fila) {
+		accionesPedido.cambiarPrecioRejilla(modeloTabla, fila);
 	}
 
 	public float getPrecioAnteriorSegunFecha(String fecha, String nombreArt) {
@@ -299,6 +300,50 @@ public class Logica<K> {
 
 	public boolean eliminarCliente(String dni) {
 		return new AlmacenIndice<>(Utiles.pathClientes).borrar((K) dni);
+	}
+	
+	/**
+	 * Comprueba si el articulo seleccionado esta o no en el pedido
+	 * 
+	 * @param modeloTabla		El modelo de la tabla a comprobar
+	 * @param nombreArticulo	El nombre del articulo a buscar
+	 * @return	-1 si no se encuentra u otro correspondiente a la fila en la que se encuentra
+	 */
+	public int comprobarArticuloPedido(DefaultTableModel modeloTabla, String nombreArticulo) {
+		int encontrado = -1;
+		int rows = modeloTabla.getRowCount();
+		for (int i = rows - 1; i >= 0; i--) {
+			if (modeloTabla.getValueAt(i, 1).toString().equals(nombreArticulo)) {
+				encontrado = i;
+			}
+		}
+		return encontrado;
+	}
+
+	/**
+	 * Actualiza la cantidad del articulo seleccionado en el pedido
+	 * 
+	 * @param modeloTabla		El modelo de la tabla
+	 * @param lineaArticulo		La linea de la tabla a actualizar
+	 */
+	public void cambiarCantidadArticuloTabla(DefaultTableModel modeloTabla, int lineaArticulo) {
+		modeloTabla.setValueAt((Integer.parseInt(modeloTabla.getValueAt(lineaArticulo, 3).toString()) + 1),
+				lineaArticulo, 3);
+	}
+
+	/**
+	 * Envia el precio total del pedido
+	 * 
+	 * @param tabla La tabla con el pedido
+	 * @return	El precio total del pedido
+	 */
+	public float cambiarPrecioTotalPedido(JTable tabla) {
+		DefaultTableModel modeloTabla = (DefaultTableModel) tabla.getModel();
+		float precioTotal = 0;
+		for (int i = 0; i < tabla.getRowCount(); i++) {
+			precioTotal = Float.parseFloat(modeloTabla.getValueAt(i, 4).toString()) + precioTotal;
+		}
+		return precioTotal;
 	}
 
 }

@@ -242,7 +242,7 @@ public class PanelPedido extends JPanel {
 		gbc_lblTotal.gridy = 2;
 		add(lblTotal, gbc_lblTotal);
 		
-		lblTotalPrecio = new JLabel("");
+		lblTotalPrecio = new JLabel("0.0");
 		GridBagConstraints gbc_lblTotalPrecio = new GridBagConstraints();
 		gbc_lblTotalPrecio.anchor = GridBagConstraints.WEST;
 		gbc_lblTotalPrecio.gridx = 1;
