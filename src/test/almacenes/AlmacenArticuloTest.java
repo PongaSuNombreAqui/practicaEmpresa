@@ -11,12 +11,15 @@ import org.junit.Test;
 
 import control.almacenes.AlmacenIndice;
 import modelo.Articulo;
+
 /**
  * 
  * @author fp-hermoso
  *
- * @param <T> object
- * @param <K> key
+ * @param <T>
+ *            object
+ * @param <K>
+ *            key
  */
 public class AlmacenArticuloTest<T, K> {
 
@@ -47,10 +50,17 @@ public class AlmacenArticuloTest<T, K> {
 		new AlmacenIndice<T, K>(path).grabar((T) articuloTres, articuloTres.getIdArticulo(), articuloTres.getNombre());
 		new AlmacenIndice<T, K>(path).grabar((T) articuloUno, articuloUno.getIdArticulo(), articuloUno.getNombre());
 		Articulo leer = (Articulo) new AlmacenIndice<T, K>(path).leer(articuloDos.getNombre());
-		assertEquals(leer.getCurrentPrice(), this.articuloDos.getCurrentPrice(), 0); // no sobreescribe el precio al
-																						// guardarlo de nuevos
+		assertEquals(leer.getCurrentPrice(), this.articuloDos.getCurrentPrice(), 0); // no
+																						// sobreescribe
+																						// el
+																						// precio
+																						// al
+																						// guardarlo
+																						// de
+																						// nuevos
 
-		// si repites nombre si se guarda, solo tiene en cuenta el id, esta comentado
+		// si repites nombre si se guarda, solo tiene en cuenta el id, esta
+		// comentado
 		// para que no altere el testLeer
 		// Articulo antes = inst.leer("ajo");
 		// Articulo unoQueRepiteNombre = new Articulo(3, "ajo", "s", 20);

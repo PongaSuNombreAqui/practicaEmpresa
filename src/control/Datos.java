@@ -9,17 +9,18 @@ import utiles.Utiles;
 
 public class Datos {
 
-	
 	public boolean grabar(Pedido pedido) {
 		return new AlmacenRuta(Utiles.pathPedidos).grabar(pedido.getCliente().getDniCif(), pedido);
 	}
 
 	public boolean grabar(Articulo item) {
-		return new AlmacenIndice<>(Utiles.pathArticulos).grabar(item, item.getIdArticulo(), item.getNombre());
+		return new AlmacenIndice<>(Utiles.pathArticulosIndice, Utiles.pathArticulosDatos).grabar(item,
+				item.getIdArticulo(), item.getNombre());
 
 	}
-	
+
 	public boolean grabar(Cliente cliente) {
-		return new AlmacenIndice<>(Utiles.pathClientes).grabar(cliente, cliente.getDniCif());
+		return new AlmacenIndice<>(Utiles.pathClientesIndice, Utiles.pathClientesDatos).grabar(cliente,
+				cliente.getDniCif());
 	}
 }

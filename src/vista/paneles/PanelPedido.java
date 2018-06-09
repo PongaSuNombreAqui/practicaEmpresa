@@ -1,4 +1,4 @@
-package vista;
+package vista.paneles;
 
 import java.awt.*;
 import javax.swing.*;
@@ -233,7 +233,7 @@ public class PanelPedido extends JPanel {
 		gbc_textMensaje.gridx = 0;
 		gbc_textMensaje.gridy = 4;
 		panelCrearPedido.add(textMensaje, gbc_textMensaje);
-		
+
 		lblTotal = new JLabel("TOTAL:");
 		GridBagConstraints gbc_lblTotal = new GridBagConstraints();
 		gbc_lblTotal.anchor = GridBagConstraints.EAST;

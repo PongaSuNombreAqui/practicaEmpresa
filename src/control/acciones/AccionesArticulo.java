@@ -29,7 +29,7 @@ public class AccionesArticulo {
 
 	public void insertarArticulosEnCombo(JComboBox combo) {
 		combo.removeAllItems();
-		TreeMap indiceMap = new AlmacenIndice<>(Utiles.pathArticulos).obtenerIndice();
+		TreeMap indiceMap = new AlmacenIndice<>(Utiles.pathArticulosIndice, Utiles.pathArticulosDatos).obtenerMap();
 		if (!(indiceMap == null)) {
 			Set keySet = indiceMap.keySet();
 			for (Object object : keySet) {

@@ -28,7 +28,7 @@ public class ValidatorTest {
 		assertFalse(Validator.isNumber("2323232f"));
 		assertFalse(Validator.isNumber("2323232d"));
 	}
-	
+
 	@Test
 	public void testIsDniCif() {
 		assertTrue(Validator.isDniCif("12345678A"));

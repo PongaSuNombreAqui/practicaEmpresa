@@ -10,6 +10,8 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
+import org.omg.Messaging.SyncScopeHelper;
+
 import control.acciones.AccionesArticulo;
 import control.acciones.AccionesCliente;
 import control.acciones.AccionesPedido;
@@ -48,7 +50,8 @@ public class Logica<K> {
 	 * @return true si existe, false si no existe
 	 */
 	public boolean comprobarExistencia(String nombreArt) {
-		Articulo item = (Articulo) new AlmacenIndice<>(Utiles.pathArticulos).leer(nombreArt);
+		Articulo item = (Articulo) new AlmacenIndice<>(Utiles.pathArticulosIndice, Utiles.pathArticulosDatos)
+				.leer(nombreArt);
 		return accionesArticulo.comprobarExistencia(item);
 	}
 
@@ -67,7 +70,8 @@ public class Logica<K> {
 	 *            label descripcion
 	 */
 	public void consultar(String nombre, JLabel nombreArt, JLabel id, JLabel precio, JLabel descripcion) {
-		Articulo item = (Articulo) new AlmacenIndice<>(Utiles.pathArticulos).leer(nombre);
+		Articulo item = (Articulo) new AlmacenIndice<>(Utiles.pathArticulosIndice, Utiles.pathArticulosDatos)
+				.leer(nombre);
 		accionesArticulo.consultar(item, nombreArt, id, precio, descripcion);
 	};
 
@@ -86,7 +90,8 @@ public class Logica<K> {
 	 */
 	public boolean crearArticulo(String nombre, Float precio, int id, String descripcion) {
 		Articulo newArticulo = new Articulo(id, nombre, descripcion, precio);
-		Articulo item = (Articulo) new AlmacenIndice<>(Utiles.pathArticulos).leer(nombre);
+		Articulo item = (Articulo) new AlmacenIndice<>(Utiles.pathArticulosIndice, Utiles.pathArticulosDatos)
+				.leer(nombre);
 		if (item == null) {
 			return datos.grabar(newArticulo);
 		}
@@ -112,7 +117,8 @@ public class Logica<K> {
 	 *            nuevo precio del articulo
 	 */
 	public void editar(String nombre, float nuevoPrecio) {
-		Articulo item = (Articulo) new AlmacenIndice<>(Utiles.pathArticulos).leer(nombre);
+		Articulo item = (Articulo) new AlmacenIndice<>(Utiles.pathArticulosIndice, Utiles.pathArticulosDatos)
+				.leer(nombre);
 		accionesArticulo.editar(item, nuevoPrecio, this);
 	};
 
@@ -150,7 +156,8 @@ public class Logica<K> {
 	 */
 	public void consultarCliente(String dniCif, JTextField lblDniCif, JTextField lblRazonSocial,
 			JTextField lblDireccion, JTextField lblTelefono) {
-		Cliente cliente = (Cliente) new AlmacenIndice<>(Utiles.pathClientes).leer((K) dniCif);
+		Cliente cliente = (Cliente) new AlmacenIndice<>(Utiles.pathClientesIndice, Utiles.pathClientesDatos)
+				.obtener(dniCif);
 		accionesCliente.consultarCliente(cliente, lblDniCif, lblRazonSocial, lblDireccion, lblTelefono);
 	}
 
@@ -175,7 +182,8 @@ public class Logica<K> {
 	 *            nombre del articulo a introducir
 	 */
 	public void aniadirArticuloATabla(String nombre, DefaultTableModel modelo) {
-		Articulo item = (Articulo) new AlmacenIndice<>(Utiles.pathArticulos).leer(nombre);
+		Articulo item = (Articulo) new AlmacenIndice<>(Utiles.pathArticulosIndice, Utiles.pathArticulosDatos)
+				.leer(nombre);
 		accionesPedido.aniadirArticuloATabla(item, modelo);
 	};
 
@@ -199,7 +207,8 @@ public class Logica<K> {
 	 * @return
 	 */
 	public boolean crear(String dniNif, DefaultTableModel modelo) {
-		Cliente cliente = (Cliente) new AlmacenIndice<>(Utiles.pathClientes).leer((K) dniNif);
+		Cliente cliente = (Cliente) new AlmacenIndice<>(Utiles.pathClientesIndice, Utiles.pathClientesDatos)
+				.obtener((K) dniNif);
 		return accionesPedido.crear(cliente, modelo);
 	};
 
@@ -226,7 +235,7 @@ public class Logica<K> {
 	 */
 	public void insertarClientesEnCombo(JComboBox<Object> combo) {
 		combo.removeAllItems();
-		TreeMap indiceMap = new AlmacenIndice<>(Utiles.pathClientes).obtenerMap();
+		TreeMap indiceMap = new AlmacenIndice<>(Utiles.pathClientesIndice, Utiles.pathClientesDatos).obtenerMap();
 		accionesCliente.insertarClientesEnCombo(combo, indiceMap);
 	}
 
@@ -239,10 +248,11 @@ public class Logica<K> {
 	 *            string con el que identificar al cliente
 	 * @param txtField
 	 *            txtField de mensaje
+	 * @return
 	 */
-	public void insertarPedidosEnCombo(JComboBox<Object> combo, String cadena, JLabel txtField) {
+	public boolean insertarPedidosEnCombo(JComboBox<Object> combo, String cadena) {
 		cadena = cadena.substring(cadena.lastIndexOf(Utiles.separador) + 1);
-		accionesCliente.insertarPedidosEnCombo(combo, cadena, txtField);
+		return accionesCliente.insertarPedidosEnCombo(combo, cadena);
 	}
 
 	/**
@@ -282,10 +292,10 @@ public class Logica<K> {
 
 	public float getPrecioAnteriorSegunFecha(String fecha, String nombreArt) {
 		String[] fechaPartida = fecha.split("-");
-		System.out.println(fechaPartida[1]);
 		GregorianCalendar fechaGre = new GregorianCalendar(Integer.valueOf(fechaPartida[0]),
 				Integer.valueOf(fechaPartida[1]) - 1, Integer.valueOf(fechaPartida[2]));
-		Articulo item = (Articulo) new AlmacenIndice<>(Utiles.pathArticulos).leer(nombreArt);
+		Articulo item = (Articulo) new AlmacenIndice<>(Utiles.pathArticulosIndice, Utiles.pathArticulosDatos)
+				.leer(nombreArt);
 		return accionesArticulo.comprobarPrecio(item, fechaGre);
 	}
 
@@ -299,7 +309,7 @@ public class Logica<K> {
 	}
 
 	public boolean eliminarCliente(String dni) {
-		return new AlmacenIndice<>(Utiles.pathClientes).borrar((K) dni);
+		return new AlmacenIndice<>(Utiles.pathClientesIndice, Utiles.pathClientesDatos).borrar((K) dni);
 	}
 	
 	/**

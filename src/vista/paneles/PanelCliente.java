@@ -1,7 +1,10 @@
-package vista;
+package vista.paneles;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
 import javax.swing.border.BevelBorder;
 import javax.swing.border.EtchedBorder;
 
@@ -316,7 +319,7 @@ public class PanelCliente extends JPanel {
 		gbc_btnEliminarCliente.gridx = 0;
 		gbc_btnEliminarCliente.gridy = 5;
 		panelResultado.add(btnEliminarCliente, gbc_btnEliminarCliente);
-		
+
 		lblMensaje = new JLabel("");
 		lblMensaje.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		GridBagConstraints gbc_lblMensaje = new GridBagConstraints();
@@ -326,6 +329,40 @@ public class PanelCliente extends JPanel {
 		gbc_lblMensaje.gridx = 0;
 		gbc_lblMensaje.gridy = 1;
 		add(lblMensaje, gbc_lblMensaje);
+
+		getTxtDnicif().addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				getTxtDnicif().setBackground(Color.WHITE);
+			}
+		});
+
+		getTxtRazonSocial().addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				getTxtRazonSocial().setBackground(Color.WHITE);
+			}
+		});
+		getTxtDireccion().addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				getTxtDireccion().setBackground(Color.WHITE);
+			}
+		});
+
+		getTxtTelefono().addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				getTxtTelefono().setBackground(Color.WHITE);
+			}
+		});
+
+		getTxtClienteConsulta().addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				getTxtTelefono().setBackground(Color.WHITE);
+			}
+		});
 	}
 
 	public JTextField getTxtRazonSocial() {

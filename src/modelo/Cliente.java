@@ -2,7 +2,7 @@ package modelo;
 
 import java.io.Serializable;
 
-public class Cliente implements Serializable ,Comparable<Cliente>, Indexable<String> {
+public class Cliente implements Serializable, Comparable<Cliente>, Indexable<String> {
 	private String dniCif;
 	private String razonSocial;
 	private String direccion;

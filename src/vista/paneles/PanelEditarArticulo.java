@@ -1,4 +1,4 @@
-package vista;
+package vista.paneles;
 
 import javax.swing.JPanel;
 import javax.swing.border.MatteBorder;
@@ -41,14 +41,14 @@ public class PanelEditarArticulo extends JPanel {
 		gbc_lblNewLabel_3.gridx = 1;
 		gbc_lblNewLabel_3.gridy = 0;
 		add(lblNewLabel_3, gbc_lblNewLabel_3);
-		
+
 		JLabel lblNewLabel_2 = new JLabel("Fecha a comprobar");
 		GridBagConstraints gbc_lblNewLabel_2 = new GridBagConstraints();
 		gbc_lblNewLabel_2.insets = new Insets(0, 0, 5, 5);
 		gbc_lblNewLabel_2.gridx = 1;
 		gbc_lblNewLabel_2.gridy = 1;
 		add(lblNewLabel_2, gbc_lblNewLabel_2);
-		
+
 		txtFecha = new JTextField();
 		txtFecha.setText("a\u00F1o-mes-dia");
 		GridBagConstraints gbc_txtFecha = new GridBagConstraints();
@@ -58,7 +58,7 @@ public class PanelEditarArticulo extends JPanel {
 		gbc_txtFecha.gridy = 1;
 		add(txtFecha, gbc_txtFecha);
 		txtFecha.setColumns(10);
-		
+
 		btnBuscar = new JButton("BuscarPrecio");
 		GridBagConstraints gbc_btnBuscar = new GridBagConstraints();
 		gbc_btnBuscar.fill = GridBagConstraints.BOTH;

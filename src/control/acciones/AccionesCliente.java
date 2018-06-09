@@ -11,21 +11,23 @@ import javax.swing.JTextField;
 import control.almacenes.AlmacenIndice;
 import modelo.Cliente;
 import utiles.Utiles;
+
 /**
  * 
  * @author fp-hermoso
  *
- * @param <K> clave almacen indice
+ * @param <K>
+ *            clave almacen indice
  */
 public class AccionesCliente<K> {
 
-	
 	public void buscarCliente(String nombre, JComboBox combo) {
-		TreeMap indiceMap = new AlmacenIndice<>(Utiles.pathClientes).obtenerMap();
+		TreeMap indiceMap = new AlmacenIndice<>(Utiles.pathClientesIndice, Utiles.pathClientesDatos).obtenerMap();
 		if (!(indiceMap == null)) {
 			Set keySet = indiceMap.keySet();
 			for (Object object : keySet) {
-				Cliente cliente = (Cliente) new AlmacenIndice<>(Utiles.pathClientes).leer((K) object);
+				Cliente cliente = (Cliente) new AlmacenIndice<>(Utiles.pathClientesIndice, Utiles.pathClientesDatos)
+						.obtener(object);
 				if (cliente.getRazonSocial().toLowerCase().matches(".*" + nombre.toLowerCase() + ".*")
 						|| cliente.getDniCif().toLowerCase().matches(".*" + nombre.toLowerCase() + ".*")) {
 					combo.addItem(cliente.getRazonSocial() + Utiles.separador + cliente.getDniCif());
@@ -36,9 +38,7 @@ public class AccionesCliente<K> {
 
 	public void consultarCliente(Cliente cliente, JTextField lblDniCif, JTextField lblRazonSocial,
 			JTextField lblDireccion, JTextField lblTelefono) {
-		if (cliente == null) {
-			System.out.println("Error");
-		} else {
+		if (!(cliente == null)) {
 			lblDniCif.setText(cliente.getDniCif());
 			lblRazonSocial.setText(cliente.getRazonSocial());
 			lblDireccion.setText(cliente.getDireccion());
@@ -46,15 +46,15 @@ public class AccionesCliente<K> {
 		}
 	}
 
-
-	public void insertarPedidosEnCombo(JComboBox combo, String cadena, JLabel txtMensaje) {
+	public boolean insertarPedidosEnCombo(JComboBox combo, String cadena) {
 		if (Utiles.comprobarExiste("./data/pedidos/" + cadena)) {
 			File[] pedidos = new File("./data/pedidos/" + cadena).listFiles();
 			for (int i = 0; i < pedidos.length; i++) {
 				combo.addItem("Pedido " + pedidos[i].getName().replace(".ped", ""));
 			}
+			return true;
 		} else {
-			txtMensaje.setText("El cliente seleccionado no tiene pedidos");
+			return false;
 		}
 	}
 
@@ -62,7 +62,8 @@ public class AccionesCliente<K> {
 		if (!(indiceMap == null)) {
 			Set keySet = indiceMap.keySet();
 			for (Object object : keySet) {
-				Cliente cliente = (Cliente) new AlmacenIndice<>(Utiles.pathClientes).leer((K) object);
+				Cliente cliente = (Cliente) new AlmacenIndice<>(Utiles.pathClientesIndice, Utiles.pathClientesDatos)
+						.obtener((K) object);
 				combo.addItem(cliente.getRazonSocial() + Utiles.separador + cliente.getDniCif());
 			}
 		}
