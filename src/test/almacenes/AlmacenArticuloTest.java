@@ -11,6 +11,7 @@ import org.junit.Test;
 
 import control.almacenes.AlmacenIndice;
 import modelo.Articulo;
+import utiles.Utiles;
 
 /**
  * 
@@ -34,6 +35,7 @@ public class AlmacenArticuloTest<T, K> {
 
 	@After
 	public void tearDown() throws Exception {
+		//el test sale rojo al borrar, si lo comentas funciona, pero aunque de rojo se borran
 		File dir = new File("./dataTest/articulos");
 		File[] list = dir.listFiles();
 		for (int i = 0; i < list.length; i++) {
@@ -44,12 +46,12 @@ public class AlmacenArticuloTest<T, K> {
 
 	@Test
 	public void testGrabar() {
-		new AlmacenIndice<T, K>(path).grabar((T) articuloDos, articuloDos.getIdArticulo(), articuloDos.getNombre());
+		new AlmacenIndice<T, K>(Utiles.pathArticulosIndice, Utiles.pathArticulosDatos).grabar((T) articuloDos, articuloDos.getIdArticulo(), articuloDos.getNombre());
 		Articulo articuloDos = new Articulo(2, "sal", null, 50);
-		new AlmacenIndice<T, K>(path).grabar((T) articuloDos, articuloDos.getIdArticulo(), articuloDos.getNombre());
-		new AlmacenIndice<T, K>(path).grabar((T) articuloTres, articuloTres.getIdArticulo(), articuloTres.getNombre());
-		new AlmacenIndice<T, K>(path).grabar((T) articuloUno, articuloUno.getIdArticulo(), articuloUno.getNombre());
-		Articulo leer = (Articulo) new AlmacenIndice<T, K>(path).leer(articuloDos.getNombre());
+		new AlmacenIndice<T, K>(Utiles.pathArticulosIndice, Utiles.pathArticulosDatos).grabar((T) articuloDos, articuloDos.getIdArticulo(), articuloDos.getNombre());
+		new AlmacenIndice<T, K>(Utiles.pathArticulosIndice, Utiles.pathArticulosDatos).grabar((T) articuloTres, articuloTres.getIdArticulo(), articuloTres.getNombre());
+		new AlmacenIndice<T, K>(Utiles.pathArticulosIndice, Utiles.pathArticulosDatos).grabar((T) articuloUno, articuloUno.getIdArticulo(), articuloUno.getNombre());
+		Articulo leer = (Articulo) new AlmacenIndice<T, K>(Utiles.pathArticulosIndice, Utiles.pathArticulosDatos).leer(articuloDos.getNombre());
 		assertEquals(leer.getCurrentPrice(), this.articuloDos.getCurrentPrice(), 0); // no
 																						// sobreescribe
 																						// el
@@ -75,9 +77,9 @@ public class AlmacenArticuloTest<T, K> {
 	@Test
 	public void testLeer() {
 		testGrabar();
-		assertTrue(articuloUno.equals(new AlmacenIndice<T, K>(path).leer(articuloUno.getNombre())));
-		assertTrue(articuloTres.equals(new AlmacenIndice<T, K>(path).leer(articuloTres.getNombre())));
-		assertTrue(articuloDos.equals(new AlmacenIndice<T, K>(path).leer(articuloDos.getNombre())));
+		assertTrue(articuloUno.equals(new AlmacenIndice<T, K>(Utiles.pathArticulosIndice, Utiles.pathArticulosDatos).leer(articuloUno.getNombre())));
+		assertTrue(articuloTres.equals(new AlmacenIndice<T, K>(Utiles.pathArticulosIndice, Utiles.pathArticulosDatos).leer(articuloTres.getNombre())));
+		assertTrue(articuloDos.equals(new AlmacenIndice<T, K>(Utiles.pathArticulosIndice, Utiles.pathArticulosDatos).leer(articuloDos.getNombre())));
 	}
 
 }
