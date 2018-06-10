@@ -320,14 +320,7 @@ public class Logica<K> {
 	 * @return	-1 si no se encuentra u otro correspondiente a la fila en la que se encuentra
 	 */
 	public int comprobarArticuloPedido(DefaultTableModel modeloTabla, String nombreArticulo) {
-		int encontrado = -1;
-		int rows = modeloTabla.getRowCount();
-		for (int i = rows - 1; i >= 0; i--) {
-			if (modeloTabla.getValueAt(i, 1).toString().equals(nombreArticulo)) {
-				encontrado = i;
-			}
-		}
-		return encontrado;
+		return accionesPedido.comprobarArticuloPedido(modeloTabla, nombreArticulo);
 	}
 
 	/**
@@ -337,8 +330,7 @@ public class Logica<K> {
 	 * @param lineaArticulo		La linea de la tabla a actualizar
 	 */
 	public void cambiarCantidadArticuloTabla(DefaultTableModel modeloTabla, int lineaArticulo) {
-		modeloTabla.setValueAt((Integer.parseInt(modeloTabla.getValueAt(lineaArticulo, 3).toString()) + 1),
-				lineaArticulo, 3);
+		accionesPedido.cambiarCantidadArticuloTabla(modeloTabla, lineaArticulo);
 	}
 
 	/**
@@ -348,12 +340,7 @@ public class Logica<K> {
 	 * @return	El precio total del pedido
 	 */
 	public float cambiarPrecioTotalPedido(JTable tabla) {
-		DefaultTableModel modeloTabla = (DefaultTableModel) tabla.getModel();
-		float precioTotal = 0;
-		for (int i = 0; i < tabla.getRowCount(); i++) {
-			precioTotal = Float.parseFloat(modeloTabla.getValueAt(i, 4).toString()) + precioTotal;
-		}
-		return precioTotal;
+		return accionesPedido.cambiarPrecioTotalPedido(tabla);
 	}
 
 }
