@@ -91,21 +91,16 @@ public class AccionesPedido<K> {
 	 * @param pedido
 	 * @param listaObjeto
 	 */
-
 	public void introducirPedidoRejilla(JTable tabla, Pedido pedido) {
 		DefaultTableModel modelo = (DefaultTableModel) tabla.getModel();
 		for (int i = pedido.getLineas().size(); i > 0; i--) {
 			modelo.addRow(pedido.getLinea(i).toVector());
 		}
 	}
-
-	public void cambiarPrecioRejilla(DefaultTableModel modelo) {
-		// TODO Actualizar
-		// ArrayList<Linea> lineas = extraerPedidoRejilla(modelo);
-		// eliminarPedidoRejilla(modelo);
-		// for (int i = lineas.size() - 1; i >= 0; i--) {
-		// modelo.addRow(lineas.get(i).toVector());
-		// }
+	
+	public void cambiarPrecioRejilla(DefaultTableModel modeloTabla, int fila) {
+		modeloTabla.setValueAt((Float.parseFloat(modeloTabla.getValueAt(fila, 2).toString())
+				* Integer.parseInt(modeloTabla.getValueAt(fila, 3).toString())), fila, 4);
 	}
 
 	public void eliminarPedidoRejilla(DefaultTableModel modeloTabla) {
@@ -114,5 +109,32 @@ public class AccionesPedido<K> {
 			modeloTabla.removeRow(i);
 		}
 	}
+
+	public int comprobarArticuloPedido(DefaultTableModel modeloTabla, String nombreArticulo) {
+		int encontrado = -1;
+		int rows = modeloTabla.getRowCount();
+		for (int i = rows - 1; i >= 0; i--) {
+			if (modeloTabla.getValueAt(i, 1).toString().equals(nombreArticulo)) {
+				encontrado = i;
+			}
+		}
+		return encontrado;
+	}
+
+	public static void cambiarCantidadArticuloTabla(DefaultTableModel modeloTabla, int lineaArticulo) {
+		modeloTabla.setValueAt((Integer.parseInt(modeloTabla.getValueAt(lineaArticulo, 3).toString()) + 1),
+				lineaArticulo, 3);		
+	}
+
+	public float cambiarPrecioTotalPedido(JTable tabla) {
+		DefaultTableModel modeloTabla = (DefaultTableModel) tabla.getModel();
+		float precioTotal = 0;
+		for (int i = 0; i < tabla.getRowCount(); i++) {
+			precioTotal = Float.parseFloat(modeloTabla.getValueAt(i, 4).toString()) + precioTotal;
+		}
+		return precioTotal;
+	}
+	
+	
 
 }

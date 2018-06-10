@@ -281,12 +281,13 @@ public class Logica<K> {
 
 	/**
 	 * Cambia el precio total del articulo en tabla cuando se ajusta la cantidad
+	 * @param fila 
 	 * 
 	 * @param tabla
 	 *            Tabla en la que se actualizara el pedido
 	 */
-	public void cambiarPrecioRejilla(DefaultTableModel modeloTabla) {
-		accionesPedido.cambiarPrecioRejilla(modeloTabla);
+	public void cambiarPrecioRejilla(DefaultTableModel modeloTabla, int fila) {
+		accionesPedido.cambiarPrecioRejilla(modeloTabla, fila);
 	}
 
 	public float getPrecioAnteriorSegunFecha(String fecha, String nombreArt) {
@@ -309,6 +310,37 @@ public class Logica<K> {
 
 	public boolean eliminarCliente(String dni) {
 		return new AlmacenIndice<>(Utiles.pathClientesIndice, Utiles.pathClientesDatos).borrar((K) dni);
+	}
+	
+	/**
+	 * Comprueba si el articulo seleccionado esta o no en el pedido
+	 * 
+	 * @param modeloTabla		El modelo de la tabla a comprobar
+	 * @param nombreArticulo	El nombre del articulo a buscar
+	 * @return	-1 si no se encuentra u otro correspondiente a la fila en la que se encuentra
+	 */
+	public int comprobarArticuloPedido(DefaultTableModel modeloTabla, String nombreArticulo) {
+		return accionesPedido.comprobarArticuloPedido(modeloTabla, nombreArticulo);
+	}
+
+	/**
+	 * Actualiza la cantidad del articulo seleccionado en el pedido
+	 * 
+	 * @param modeloTabla		El modelo de la tabla
+	 * @param lineaArticulo		La linea de la tabla a actualizar
+	 */
+	public void cambiarCantidadArticuloTabla(DefaultTableModel modeloTabla, int lineaArticulo) {
+		accionesPedido.cambiarCantidadArticuloTabla(modeloTabla, lineaArticulo);
+	}
+
+	/**
+	 * Envia el precio total del pedido
+	 * 
+	 * @param tabla La tabla con el pedido
+	 * @return	El precio total del pedido
+	 */
+	public float cambiarPrecioTotalPedido(JTable tabla) {
+		return accionesPedido.cambiarPrecioTotalPedido(tabla);
 	}
 
 }
