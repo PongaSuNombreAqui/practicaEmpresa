@@ -99,11 +99,7 @@ public class AccionesParaUI {
 				setMensaje("No hay coincidencias", Color.RED, panelCliente.getLblMensaje());
 			}
 		} else {
-			if (panelCliente.getComboBox().getItemCount() > 0) {
-				panelCliente.getComboBox().removeAllItems();
-			}
-			borrarTxt(panelCliente.getTxtDnicifResultado(), panelCliente.getTxtRazonSocialResultado(),
-					panelCliente.getTxtDireccionResultado(), panelCliente.getTxtTelefonoResultado());
+			setMensaje("Debe rellenar el campo de cliente", Color.RED, panelCliente.getLblMensaje());
 		}
 	}
 
